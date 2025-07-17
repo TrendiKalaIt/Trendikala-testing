@@ -27,7 +27,7 @@ jobs:
 
       - name: Set backend API URL environment variable
         run: |
-          echo "VITE_API_URL=trendikala-testing-ehewejdvfzdsdeen.southeastasia-01.azurewebsites.net/" > frontend/.env.production
+          echo "VITE_API_URL=trendikala-testing-ehewejdvfzdsdeen.southeastasia-01.azurewebsites.net" > frontend/.env.production
 
       - name: Install dependencies and build frontend
         run: |
