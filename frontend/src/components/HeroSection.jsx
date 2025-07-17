@@ -30,7 +30,7 @@ const HeroSection = () => {
         backgroundPosition: 'center',
       }}
     >
-      <div className="container backdrop-blur-[4px] ">
+      <div className=" backdrop-blur-[4px] ">
         <div className="flex flex-col md:flex-row overflow-hidden">
           {/* Left */}
           <motion.div
