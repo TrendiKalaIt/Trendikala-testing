@@ -100,7 +100,7 @@ export default function Navbar({ links }) {
         </div>
 
         {/* Desktop Links */}
-        <ul className="hidden md:ps-44 md:flex space-x-6 lg:space-x-5 text-base font-medium">
+        <ul className="hidden md:ps-20 md:flex space-x-10 lg:space-x-5 text-base font-medium">
           {links.map((link) => (
             <li key={link.name}>
               <NavLink
