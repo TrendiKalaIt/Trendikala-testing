@@ -56,7 +56,7 @@ export default function Navbar({ links }) {
           </div>
         </div>
 
-        <div className='flex'>
+        <div className='flex space-x-6'>
           {/* Desktop Links */}
           <ul className="hidden md:ps-20 md:flex space-x-7 lg:space-x-12 text-base font-medium">
             {links.map((link) => (
