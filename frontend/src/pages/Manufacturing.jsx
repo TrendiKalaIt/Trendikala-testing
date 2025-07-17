@@ -64,7 +64,7 @@ function Manufacturing() { // Renamed to App as per instructions for the main co
           <div className="flex flex-col md:flex-row items-center w-full mb-12 md:mb-16">
             <div className="md:w-1/2 flex justify-center md:justify-end md:pr-12 relative">
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:ml-8 mt-4 md:mt-0 md:text-right">
-                <Palette size={40} className="text-green-500 mb-3 mx-auto md:ml-auto md:mr-0" />
+                <Palette size={40} className="text-green-500 mb-3 mx-auto md:ml-auto md:mr-0 hidden" />
                 <h3 className="text-2xl font-semibold mb-2">Concept & Design</h3>
                 <p className="text-gray-600">
                   It all begins with an idea. Our designers meticulously sketch, refine, and plan each product, focusing on aesthetics, functionality, and durability.
@@ -153,7 +153,7 @@ function Manufacturing() { // Renamed to App as per instructions for the main co
             <div className="md:w-1/2 flex justify-center md:justify-end md:pr-12 relative">
               
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:ml-8 mt-4 md:mt-0 md:text-right">
-                <Truck size={40} className="text-green-500 mb-3 mx-auto md:ml-auto md:mr-0" />
+               <span className='text-white hidden '>RG&PN</span> <Truck size={40} className="text-green-500 mb-3 mx-auto md:ml-auto md:mr-0" />
                 <h3 className="text-2xl font-semibold mb-2">Packaging & Dispatch</h3>
                 <p className="text-gray-600">
                   Products are carefully packaged to ensure safe delivery and dispatched to their new homes.

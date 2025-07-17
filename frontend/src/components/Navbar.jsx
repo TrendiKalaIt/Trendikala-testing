@@ -56,77 +56,79 @@ export default function Navbar({ links }) {
           </div>
         </div>
 
-        {/* Desktop Links */}
-        <ul className="hidden md:ps-20 md:flex space-x-10 lg:space-x-12 text-base font-medium">
-          {links.map((link) => (
-            <li key={link.name}>
-              <NavLink
-                to={link.path}
-                className={({ isActive }) =>
-                  `transition-colors border-b-2 ${isActive
-                    ? 'text-green-700 border-green-500'
-                    : 'text-gray-700 hover:text-green-700 border-transparent hover:border-green-400'}`
-                }
-              >
-                {link.name.charAt(0).toUpperCase() + link.name.slice(1)}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        <div className='flex'>
+          {/* Desktop Links */}
+          <ul className="hidden md:ps-20 md:flex space-x-7 lg:space-x-12 text-base font-medium">
+            {links.map((link) => (
+              <li key={link.name}>
+                <NavLink
+                  to={link.path}
+                  className={({ isActive }) =>
+                    `transition-colors border-b-2 ${isActive
+                      ? 'text-green-700 border-green-500'
+                      : 'text-gray-700 hover:text-green-700 border-transparent hover:border-green-400'}`
+                  }
+                >
+                  {link.name.charAt(0).toUpperCase() + link.name.slice(1)}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
 
-        {/* Icons */}
-        <div className="flex items-center space-x-4 text-green-700">
-          {user && (<NavLink to="/cart"><ShoppingCart className="w-6 h-6 hover:text-green-500 transition" /></NavLink>
-          )}
-          {user && (
-            <NavLink to="/wishlist">
-              <Heart className="w-6 h-6 cursor-pointer hover:text-green-500 transition" />
-            </NavLink>
-          )}
-          {/* <Search className="w-6 h-6 hover:text-green-500 transition" onClick={() => setIsSearchInputOpen(!isSearchInputOpen)} /> */}
-
-          {/* User Icon with Dropdown */}
-          <div className="relative user-dropdown">
-            <button onClick={() => setShowDropdown(!showDropdown)} className="flex items-center gap-1 hover:text-green-500">
-              <User className="w-6 h-6" />
-              {user ? <span className="text-sm hidden md:inline">{user.name}</span> : <span className="text-sm hidden md:inline">Login</span>}
-              <svg className="w-4 h-4 hidden md:inline" viewBox="0 0 20 20" fill="currentColor">
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-
-            {/*  Reusable Dropdown (visible on both mobile & desktop) */}
-            {showDropdown && (
-              <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow z-50">
-                {user ? (
-                  <>
-                    <button onClick={handleMyOrdersClick} className="w-full text-left px-4 py-2 hover:bg-gray-100">My Orders</button>
-                    <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
-                  </>
-                ) : (
-                  <button
-                    onClick={() => {
-                      navigate('/signin');
-                      setShowDropdown(false);
-                      setIsMenuOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                  >
-                    Sign In
-                  </button>
-                )}
-              </div>
+          {/* Icons */}
+          <div className="flex items-center space-x-4 text-green-700">
+            {user && (<NavLink to="/cart"><ShoppingCart className="w-6 h-6 hover:text-green-500 transition" /></NavLink>
             )}
-          </div>
+            {user && (
+              <NavLink to="/wishlist">
+                <Heart className="w-6 h-6 cursor-pointer hover:text-green-500 transition" />
+              </NavLink>
+            )}
+            {/* <Search className="w-6 h-6 hover:text-green-500 transition" onClick={() => setIsSearchInputOpen(!isSearchInputOpen)} /> */}
 
-          {/* Mobile Menu Button */}
-          <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            {/* User Icon with Dropdown */}
+            <div className="relative user-dropdown">
+              <button onClick={() => setShowDropdown(!showDropdown)} className="flex items-center gap-1 hover:text-green-500">
+                <User className="w-6 h-6" />
+                {user ? <span className="text-sm hidden md:inline">{user.name}</span> : <span className="text-sm hidden md:inline">Login</span>}
+                <svg className="w-4 h-4 hidden md:inline" viewBox="0 0 20 20" fill="currentColor">
+                  <path
+                    fillRule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              {/*  Reusable Dropdown (visible on both mobile & desktop) */}
+              {showDropdown && (
+                <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow z-50">
+                  {user ? (
+                    <>
+                      <button onClick={handleMyOrdersClick} className="w-full text-left px-4 py-2 hover:bg-gray-100">My Orders</button>
+                      <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        navigate('/signin');
+                        setShowDropdown(false);
+                        setIsMenuOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                    >
+                      Sign In
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
