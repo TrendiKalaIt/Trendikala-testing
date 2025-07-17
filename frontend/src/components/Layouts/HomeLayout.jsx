@@ -5,6 +5,7 @@ import NavbarHome from '../NavbarHome';
 import Footer from '../Footer';
 import Spinner from '../Spinner';
 import { useSelector } from 'react-redux';
+import Badge from '../TestingBadge'
 
 const navLinks = [
   { name: 'home', path: '/' },
@@ -22,6 +23,7 @@ const Layout = () => {
       <NavbarHome links={navLinks} />
       <main className="flex-grow">
         <Outlet />
+        <Badge/>
       </main>
       <Footer />
     </div>
