@@ -300,7 +300,7 @@ exports.addProductReview = async (req, res) => {
 
 
 
-// Search products by name (partial match)
+// Search products by name, category, description, brand, and tags (partial, case-insensitive match)
 exports.searchProducts = async (req, res) => {
   try {
     const query = req.query.query?.trim();
@@ -313,7 +313,13 @@ exports.searchProducts = async (req, res) => {
     }
 
     const products = await Product.find({
-      productName: { $regex: query, $options: 'i' }, // case-insensitive match
+      $or: [
+        { productName: { $regex: query, $options: 'i' } },
+        { category: { $regex: query, $options: 'i' } },
+        // { description: { $regex: query, $options: 'i' } },
+        // { brand: { $regex: query, $options: 'i' } },
+        // { tags: { $elemMatch: { $regex: query, $options: 'i' } } }, 
+      ],
     });
 
     res.status(200).json({
@@ -330,3 +336,4 @@ exports.searchProducts = async (req, res) => {
     });
   }
 };
+

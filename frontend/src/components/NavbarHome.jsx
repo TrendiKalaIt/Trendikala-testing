@@ -42,7 +42,7 @@ export default function Navbar({ links }) {
         : 'text-gray-700 hover:text-green-700 border-transparent hover:border-green-400';
     } else {
       return isActive
-        ? 'text-black border-green-200'
+        ? 'text-white border-green-200'
         : 'text-green-100 hover:text-white border-transparent hover:border-green-200';
     }
   };
@@ -132,10 +132,33 @@ export default function Navbar({ links }) {
               </NavLink>
             )}
 
-            {/* <Search
-            className="w-6 h-6 cursor-pointer hover:text-green-500 transition"
-            onClick={() => setIsSearchInputOpen(!isSearchInputOpen)}
-          /> */}
+            <div className='relative inline-block'>
+              <Search
+                className={`w-6 h-6 cursor-pointer transition ${isScrolled ? 'text-green-700' : 'lg:text-white'}`}
+                onClick={() => setIsSearchInputOpen(!isSearchInputOpen)}
+              />
+              {isSearchInputOpen && (
+                <div className="absolute right-0  m-auto mt-9 lg:mt-4 z-50 w-56 lg:w-72">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && searchText.trim()) {
+                        navigate(`/search?query=${encodeURIComponent(searchText.trim())}`);
+                        setIsSearchInputOpen(false);
+                        setSearchText('');
+                      }
+                    }}
+                    autoFocus
+                    className="w-full text-green-500 p-2 border  rounded-md shadow focus:outline-none focus:ring-2 "
+                  />
+                </div>
+              )}
+
+            </div>
+
 
             {/* User/Login Button with Dropdown */}
             <div className="relative user-dropdown hidden md:block">
@@ -286,25 +309,6 @@ export default function Navbar({ links }) {
         </div>
       )}
 
-      {/* Search Input */}
-      {/* {isSearchInputOpen && (
-        <div className="px-4 mt-3 pb-2">
-          <input
-            type="text"
-            placeholder="Search products, stories..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && searchText.trim()) {
-                navigate(`/search?query=${encodeURIComponent(searchText.trim())}`);
-                setIsSearchInputOpen(false);
-              }
-            }}
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-200 shadow"
-          />
-
-        </div>
-      )} */}
     </nav>
   );
 }

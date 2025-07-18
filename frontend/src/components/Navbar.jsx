@@ -12,6 +12,7 @@ export default function Navbar({ links }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 400);
@@ -84,7 +85,32 @@ export default function Navbar({ links }) {
                 <Heart className="w-6 h-6 cursor-pointer hover:text-green-500 transition" />
               </NavLink>
             )}
-            {/* <Search className="w-6 h-6 hover:text-green-500 transition" onClick={() => setIsSearchInputOpen(!isSearchInputOpen)} /> */}
+            <div className='relative inline-block'>
+              <Search
+                className="w-6 h-6 cursor-pointer  transition"
+                onClick={() => setIsSearchInputOpen(!isSearchInputOpen)}
+              />
+              {isSearchInputOpen && (
+                <div className="absolute right-0  m-auto mt-9 lg:mt-4 z-50 w-56 lg:w-72">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && searchText.trim()) {
+                        navigate(`/search?query=${encodeURIComponent(searchText.trim())}`);
+                        setIsSearchInputOpen(false);
+                        setSearchText('');
+                      }
+                    }}
+                    autoFocus
+                    className="w-full text-green-500 p-2 border  rounded-md shadow focus:outline-none focus:ring-2 "
+                  />
+                </div>
+              )}
+
+            </div>
 
             {/* User Icon with Dropdown */}
             <div className="relative user-dropdown">
@@ -155,16 +181,6 @@ export default function Navbar({ links }) {
         </div>
       )}
 
-      {/* Search Input */}
-      {/* {isSearchInputOpen && (
-        <div className="px-4 mt-3 pb-2">
-          <input
-            type="text"
-            placeholder="Search products, stories..."
-            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-200 shadow"
-          />
-        </div>
-      )} */}
     </nav>
   );
 }

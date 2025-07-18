@@ -26,7 +26,7 @@ const SearchResults = () => {
         dispatch(showLoader());
         setError(null);
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/products/search?query=${encodeURIComponent(query)}`
+          `${import.meta.env.VITE_API_URL}/api/products/search?query=${encodeURIComponent(query)}`
         );
         setResults(res.data.data || []);
         dispatch(hideLoader());
