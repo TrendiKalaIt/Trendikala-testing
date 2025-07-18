@@ -40,7 +40,7 @@ const HeroSection = () => {
             transition={{ duration: 2.5 }}
             className="w-full md:w-1/2 flex flex-col h-full"
           >
-            <div className="relative h-full flex justify-center md:justify-end pe-20 ">
+            <div className="relative h-full flex justify-center md:justify-end  xl:pe-20 ">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -89,7 +89,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-2xl w-2/3 md:text-3xl font-semibold leading-tight mt-10 md:mt-20 text-[#a5e665c8]"
+                className="text-2xl w-2/3 md:text-2xl font-semibold leading-tight mt-10 md:mt-20 text-[#a5e665c8]"
               >
                 "{title.toUpperCase()}"
               </motion.h1>

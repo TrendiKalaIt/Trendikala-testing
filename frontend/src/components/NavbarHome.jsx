@@ -42,8 +42,8 @@ export default function Navbar({ links }) {
         : 'text-gray-700 hover:text-green-700 border-transparent hover:border-green-400';
     } else {
       return isActive
-        ? 'text-white border-green-200'
-        : 'text-green-100 hover:text-white border-transparent hover:border-green-200';
+        ? 'Lg:text-white text-green-500 border-green-200'
+        : 'lg:text-green-100 text-green-500 hover:text-white border-transparent hover:border-green-200';
     }
   };
 
