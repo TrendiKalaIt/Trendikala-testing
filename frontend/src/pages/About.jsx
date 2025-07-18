@@ -46,10 +46,10 @@ function AboutUs() { // Renamed to App as per instructions for the main componen
           <div className="md:w-1/2 text-center md:text-left">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair-display text-green-700">Our Journey</h2>
             <p className="text-lg mb-4 leading-relaxed">
-              Welcome to [Your E-commerce Brand], where every product tells a story. Founded in [Year] by [Founder's Name], our vision was to create more than just an online store; we aimed to build a community around quality, innovation, and exceptional service.
+              Welcome to <span className='font-bold'> ' TRENDI KALA ' </span>, where every product tells a story. Founded in  <span className="font-semibold"> 2025 </span> by Trendi kala, our vision was to create more than just an online store we aimed to build a community around quality, innovation, and exceptional service.
             </p>
             <p className="text-lg leading-relaxed">
-              From our humble beginnings, meticulously sourcing the finest materials and partnering with skilled artisans, we've grown into a trusted destination for [mention your product category, e.g., unique home decor, sustainable fashion, tech gadgets]. Our commitment remains unwavering: to bring you products that not only meet your needs but also enrich your life.
+              From our humble beginnings, meticulously sourcing the finest materials and partnering with skilled artisans, we've grown into a trusted destination for best products. Our commitment remains unwavering to bring you products that not only meet your needs but also enrich your life.
             </p>
           </div>
           {/* Story Image */}

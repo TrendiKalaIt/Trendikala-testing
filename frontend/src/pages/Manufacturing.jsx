@@ -36,7 +36,7 @@ function Manufacturing() { // Renamed to App as per instructions for the main co
             Where Quality Meets Craftsmanship
           </h1>
           <p className="text-lg md:text-xl font-light">
-            A transparent look into the meticulous process behind every TRENDI KALA we create.
+            A transparent look into the meticulous process behind every TRENDI KALA creation..
           </p>
         </div>
       </section>
@@ -47,7 +47,7 @@ function Manufacturing() { // Renamed to App as per instructions for the main co
           Our Philosophy: Built to Last
         </h2>
         <p className="text-lg leading-relaxed max-w-3xl mx-auto">
-          At [Your E-commerce Brand], we believe that true quality is woven into every fiber and forged in every process. Our manufacturing journey is driven by a commitment to excellence, sustainability, and the well-being of our artisans. We invite you to explore the steps that bring our products to life.
+          At <span className='font-bold'> ' TRENDI KALA ' </span>, we believe that true quality is woven into every fiber and forged in every process. Our manufacturing journey is driven by a commitment to excellence, sustainability, and the well-being of our artisans. We invite you to explore the steps that bring our products to life.
         </p>
       </section>
 
@@ -254,4 +254,4 @@ function Manufacturing() { // Renamed to App as per instructions for the main co
 }
 
 export default Manufacturing;
-
+  
