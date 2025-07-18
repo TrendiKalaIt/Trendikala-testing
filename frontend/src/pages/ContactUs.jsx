@@ -136,11 +136,11 @@ const ContactUs = () => {
                 <div>
                   <h3 className="text-lg font-medium text-gray-900">Our Location</h3>
                   <p className="text-gray-600">
-                    OFFICE NO. LG-004, A-82,BUILDING,
+                    Shop No. 225, Panchsheel Square Mall,   
                     <br />
-                    SECTOR 63 RD, NOIDA,
+                    Crossing Republik, Ghaziabad,
                     <br />
-                    UTTAR PRADESH 201301
+                    Uttar Pradesh – 201016
                   </p>
                 </div>
               </div>
@@ -149,8 +149,8 @@ const ContactUs = () => {
                 <Clock className="h-6 w-6 text-green-600" />
                 <div>
                   <h3 className="text-lg font-medium text-gray-900">Business Hours</h3>
-                  <p className="text-gray-600">Mon - Fri: 9:00 AM - 5:00 PM IST</p>
-                  <p className="text-gray-600">Sat - Sun: Closed</p>
+                  <p className="text-gray-600">9:00 AM - 9:00 PM</p>
+                  {/* <p className="text-gray-600">Sat - Sun: Closed</p> */}
                 </div>
               </div>
             </div>
@@ -158,13 +158,13 @@ const ContactUs = () => {
             <div className="mt-8 pt-6 border-t border-gray-200">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Connect With Us</h3>
               <div className="flex space-x-4">
-                <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-green-600">
+                <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                   <SiFacebook className="h-7 w-7" />
                 </a>
-                <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-green-600">
+                <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-red-400">
                   <SiInstagram className="h-7 w-7" />
                 </a>
-                <a href="https://twitter.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-green-600">
+                <a href="https://www.youtube.com/@trendikala" target="_blank" rel="noopener noreferrer" className=" text-red-600">
                   <SiYoutube className="h-7 w-7" />
                 </a>
               </div>

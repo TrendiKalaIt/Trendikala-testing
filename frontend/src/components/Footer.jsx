@@ -48,9 +48,9 @@ const Footer = () => {
           <h3 className="font-bold text-lg mb-2">SOCIALS</h3>
           <ul className="space-y-2 space-x-3 mb-2 flex justify-center text-2xl lg:justify-start ">
             <li></li>
-            <li ><a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-blue-700 transition duration-300 "><SiFacebook /></a></li>
-            <li ><a href="https://twitter.com" target="_blank" rel="noreferrer" className="hover:text-red-700 transition duration-300 "><SiInstagram /></a></li>
-            <li ><a href="https://youtube.com" target="_blank" rel="noreferrer" className="hover:text-red-700 transition duration-300 "><SiYoutube /></a></li>
+            <li ><a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-blue-600 transition duration-300 "><SiFacebook /></a></li>
+            <li ><a href="https://twitter.com" target="_blank" rel="noreferrer" className="text-red-400 transition duration-300 "><SiInstagram /></a></li>
+            <li ><a href="https://www.youtube.com/@trendikala" target="_blank" rel="noreferrer" className="text-red-600 transition duration-300 "><SiYoutube /></a></li>
           </ul>
 
           <div>
