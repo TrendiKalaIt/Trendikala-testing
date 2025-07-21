@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
   isVerified: { type: Boolean, default: false },
   addresses: [addressSchema], // store multiple addresses
   createdAt: { type: Date, default: Date.now },
+  //for reset password 
+  resetPasswordToken: String,
+  resetPasswordExpires: Date,
+
 });
 
 const User = mongoose.models.User || mongoose.model('User', UserSchema);

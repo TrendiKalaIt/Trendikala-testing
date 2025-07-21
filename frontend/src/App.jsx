@@ -21,6 +21,8 @@ import Manufacturing from './pages/Manufacturing'
 import ErrorPage from './pages/ErrorPage'
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import OTPVerification from './pages/OTPVerification';
 import SearchResults from './pages/SearchResults';
 import FAQPage from './pages/FAQPage';
@@ -62,8 +64,8 @@ function App() {
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/my-orders" element={<MyOrdersPage />} />
-              <Route path="/cancellation-return" element={<ComingSoon  title="Terms & Conditions"/>}  />
-              <Route path="/privacy-policy" element={<ComingSoon  title="Privacy Policy" />} />
+              <Route path="/cancellation-return" element={<ComingSoon title="Terms & Conditions" />} />
+              <Route path="/privacy-policy" element={<ComingSoon title="Privacy Policy" />} />
               <Route path="/terms-conditions" element={<ComingSoon title="Cancellation & Return" />} />
               {/* add more routes here */}
             </Route>
@@ -76,6 +78,8 @@ function App() {
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/verify-otp" element={<OTPVerification />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
             </Route>
 
             <Route path="/error" element={<ErrorPage />} />
