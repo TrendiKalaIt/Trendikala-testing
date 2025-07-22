@@ -45,7 +45,7 @@ const AddressSection = ({
     if (!window.confirm('Are you sure you want to delete this address?')) return;
 
     try {
-      setLoading(true); a
+      setLoading(true); 
       await axios.delete(`${import.meta.env.VITE_API_URL}/api/addresses/${addressId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
