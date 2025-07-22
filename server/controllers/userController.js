@@ -12,7 +12,7 @@ const generateOTP = () => {
 
 // REGISTER USER with OTP
 exports.registerUser = async (req, res) => {
-  const { name, email,mobile, password } = req.body;
+  const { name, email, mobile, password } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -161,16 +161,36 @@ exports.forgotPassword = async (req, res) => {
 
     const resetUrl = `${process.env.CLIENT_URL}/reset-password/${token}`;
 
-    const message = `
-      <h3>You requested a password reset</h3>
-      <p>Please click the link below to reset your password. The link is valid for 15 minutes.</p>
-      <a href="${resetUrl}">${resetUrl}</a>
-    `;
+    // --- HTML for Password Reset Email - Matching the image design ---
+    const emailHtml = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; background-color: #ffffff;">
+              
 
-    await sendEmail(user.email, 'Password Reset Request', message);
+                <div style="padding: 30px; text-align: center;">
+                    <h2 style="font-size: 20px; margin-top: 0; margin-bottom: 20px; color: #333;">Reset Your Password</h2>
+                    <p style="font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 25px;">
+                        If you've lost your password or wish to reset it, click the button below to get started. This link is valid for <strong>15 minutes</strong>.
+                    </p>
+                    <a href="${resetUrl}" style="display: inline-block; background-color: #5bbd72; color: #ffffff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 16px; font-weight: bold;">
+                        Reset Your Password
+                    </a>
+
+                    <p style="font-size: 13px; color: #777; margin-top: 30px; line-height: 1.5;">
+                        If you did not request a password reset, you can safely ignore this email. Only a person with access to your email can reset your account password.
+                    </p>
+                </div>
+
+                <div style="padding: 20px 30px; text-align: center; font-size: 12px; color: #999; background-color: #f8f8f8; border-top: 1px solid #eee;">
+                    &copy; ${new Date().getFullYear()} Trendikala.
+                </div>
+            </div>
+        `;
+
+    await sendEmail(user.email, 'Password Reset Request', emailHtml);
 
     res.status(200).json({ message: 'Reset password link sent to email' });
   } catch (error) {
+    console.error('Forgot password error:', error);
     res.status(500).json({ message: error.message });
   }
 };
