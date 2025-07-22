@@ -8,8 +8,6 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-const LOGO_URL = process.env.LOGO_URL || 'https://via.placeholder.com/150x50?text=Your+Logo';
-const ACCESS_PRODUCTS_LINK = process.env.ACCESS_PRODUCTS_LINK || 'https://yourdomain.com/my-products';
 
 exports.placeOrder = async (req, res) => {
     console.log('Backend received req.body:', req.body);
