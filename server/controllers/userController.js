@@ -20,7 +20,7 @@ exports.registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const otp = generateOTP();
-    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
 
     const newUser = new User({
       name,
@@ -34,7 +34,37 @@ exports.registerUser = async (req, res) => {
 
     await newUser.save();
 
-    // Send email with OTP
+    // --- HTML for OTP Verification Email - Matching the image design ---
+    const emailHtml = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; background-color: #ffffff;">
+                <div style="background-color: #5bbd72; padding: 15px 30px; text-align: start; color: #ffffff;">
+                    <h1 style="margin: 0; font-size: 28px; font-weight: bold;">Verify Your Email</h1>
+                    <p style="font-size: 16px; margin-top: 15px; line-height: 1.5;">Welcome to Trendikala, ${name.split(' ')[0]}!</p>
+                    <p style="font-size: 16px; margin-top: 5px; line-height: 1.5;">Please use the OTP below to verify your email address and complete your registration.</p>
+                </div>
+
+                <div style="padding: 30px; text-align: center;">
+                    <h2 style="font-size: 20px; margin-top: 0; margin-bottom: 20px; color: #333;">Your One-Time Password (OTP)</h2>
+                    <p style="font-size: 32px; font-weight: bold; color: #5bbd72; margin-bottom: 25px; letter-spacing: 5px;">
+                        ${otp}
+                    </p>
+                    <p style="font-size: 14px; color: #555; line-height: 1.6;">
+                        This OTP is valid for <strong>10 minutes</strong>. Please enter it on the verification page to activate your account.
+                    </p>
+                    
+                
+
+                    <p style="font-size: 13px; color: #777; margin-top: 30px; line-height: 1.5;">
+                        If you did not attempt to register, please ignore this email.
+                    </p>
+                </div>
+
+                <div style="padding: 20px 30px; text-align: center; font-size: 12px; color: #999; background-color: #f8f8f8; border-top: 1px solid #eee;">
+                    &copy; ${new Date().getFullYear()} Trendikala.
+                </div>
+            </div>
+        `;
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -45,13 +75,14 @@ exports.registerUser = async (req, res) => {
 
     await transporter.sendMail({
       to: email,
-      subject: 'Verify your Email',
-      html: `<h3>Your OTP is: <b>${otp}</b></h3><p>It is valid for 10 minutes.</p>`
+      subject: 'Verify Your Email for Trendikala',
+      html: emailHtml
     });
 
     res.status(201).json({ message: "OTP sent to email. Please verify your account." });
 
   } catch (error) {
+    console.error('Register user error:', error); // Added error logging
     res.status(500).json({ error: error.message });
   }
 };
