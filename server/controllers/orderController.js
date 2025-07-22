@@ -48,7 +48,7 @@ exports.placeOrder = async (req, res) => {
             await Cart.findOneAndDelete({ user: userId });
         }
 
-     
+
         const orderItemsTableHtml = orderItems.map(item => `
             <tr>
                 <td style="padding: 10px; border: 1px solid #ddd; text-align: left; font-size: 14px;">
@@ -193,7 +193,7 @@ exports.getMyOrders = async (req, res) => {
 };
 
 
-// guest order place (similar changes to placeOrder)
+// guest order place 
 exports.guestPlaceOrder = async (req, res) => {
     console.log('Backend received guest order req.body:', req.body);
     try {
@@ -232,95 +232,96 @@ exports.guestPlaceOrder = async (req, res) => {
 
         // --- COMMON Order Summary Table HTML (used by both emails) - REPLICATING IMAGE DESIGN ---
         const orderItemsTableHtml = items.map(item => `
-            <tr>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: left; font-size: 14px;">
-                    <strong>${item.productName}</strong><br />
-                    <span style="color: #666; font-size: 13px;">${item.domainName || ''}</span> </td>
-                <td style="padding: 10px; border-bottom: 1px solid #ddd; text-align: center; font-size: 14px;">${item.quantity} ${item.unit || 'Unit'}</td>
-            </tr>
-        `).join('');
+    <tr>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: left; font-size: 14px;">
+            <strong>${item.productName}</strong><br />
+            <span style="color: #666; font-size: 13px;">${item.domainName || ''}</span>
+        </td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: center; font-size: 14px;">${item.quantity} ${item.unit || 'Unit'}</td>
+        <td style="padding: 10px; border: 1px solid #ddd; text-align: right; font-size: 14px;">₹${item.discountPrice.toFixed(2)}</td>
+    </tr>
+`).join('');
 
         const orderSummaryTableStructure = `
-            <table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc; margin-top: 20px; font-family: Arial, sans-serif;">
-                <thead>
-                    <tr>
-                        <th style="padding: 10px; border: 1px solid #ddd; text-align: left; background-color: #f8f8f8; font-size: 14px; color: #555;">Product</th>
-                        <th style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #f8f8f8; font-size: 14px; color: #555;">Quantity</th>
-                        <th style="padding: 10px; border: 1px solid #ddd; text-align: right; background-color: #f8f8f8; font-size: 14px; color: #555;">Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${orderItemsTableHtml}
-                    <tr>
-                        <td colspan="3" style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border-top: 1px solid #ddd;">Subtotal:</td>
-                        <td style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border-top: 1px solid #ddd;">₹${(totalAmount - shippingCost).toFixed(2)}</td>
-                    </tr>
-                </tbody>
-            </table>
-        `;
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; font-family: Arial, sans-serif; border: 1px solid #ddd;">
+        <thead>
+            <tr>
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: left; background-color: #f8f8f8; font-size: 14px; color: #555;">Product</th>
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: center; background-color: #f8f8f8; font-size: 14px; color: #555;">Quantity</th>
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: right; background-color: #f8f8f8; font-size: 14px; color: #555;">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${orderItemsTableHtml}
+            <tr>
+                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">Subtotal:</td>
+                <td style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">₹${(totalAmount - shippingCost).toFixed(2)}</td>
+            </tr>
+        </tbody>
+    </table>
+`;
 
         const shippingDetailsHtml = `
-            <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
-                <p style="margin: 0;"><strong>${shippingInfo.fullName}</strong></p>
-                <p style="margin: 5px 0 0;">${shippingInfo.streetAddress}${shippingInfo.apartment ? ', ' + shippingInfo.apartment : ''}</p>
-                <p style="margin: 5px 0 0;">${shippingInfo.townCity}, ${shippingInfo.state || ''}, ${shippingInfo.zipCode || ''}</p>
-                <p style="margin: 5px 0 0;">Phone: ${shippingInfo.phoneNumber}</p>
-                <p style="margin: 5px 0 0;">Email: ${shippingInfo.emailAddress}</p>
-            </div>
-        `;
+    <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+        <p style="margin: 0;"><strong>${shippingInfo.fullName}</strong></p>
+        <p style="margin: 5px 0 0;">${shippingInfo.streetAddress}${shippingInfo.apartment ? ', ' + shippingInfo.apartment : ''}</p>
+        <p style="margin: 5px 0 0;">${shippingInfo.townCity}, ${shippingInfo.state || ''}, ${shippingInfo.zipCode || ''}</p>
+        <p style="margin: 5px 0 0;">Phone: ${shippingInfo.phoneNumber}</p>
+        <p style="margin: 5px 0 0;">Email: ${shippingInfo.emailAddress}</p>
+    </div>
+`;
 
         const customerEmailHtml = `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; background-color: #ffffff;">
-                <div style="background-color: #5bbd72; padding: 15px 30px; text-align: start; color: #ffffff;">
-                    <h1 style="margin: 0; font-size: 28px; font-weight: bold;">Thanks for your order, ${shippingInfo.fullName.split(' ')[0]}.</h1>
-                    <p style="font-size: 16px; margin-top: 15px; line-height: 1.5;">Here's your confirmation for order number <span style="font-weight: bold;">${newOrder.orderId}</span>. Review your receipt and get started using your products.</p>
-                   
-                </div>
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; background-color: #ffffff;">
+        <div style="background-color: #5bbd72; padding: 15px 30px; text-align: start; color: #ffffff;">
+            <h1 style="margin: 0; font-size: 28px; font-weight: bold;">Thanks for your order, ${shippingInfo.fullName.split(' ')[0]}.</h1>
+            <p style="font-size: 16px; margin-top: 15px; line-height: 1.5;">Here's your confirmation for order number <span style="font-weight: bold;">${newOrder.orderId}</span>. Review your receipt and get started using your products.</p>
+        </div>
 
-                <div style="padding: 30px;">
-                    <h2 style="font-size: 18px; margin-top: 0; margin-bottom: 20px; color: #333;">Order Number: <span style="font-weight: normal; color: #000;">${newOrder.orderId}</span></h2>
-                    ${orderSummaryTableStructure}
-                    
-                    <div style="text-align: right; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 15px; font-weight: bold;">
-                        Subtotal: ₹${(totalAmount - shippingCost).toFixed(2)}
-                    </div>
-                </div>
+        <div style="padding: 30px;">
+            <h2 style="font-size: 18px; margin-top: 0; margin-bottom: 20px; color: #333;">Order Number: <span style="font-weight: normal; color: #000;">${newOrder.orderId}</span></h2>
+            ${orderSummaryTableStructure}
 
-                <div style="padding: 20px 30px; text-align: center; font-size: 12px; color: #999;">
-                    &copy; ${new Date().getFullYear()} Trendikala.
-                </div>
+            <div style="text-align: right; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; font-size: 15px; font-weight: bold;">
+                Total: ₹${(totalAmount + shippingCost).toFixed(2)}
             </div>
-        `;
+        </div>
+
+        <div style="padding: 20px 30px; text-align: center; font-size: 12px; color: #999;">
+            &copy; ${new Date().getFullYear()} Trendikala.
+        </div>
+    </div>
+`;
 
         const adminEmailHtml = `
-            <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #f0f0f0; border-radius: 8px; overflow: hidden;">
-                <div style="background-color: #f5f5f5; padding: 20px; text-align: center; border-bottom: 1px solid #e0e0e0;">
-                    <h2 style="color: #333; margin: 0;">New Guest Order Notification - ${newOrder.orderId}</h2>
-                </div>
-                <div style="padding: 20px;">
-                    <p>Dear Admin,</p>
-                    <p>A new guest order has been placed on your store.</p>
-                    
-                    <h3>Order Details:</h3>
-                    <p><strong>Order ID:</strong> ${newOrder.orderId}</p>
-                    <p><strong>Order Date:</strong> ${new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-                    <p><strong>Payment Method:</strong> ${paymentMethod}</p>
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #f0f0f0;  overflow: hidden;">
+        <div style="background-color: #f5f5f5; padding: 20px; text-align: center; border-bottom: 1px solid #e0e0e0;">
+            <h2 style="color: #333; margin: 0;">New Guest Order Notification - ${newOrder.orderId}</h2>
+        </div>
+        <div style="padding: 20px;">
+            <p>Dear Admin,</p>
+            <p>A new guest order has been placed on your store.</p>
 
-                    ${orderSummaryTableStructure}
+            <h3>Order Details:</h3>
+            <p><strong>Order ID:</strong> ${newOrder.orderId}</p>
+            <p><strong>Order Date:</strong> ${new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+            <p><strong>Payment Method:</strong> ${paymentMethod}</p>
 
-                    <p style="font-weight: bold;">Total Paid: ₹${totalAmount.toFixed(2)}</p>
+            ${orderSummaryTableStructure}
 
-                    <h3>Customer & Shipping Information:</h3>
-                    ${shippingDetailsHtml}
+            <p style="font-weight: bold;">Total Paid: ₹${totalAmount.toFixed(2)}</p>
 
-                    <p style="margin-top: 20px;">Please log in to the admin panel to process this order.</p>
-                   
-                </div>
-                <div style="background-color: #f5f5f5; padding: 15px; text-align: center; font-size: 12px; color: #777; border-top: 1px solid #e0e0e0;">
-                    &copy; ${new Date().getFullYear()} Trendikala Admin.
-                </div>
-            </div>
-        `;
+            <h3>Customer & Shipping Information:</h3>
+            ${shippingDetailsHtml}
+
+            <p style="margin-top: 20px;">Please log in to the admin panel to process this order.</p>
+        </div>
+        <div style="background-color: #f5f5f5; padding: 15px; text-align: center; font-size: 12px; color: #777; border-top: 1px solid #e0e0e0;">
+            &copy; ${new Date().getFullYear()} Trendikala Admin.
+        </div>
+    </div>
+`;
+
 
         await sendEmail(
             shippingInfo.emailAddress,
