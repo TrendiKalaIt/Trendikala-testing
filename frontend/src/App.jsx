@@ -28,6 +28,7 @@ import SearchResults from './pages/SearchResults';
 import FAQPage from './pages/FAQPage';
 import ContactUs from './pages/ContactUs';
 import MyOrdersPage from './pages/MyOrdersPage';
+import Enquiry from './components/EnquiryForm';
 // import CancellationReturn from './pages/CancellationReturn';
 // import PrivacyPolicy from './pages/PrivacyPolicy';
 // import TermsConditions from './pages/TermsConditions';
@@ -67,6 +68,7 @@ function App() {
               <Route path="/cancellation-return" element={<ComingSoon title="Terms & Conditions" />} />
               <Route path="/privacy-policy" element={<ComingSoon title="Privacy Policy" />} />
               <Route path="/terms-conditions" element={<ComingSoon title="Cancellation & Return" />} />
+              <Route path="/enquiry" element={<Enquiry/>}/>
               {/* add more routes here */}
             </Route>
 
