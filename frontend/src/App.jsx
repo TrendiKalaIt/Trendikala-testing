@@ -40,7 +40,7 @@ import Enquiry from './components/EnquiryForm';
 import { Provider } from 'react-redux'; // Import Provider
 import store from './utility/store';
 import ComingSoon from './components/ComingSoon';
-
+import UserProfilePage from "./pages/UserProfilePage";
 
 
 function App() {
@@ -69,6 +69,7 @@ function App() {
               <Route path="/privacy-policy" element={<ComingSoon title="Privacy Policy" />} />
               <Route path="/terms-conditions" element={<ComingSoon title="Cancellation & Return" />} />
               <Route path="/enquiry" element={<Enquiry/>}/>
+              <Route path="/profile" element={<UserProfilePage />} />
               {/* add more routes here */}
             </Route>
 

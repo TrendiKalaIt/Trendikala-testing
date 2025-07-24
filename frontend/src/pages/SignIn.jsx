@@ -24,14 +24,16 @@ const SignIn = () => {
       });
 
       const userData = {
+        id: response.data.user.id,
         name: response.data.user.name,
         email: response.data.user.email,
+        profileImage: response.data.user.profileImage || null,
         token: response.data.token,
       };
 
       // Store user in localStorage & Redux
-      localStorage.setItem('user', JSON.stringify(userData));
-      localStorage.setItem('token', response.data.token);
+      sessionStorage.setItem('user', JSON.stringify(userData));
+      sessionStorage.setItem('token', response.data.token);
       dispatch(login(userData));
 
       toast.success('Login successful');
