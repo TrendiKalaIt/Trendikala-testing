@@ -5,7 +5,7 @@ const { cloudinary } = require('../config/cloudinary'); // No .js needed for Com
 const storage = new CloudinaryStorage({
   cloudinary,
   params: async (req, file) => ({
-    folder: 'trendiKala/profiles',
+    folder: 'trendiKala/products',
     resource_type: file.mimetype.startsWith('video') ? 'video' : 'image',
     public_id: `${Date.now()}-${file.originalname.split('.')[0]}`,
   }),

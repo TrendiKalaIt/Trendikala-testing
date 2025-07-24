@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Heart, ShoppingCart, Search, User, Menu, X } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import { ShoppingCart, Search, User, Menu, X } from 'lucide-react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../utility/auth/authSlice';
+
 
 export default function Navbar({ links }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,12 +12,10 @@ export default function Navbar({ links }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const user = useSelector((state) => state.auth.user);
- 
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState('');
+
 
   // Scroll effect
   useEffect(() => {
@@ -70,24 +70,6 @@ export default function Navbar({ links }) {
     setIsMenuOpen(false);
   };
 
-  const getProfileImageUrl = () => {
-    if (!user?.profileImage) return null;
-
-   
-    if (
-      user.profileImage.startsWith('http://') ||
-      user.profileImage.startsWith('https://')
-    ) {
-      return user.profileImage;
-    }
-
-   
-    return `${import.meta.env.VITE_API_URL}/${user.profileImage}`;
-  };
-
-
-  const profileImageUrl = getProfileImageUrl();
-
   return (
     <nav
       className={`px-4 lg:fixed top-0 left-0 right-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
@@ -117,7 +99,7 @@ export default function Navbar({ links }) {
           </div>
         </div>
 
-        <div className="lg:flex lg:space-x-10 md:space-y-3 lg:space-y-0">
+        <div className='lg:flex lg:space-x-10 md:space-y-3 lg:space-y-0'>
           {/* Desktop Links */}
           <ul className="hidden md:ps-20 md:flex space-x-10 lg:space-x-5 text-base font-medium">
             {links.map((link) => (
@@ -150,14 +132,13 @@ export default function Navbar({ links }) {
               </NavLink>
             )}
 
-            <div className="relative inline-block">
+            <div className='relative inline-block'>
               <Search
-                className={`w-6 h-6 cursor-pointer transition ${isScrolled ? 'text-green-700' : 'lg:text-white'
-                  }`}
+                className={`w-6 h-6 cursor-pointer transition ${isScrolled ? 'text-green-700' : 'lg:text-white'}`}
                 onClick={() => setIsSearchInputOpen(!isSearchInputOpen)}
               />
               {isSearchInputOpen && (
-                <div className="absolute right-0 m-auto mt-9 lg:mt-4 z-50 w-56 lg:w-72">
+                <div className="absolute right-0  m-auto mt-9 lg:mt-4 z-50 w-56 lg:w-72">
                   <input
                     type="text"
                     placeholder="Search products..."
@@ -165,19 +146,19 @@ export default function Navbar({ links }) {
                     onChange={(e) => setSearchText(e.target.value)}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && searchText.trim()) {
-                        navigate(
-                          `/search?query=${encodeURIComponent(searchText.trim())}`
-                        );
+                        navigate(`/search?query=${encodeURIComponent(searchText.trim())}`);
                         setIsSearchInputOpen(false);
                         setSearchText('');
                       }
                     }}
                     autoFocus
-                    className="w-full text-green-500 p-2 border rounded-md shadow focus:outline-none focus:ring-2 "
+                    className="w-full text-green-500 p-2 border  rounded-md shadow focus:outline-none focus:ring-2 "
                   />
                 </div>
               )}
+
             </div>
+
 
             {/* User/Login Button with Dropdown */}
             <div className="relative user-dropdown hidden md:block">
@@ -185,26 +166,9 @@ export default function Navbar({ links }) {
                 <button
                   onClick={handleAuth}
                   className="flex items-center hover:text-green-500 focus:outline-none"
-                  type="button"
-                  aria-haspopup="true"
-                  aria-expanded={showUserDropdown}
                 >
-                  <div className="w-8 h-8 rounded-full bg-[#35894E] text-white flex items-center justify-center text-sm font-semibold shadow-md overflow-hidden">
-                    {profileImageUrl ? (
-                      <img
-                        src={profileImageUrl || "https://res.cloudinary.com/dq70cmqwb/image/upload/v1751035700/samples/smile.jpg"}
-                        alt="Profile"
-                        className="h-8 w-8 rounded-full object-cover"
-                      />
-                    ) : (
-                      user.name
-                        ?.split(' ')
-                        .map((w) => w[0])
-                        .join('')
-                        .toUpperCase()
-                    )}
-                  </div>
-                  <span className="ml-2 text-sm">{user.name}</span>
+                  <User className="w-6 h-6 cursor-pointer transition" />
+                  <span className="ml-1 text-sm">{user.name}</span>
                   <svg
                     className="w-4 h-4 ml-1"
                     viewBox="0 0 20 20"
@@ -221,13 +185,13 @@ export default function Navbar({ links }) {
                 <button
                   onClick={handleAuth}
                   className="flex items-center hover:text-green-500"
-                  type="button"
                 >
                   <User className="w-6 h-6 cursor-pointer transition" />
                   <span className="ml-1 text-sm">Login</span>
                 </button>
               )}
-              {/* Dropdown menu */}
+
+              {/* Dropdown */}
               {user && showUserDropdown && (
                 <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
                   <button
@@ -236,24 +200,12 @@ export default function Navbar({ links }) {
                       setShowUserDropdown(false);
                     }}
                     className="block text-green-500 w-full px-4 py-2 text-left hover:bg-gray-100"
-                    type="button"
                   >
                     My Orders
                   </button>
                   <button
-                    onClick={() => {
-                      navigate('/profile');
-                      setShowUserDropdown(false);
-                    }}
-                    className="block text-green-500 w-full px-4 py-2 text-left hover:bg-gray-100"
-                    type="button"
-                  >
-                    Profile
-                  </button>
-                  <button
                     onClick={handleLogout}
                     className="block text-green-500 w-full px-4 py-2 text-left hover:bg-gray-100"
-                    type="button"
                   >
                     Logout
                   </button>
@@ -297,34 +249,18 @@ export default function Navbar({ links }) {
                 </NavLink>
               </li>
             ))}
-
             {/* User/Login for mobile */}
             <li>
               {user ? (
                 <div className="relative user-dropdown">
                   <button
                     onClick={() => setShowUserDropdown((prev) => !prev)}
-                    className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-green-700 cursor-pointer w-full"
+                    className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-green-700 cursor-pointer"
                   >
-                    {/* Profile Image or Initials */}
-                    <div className="w-8 h-8 rounded-full bg-[#35894E] text-white flex items-center justify-center text-sm font-semibold shadow-md overflow-hidden mr-2">
-                      {profileImageUrl ? (
-                        <img
-                          src={profileImageUrl}
-                          alt="Profile"
-                          className="h-8 w-8 rounded-full object-cover"
-                        />
-                      ) : (
-                        user.name
-                          ?.split(' ')
-                          .map((w) => w[0])
-                          .join('')
-                          .toUpperCase()
-                      )}
-                    </div>
-                    <span>{user.name}</span>
+                    <User className="w-6 h-6 mr-2" />
+                    {user.name}
                     <svg
-                      className="w-4 h-4 ml-auto"
+                      className="w-4 h-4 ml-1"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -336,7 +272,7 @@ export default function Navbar({ links }) {
                     </svg>
                   </button>
                   {showUserDropdown && (
-                    <div className="bg-white border rounded shadow-lg mt-1 absolute right-0 left-0 w-full z-50">
+                    <div className="bg-white border rounded shadow-lg mt-1 absolute right-0 w-full z-50">
                       <button
                         onClick={() => {
                           navigate('/my-orders');
@@ -348,21 +284,7 @@ export default function Navbar({ links }) {
                         My Orders
                       </button>
                       <button
-                        onClick={() => {
-                          navigate('/profile');
-                          setShowUserDropdown(false);
-                          setIsMenuOpen(false);
-                        }}
-                        className="block w-full px-4 py-2 text-left hover:bg-gray-100"
-                      >
-                        Profile
-                      </button>
-                      <button
-                        onClick={() => {
-                          handleLogout();
-                          setShowUserDropdown(false);
-                          setIsMenuOpen(false);
-                        }}
+                        onClick={handleLogout}
                         className="block w-full px-4 py-2 text-left hover:bg-gray-100"
                       >
                         Logout
@@ -383,10 +305,10 @@ export default function Navbar({ links }) {
                 </button>
               )}
             </li>
-
           </ul>
         </div>
       )}
+
     </nav>
   );
 }

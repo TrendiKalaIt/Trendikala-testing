@@ -42,23 +42,6 @@ export default function Navbar({ links }) {
     setIsMenuOpen(false);
   };
 
-
-  // Add this function inside Navbar component, before return
-  const getProfileImageUrl = () => {
-    if (!user?.profileImage) return null;
-
-    if (
-      user.profileImage.startsWith('http://') ||
-      user.profileImage.startsWith('https://')
-    ) {
-      return user.profileImage;
-    }
-    return `${import.meta.env.VITE_API_URL}/${user.profileImage}`;
-  };
-
-  const profileImageUrl = getProfileImageUrl();
-
-
   return (
     <nav className="px-4 top-0 left-0 right-0 z-10 bg-white shadow-md">
       <div className="max-w-7xl mx-auto flex justify-between items-center py-0">
@@ -131,33 +114,9 @@ export default function Navbar({ links }) {
 
             {/* User Icon with Dropdown */}
             <div className="relative user-dropdown">
-              <button
-                onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center gap-2 hover:text-green-500 focus:outline-none"
-              >
-                {/* Profile image or initials */}
-                {profileImageUrl ? (
-                  <img
-                    src={profileImageUrl}
-                    alt="Profile"
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                ) : (
-                  <div className="w-8 h-8 rounded-full bg-green-700 text-white flex items-center justify-center font-semibold text-sm">
-                    {user
-                      ? user.name
-                        .split(' ')
-                        .map((w) => w[0])
-                        .join('')
-                        .toUpperCase()
-                      : <User className="w-6 h-6" />}
-                  </div>
-                )}
-                {user ? (
-                  <span className="text-sm hidden md:inline">{user.name}</span>
-                ) : (
-                  <span className="text-sm hidden md:inline">Login</span>
-                )}
+              <button onClick={() => setShowDropdown(!showDropdown)} className="flex items-center gap-1 hover:text-green-500">
+                <User className="w-6 h-6" />
+                {user ? <span className="text-sm hidden md:inline">{user.name}</span> : <span className="text-sm hidden md:inline">Login</span>}
                 <svg className="w-4 h-4 hidden md:inline" viewBox="0 0 20 20" fill="currentColor">
                   <path
                     fillRule="evenodd"
@@ -167,33 +126,13 @@ export default function Navbar({ links }) {
                 </svg>
               </button>
 
+              {/*  Reusable Dropdown (visible on both mobile & desktop) */}
               {showDropdown && (
                 <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow z-50">
                   {user ? (
                     <>
-                      <button
-                        onClick={() => {
-                          navigate('/my-orders');
-                          setShowDropdown(false);
-                          setIsMenuOpen(false);
-                        }}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                      >
-                        My Orders
-                      </button>
-                      <button
-                        onClick={() => {
-                          navigate('/profile');
-                          setShowDropdown(false);
-                          setIsMenuOpen(false);
-                        }}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                      >
-                        Profile
-                      </button>
-                      <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">
-                        Logout
-                      </button>
+                      <button onClick={handleMyOrdersClick} className="w-full text-left px-4 py-2 hover:bg-gray-100">My Orders</button>
+                      <button onClick={handleLogout} className="w-full text-left px-4 py-2 hover:bg-gray-100">Logout</button>
                     </>
                   ) : (
                     <button
@@ -210,7 +149,6 @@ export default function Navbar({ links }) {
                 </div>
               )}
             </div>
-
 
             {/* Mobile Menu Button */}
             <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>

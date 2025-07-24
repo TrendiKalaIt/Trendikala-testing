@@ -137,7 +137,6 @@ exports.loginUser = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        profileImage: user.profileImage || null,
       },
     });
 
@@ -145,6 +144,38 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+
+// // controllers/userController.js
+// exports.getUserProfile = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.user.id).select('-password -otp -otpExpires');
+//     if (!user) return res.status(404).json({ message: 'User not found' });
+
+//     res.status(200).json(user);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+// exports.updateUserProfile = async (req, res) => {
+//   try {
+//     const { name, mobile } = req.body;
+//     const user = await User.findById(req.user.id);
+
+//     if (!user) return res.status(404).json({ message: 'User not found' });
+
+//     user.name = name || user.name;
+//     user.mobile = mobile || user.mobile;
+
+//     await user.save();
+
+//     res.status(200).json({ message: 'Profile updated successfully', user });
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
 
 //forgot password 
 exports.forgotPassword = async (req, res) => {
@@ -231,73 +262,3 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-// GET USER PROFILE
-exports.getUserProfile = async (req, res) => {
-  try {
-    if (!req.user) {
-      return res.status(401).json({ message: 'Not authorized' });
-    }
-
-    const user = await User.findById(req.user._id).select('-password');
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.status(200).json(user);
-  } catch (error) {
-    console.error('getUserProfile error:', error.message);
-    res.status(500).json({ message: 'Server error' });
-  }
-};
-
-
-// UPDATE USER PROFILE
-exports.updateUserProfile = async (req, res) => {
-  try {
-    const user = await User.findById(req.user._id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    const { name, mobile, addresses } = req.body;
-
-    if (name) user.name = name;
-    if (mobile) user.mobile = mobile;
-
-    // Addresses come as string if sent via form-data, so parse if needed
-    if (addresses) {
-      if (typeof addresses === 'string') {
-        user.addresses = JSON.parse(addresses);
-      } else {
-        user.addresses = addresses;
-      }
-    }
-
-    // multer saves file info in req.file
-    if (req.file && req.file.path) {
-      user.profileImage = req.file.path; 
-    }
-
-    await user.save();
-
-    res.status(200).json({
-      message: "Profile updated successfully",
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        mobile: user.mobile,
-        profileImage: user.profileImage,
-        addresses: user.addresses,
-      },
-    });
-  } catch (error) {
-    console.error("Update Error:", error);
-    res.status(500).json({ message: error.message });
-  }
-};
-
-
-
-
-

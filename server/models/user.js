@@ -23,8 +23,7 @@ const UserSchema = new mongoose.Schema({
   otp: String,
   otpExpires: Date,
   isVerified: { type: Boolean, default: false },
-  profileImage: { type: String, default: "" },
-  addresses: [addressSchema],
+  addresses: [addressSchema], // store multiple addresses
   createdAt: { type: Date, default: Date.now },
   //for reset password 
   resetPasswordToken: String,
