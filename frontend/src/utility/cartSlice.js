@@ -160,3 +160,6 @@ const cartSlice = createSlice({
 
 export const { clearLocalCart } = cartSlice.actions;
 export default cartSlice.reducer;
+
+export const selectCartCount = (state) =>
+  state.cart.items.reduce((total, item) => total + item.quantity, 0);

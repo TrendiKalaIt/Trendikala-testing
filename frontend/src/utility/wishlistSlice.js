@@ -127,3 +127,5 @@ const wishlistSlice = createSlice({
 });
 
 export default wishlistSlice.reducer;
+
+export const selectWishlistCount = (state) => state.wishlist.items.length;

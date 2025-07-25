@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
+import { selectWishlistCount, fetchWishlist } from '../utility/wishlistSlice';
 import { Heart, ShoppingCart, Search, User, Menu, X } from 'lucide-react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../utility/auth/authSlice';
+import { selectCartCount } from '../utility/cartSlice';
 
 export default function Navbar({ links }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,6 +15,14 @@ export default function Navbar({ links }) {
   const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const [searchText, setSearchText] = useState('');
+  const cartCount = useSelector(selectCartCount);
+  const wishlistCount = useSelector(selectWishlistCount);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchWishlist());
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 400);
@@ -98,11 +108,25 @@ export default function Navbar({ links }) {
 
           {/* Icons */}
           <div className="flex items-center md:justify-end space-x-4 text-green-700 py-1">
-            {user && (<NavLink to="/cart"><ShoppingCart className="w-6 h-6 hover:text-green-500 transition" /></NavLink>
-            )}
             {user && (
-              <NavLink to="/wishlist">
+              <NavLink to="/cart" className="relative">
+                <ShoppingCart className="w-6 h-6 hover:text-green-500 transition" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </NavLink>
+            )}
+
+            {user && (
+              <NavLink to="/wishlist" className="relative">
                 <Heart className="w-6 h-6 cursor-pointer hover:text-green-500 transition" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
               </NavLink>
             )}
             <div className='relative inline-block'>
