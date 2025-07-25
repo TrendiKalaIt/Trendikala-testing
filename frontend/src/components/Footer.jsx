@@ -8,8 +8,8 @@ import { FaCcVisa, FaCcApplePay } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#bedaa4] text-gray-800 py-10 px-4 shadow-lg">
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-start ">
+    <footer className="bg-[#bedaa4] text-gray-800 py-10 px-6 md:px-20 shadow-lg">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3  lg:grid-cols-4 sm:grid-cols-2 gap-8 text-start ">
 
         {/* Customer Care */}
         <div>
