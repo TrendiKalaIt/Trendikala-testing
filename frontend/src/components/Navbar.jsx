@@ -74,9 +74,9 @@ export default function Navbar({ links }) {
           </div>
         </div>
 
-        <div className='flex space-x-6'>
+        <div className='lg:flex space-x-6 '>
           {/* Desktop Links */}
-          <ul className="hidden md:ps-20 md:flex space-x-7 lg:space-x-12 text-base font-medium">
+          <ul className="hidden md:ps-20 md:flex space-x-7 lg:space-x-12 text-base font-medium py-1">
             {links.map((link) => (
               <li key={link.name}>
                 <NavLink
@@ -94,7 +94,7 @@ export default function Navbar({ links }) {
           </ul>
 
           {/* Icons */}
-          <div className="flex items-center space-x-4 text-green-700">
+          <div className="flex items-center md:justify-end space-x-4 text-green-700 py-1">
             {user && (<NavLink to="/cart"><ShoppingCart className="w-6 h-6 hover:text-green-500 transition" /></NavLink>
             )}
             {user && (

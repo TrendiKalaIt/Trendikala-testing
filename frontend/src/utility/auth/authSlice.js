@@ -20,9 +20,11 @@ const authSlice = createSlice({
       sessionStorage.removeItem("token");
     },
     updateUser(state, action) {
-      state.user = { ...state.user, ...action.payload };
-      sessionStorage.setItem("user", JSON.stringify(state.user));
-    },
+      const updatedUser = { ...state.user, ...action.payload };
+      sessionStorage.setItem("user", JSON.stringify(updatedUser));
+      state.user = updatedUser;
+    }
+    ,
   },
 });
 

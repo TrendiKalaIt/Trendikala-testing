@@ -10,7 +10,7 @@ export default function Navbar({ links }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showUserDropdown, setShowUserDropdown] = useState(false);
   const user = useSelector((state) => state.auth.user);
- 
+
 
 
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ export default function Navbar({ links }) {
   const getProfileImageUrl = () => {
     if (!user?.profileImage) return null;
 
-   
+
     if (
       user.profileImage.startsWith('http://') ||
       user.profileImage.startsWith('https://')
@@ -81,7 +81,7 @@ export default function Navbar({ links }) {
       return user.profileImage;
     }
 
-   
+
     return `${import.meta.env.VITE_API_URL}/${user.profileImage}`;
   };
 

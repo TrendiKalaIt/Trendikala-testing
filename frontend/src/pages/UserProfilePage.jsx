@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../utility/auth/authSlice';
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
@@ -11,11 +13,14 @@ const UserProfile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   // Store selected image file for upload
   const [selectedFile, setSelectedFile] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');;
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -87,18 +92,15 @@ const UserProfile = () => {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem('token');
+      setIsSaving(true);
+
+      const token = sessionStorage.getItem('token');
 
       const formData = new FormData();
-
-      // Append text fields
       formData.append('name', editedUser.name || '');
       formData.append('mobile', editedUser.mobile || '');
-
-      // Append addresses as JSON string
       formData.append('addresses', JSON.stringify(editedUser.addresses || []));
 
-      // Append file only if selected
       if (selectedFile) {
         formData.append('profileImage', selectedFile);
       }
@@ -119,11 +121,16 @@ const UserProfile = () => {
       setEditMode(false);
       setSelectedFile(null);
       setSelectedImage(res.data.user.profileImage || null);
+
+
+      dispatch(updateUser(res.data.user));
+
     } catch (err) {
       console.error('Save failed:', err);
+    } finally {
+      setIsSaving(false);
     }
   };
-
   if (!user || !editedUser) return <div className="p-5">Loading...</div>;
 
   return (
@@ -312,9 +319,11 @@ const UserProfile = () => {
           <>
             <button
               onClick={handleSave}
-              className="bg-[#35894E] text-white px-5 py-2 rounded text-sm hover:bg-[#2f7c46] transition"
+              disabled={isSaving}
+              className={`px-5 py-2 rounded text-sm text-white transition ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#35894E] hover:bg-[#2f7c46]'
+                }`}
             >
-              Save Changes
+              {isSaving ? 'Saving...' : 'Save Changes'}
             </button>
             <button
               onClick={() => {
@@ -335,7 +344,7 @@ const UserProfile = () => {
           </button>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 

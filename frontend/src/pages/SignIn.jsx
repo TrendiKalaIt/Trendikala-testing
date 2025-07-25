@@ -32,8 +32,9 @@ const SignIn = () => {
       };
 
       // Store user in localStorage & Redux
-      sessionStorage.setItem('user', JSON.stringify(userData));
-      sessionStorage.setItem('token', response.data.token);
+      // ✅ CORRECT
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', response.data.token);
       dispatch(login(userData));
 
       toast.success('Login successful');
