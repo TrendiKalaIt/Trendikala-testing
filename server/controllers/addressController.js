@@ -1,3 +1,4 @@
+const axios = require('axios');
 const User = require('../models/user');
 
 exports.saveAddress = async (req, res) => {
@@ -18,6 +19,26 @@ exports.saveAddress = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
+    // India Post API PIN code validation
+    const response = await axios.get(`https://api.postalpincode.in/pincode/${zipcode}`);
+    const data = response.data[0];
+
+    if (data.Status !== "Success") {
+      return res.status(400).json({ message: "Invalid PIN Code." });
+    }
+
+    const matched = data.PostOffice.some(
+      (po) =>
+        po.State.toLowerCase() === state.toLowerCase() &&
+        po.District.toLowerCase() === townCity.toLowerCase()
+    );
+
+    if (!matched) {
+      return res.status(400).json({
+        message: `PIN Code does not match the selected State or City. It belongs to ${data.PostOffice[0].State}, ${data.PostOffice[0].District}`
+      });
+    }
+
     const newAddress = {
       fullName,
       streetAddress,
@@ -29,7 +50,6 @@ exports.saveAddress = async (req, res) => {
       emailAddress,
     };
 
-    // Prevent duplicate save (optional)
     const alreadyExists = user.addresses.some(
       (addr) =>
         addr.streetAddress === newAddress.streetAddress &&

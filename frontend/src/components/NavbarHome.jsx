@@ -65,9 +65,13 @@ export default function Navbar({ links }) {
 
   // Logout
   const handleLogout = () => {
+    sessionStorage.removeItem('token');
     dispatch(logout());
-    setShowUserDropdown(false);
+    localStorage.removeItem('cart');
+    localStorage.removeItem('user');
+    setShowDropdown(false);
     setIsMenuOpen(false);
+    navigate('/');
   };
 
   const getProfileImageUrl = () => {

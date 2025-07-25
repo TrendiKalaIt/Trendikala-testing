@@ -30,7 +30,10 @@ export default function Navbar({ links }) {
   }, [showDropdown]);
 
   const handleLogout = () => {
+    sessionStorage.removeItem('token');
     dispatch(logout());
+    localStorage.removeItem('cart');
+    localStorage.removeItem('user');
     setShowDropdown(false);
     setIsMenuOpen(false);
     navigate('/');

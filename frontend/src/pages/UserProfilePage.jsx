@@ -1,26 +1,190 @@
 
+// import React, { useState, useEffect } from 'react';
+// import axios from 'axios';
+// import { useDispatch } from 'react-redux';
+// import { updateUser } from '../utility/auth/authSlice';
+
+// const UserProfile = () => {
+//   const [user, setUser] = useState(null);
+//   const [editedUser, setEditedUser] = useState(null);
+//   const [editMode, setEditMode] = useState(false);
+
+//   // Store selected image preview URL
+//   const [selectedImage, setSelectedImage] = useState(null);
+//   // Store selected image file for upload
+//   const [selectedFile, setSelectedFile] = useState(null);
+//   const [isSaving, setIsSaving] = useState(false);
+
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     const fetchUser = async () => {
+//       try {
+//         const token = sessionStorage.getItem('token');;
+//         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
+//           headers: { Authorization: `Bearer ${token}` },
+//         });
+//         setUser(res.data);
+//         setEditedUser(res.data);
+//         setSelectedImage(res.data.profileImage || null);
+//         setSelectedFile(null);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
+
+//     fetchUser();
+//   }, []);
+
+//   // When editedUser changes (e.g. cancel edit), reset image preview & file
+//   useEffect(() => {
+//     if (editedUser) {
+//       setSelectedImage(editedUser.profileImage || null);
+//       setSelectedFile(null);
+//     }
+//   }, [editedUser]);
+
+//   const handleChange = (e) => {
+//     setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
+//   };
+
+//   const handleAddressChange = async (index, field, value) => {
+//     const updatedAddresses = [...(editedUser.addresses || [])];
+//     updatedAddresses[index] = { ...updatedAddresses[index], [field]: value };
+
+//     // Auto-fill city/state on valid 6-digit PIN
+//     if (field === 'zipcode' && /^\d{6}$/.test(value)) {
+//       const { city, state } = await fetchCityStateByPincode(value);
+//       if (city && state) {
+//         updatedAddresses[index].townCity = city;
+//         updatedAddresses[index].state = state;
+//       }
+//     }
+
+//     setEditedUser({ ...editedUser, addresses: updatedAddresses });
+//   };
+
+
+//   const addNewAddress = () => {
+//     setEditedUser({
+//       ...editedUser,
+//       addresses: [
+//         ...(editedUser.addresses || []),
+//         {
+//           fullName: '',
+//           streetAddress: '',
+//           apartment: '',
+//           townCity: '',
+//           state: '',
+//           zipcode: '',
+//           phoneNumber: '',
+//           emailAddress: '',
+//         },
+//       ],
+//     });
+//   };
+
+//   const removeAddress = (index) => {
+//     const updated = [...(editedUser.addresses || [])];
+//     updated.splice(index, 1);
+//     setEditedUser({ ...editedUser, addresses: updated });
+//   };
+
+//   // Handle selecting a new image file
+//   const handleImageChange = (e) => {
+//     const file = e.target.files[0];
+//     if (file) {
+//       // Preview URL
+//       const previewUrl = URL.createObjectURL(file);
+//       setSelectedImage(previewUrl);
+//       setSelectedFile(file);
+//     }
+//   };
+
+//   const handleSave = async () => {
+//     try {
+//       setIsSaving(true);
+
+//       const token = sessionStorage.getItem('token');
+
+//       const formData = new FormData();
+//       formData.append('name', editedUser.name || '');
+//       formData.append('mobile', editedUser.mobile || '');
+//       formData.append('addresses', JSON.stringify(editedUser.addresses || []));
+
+//       if (selectedFile) {
+//         formData.append('profileImage', selectedFile);
+//       }
+
+//       const res = await axios.put(
+//         `${import.meta.env.VITE_API_URL}/api/auth/profile`,
+//         formData,
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//             'Content-Type': 'multipart/form-data',
+//           },
+//         }
+//       );
+
+//       setUser(res.data.user);
+//       setEditedUser(res.data.user);
+//       setEditMode(false);
+//       setSelectedFile(null);
+//       setSelectedImage(res.data.user.profileImage || null);
+
+
+//       dispatch(updateUser(res.data.user));
+
+//     } catch (err) {
+//       console.error('Save failed:', err);
+//     } finally {
+//       setIsSaving(false);
+//     }
+//   };
+//   if (!user || !editedUser) return <div className="p-5">Loading...</div>;
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../utility/auth/authSlice';
+import { toast } from 'react-hot-toast';
+
+const fetchCityStateByPincode = async (pincode) => {
+  try {
+    const response = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+    const data = response.data[0];
+
+    if (data.Status === 'Success') {
+      const postOffice = data.PostOffice[0];
+      return {
+        city: postOffice.District,
+        state: postOffice.State,
+      };
+    } else {
+      toast.error('Invalid PIN Code.');
+      return { city: '', state: '' };
+    }
+  } catch (err) {
+    console.error('PIN code fetch failed:', err);
+    toast.error('Failed to fetch city/state');
+    return { city: '', state: '' };
+  }
+};
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [editedUser, setEditedUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
-
-  // Store selected image preview URL
   const [selectedImage, setSelectedImage] = useState(null);
-  // Store selected image file for upload
   const [selectedFile, setSelectedFile] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = sessionStorage.getItem('token');;
+        const token = sessionStorage.getItem('token');
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -32,11 +196,9 @@ const UserProfile = () => {
         console.error(err);
       }
     };
-
     fetchUser();
   }, []);
 
-  // When editedUser changes (e.g. cancel edit), reset image preview & file
   useEffect(() => {
     if (editedUser) {
       setSelectedImage(editedUser.profileImage || null);
@@ -48,9 +210,26 @@ const UserProfile = () => {
     setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
   };
 
-  const handleAddressChange = (index, field, value) => {
+  const handleAddressChange = async (index, field, value) => {
     const updatedAddresses = [...(editedUser.addresses || [])];
+
+    if (field === 'phoneNumber') {
+      let cleaned = value.replace(/\D/g, '');
+      if (!/^[6-9]\d{9}$/.test(cleaned)) {
+      }
+      value = cleaned;
+    }
+
     updatedAddresses[index] = { ...updatedAddresses[index], [field]: value };
+
+    if (field === 'zipcode' && /^\d{6}$/.test(value)) {
+      const { city, state } = await fetchCityStateByPincode(value);
+      if (city && state) {
+        updatedAddresses[index].townCity = city;
+        updatedAddresses[index].state = state;
+      }
+    }
+
     setEditedUser({ ...editedUser, addresses: updatedAddresses });
   };
 
@@ -79,11 +258,9 @@ const UserProfile = () => {
     setEditedUser({ ...editedUser, addresses: updated });
   };
 
-  // Handle selecting a new image file
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Preview URL
       const previewUrl = URL.createObjectURL(file);
       setSelectedImage(previewUrl);
       setSelectedFile(file);
@@ -94,8 +271,60 @@ const UserProfile = () => {
     try {
       setIsSaving(true);
 
-      const token = sessionStorage.getItem('token');
+      const requiredFields = [
+        'fullName',
+        'streetAddress',
+        'townCity',
+        'state',
+        'zipcode',
+        'phoneNumber',
+        'emailAddress',
+      ];
 
+      const fieldLabels = {
+        fullName: 'Full Name',
+        streetAddress: 'Street Address',
+        townCity: 'City/Town',
+        state: 'State',
+        zipcode: 'PIN Code',
+        phoneNumber: 'Phone Number',
+        emailAddress: 'Email Address',
+      };
+
+      for (let i = 0; i < (editedUser.addresses || []).length; i++) {
+        const address = editedUser.addresses[i];
+
+        for (let field of requiredFields) {
+          const value = address[field];
+
+          const isEmpty = value === undefined || value === null || (typeof value === 'string' && value.trim() === '');
+          if (isEmpty) {
+            toast.error(`Address ${i + 1}: ${fieldLabels[field]} is required`);
+            setIsSaving(false);
+            return;
+          }
+
+          if (field === 'zipcode' && !/^\d{6}$/.test(value)) {
+            toast.error(`Address ${i + 1}: PIN Code must be 6 digits`);
+            setIsSaving(false);
+            return;
+          }
+
+          if (field === 'phoneNumber' && !/^(\+91)?[6-9]\d{9}$/.test(value)) {
+            toast.error(`Address ${i + 1}: Enter a valid 10-digit Indian phone number`);
+            setIsSaving(false);
+            return;
+          }
+
+          if (field === 'emailAddress' && !/^\S+@\S+\.\S+$/.test(value)) {
+            toast.error(`Address ${i + 1}: Enter a valid email address`);
+            setIsSaving(false);
+            return;
+          }
+        }
+      }
+
+      const token = sessionStorage.getItem('token');
       const formData = new FormData();
       formData.append('name', editedUser.name || '');
       formData.append('mobile', editedUser.mobile || '');
@@ -121,18 +350,20 @@ const UserProfile = () => {
       setEditMode(false);
       setSelectedFile(null);
       setSelectedImage(res.data.user.profileImage || null);
-
-
       dispatch(updateUser(res.data.user));
-
+      toast.success('Profile updated successfully');
     } catch (err) {
       console.error('Save failed:', err);
+      toast.error('Failed to update profile');
     } finally {
       setIsSaving(false);
     }
   };
-  if (!user || !editedUser) return <div className="p-5">Loading...</div>;
 
+
+
+
+  if (!user || !editedUser) return <div className="p-5">Loading...</div>;
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
       <h1 className="text-xl md:text-2xl font-bold text-[#35894E] mb-6 text-center">Your Profile</h1>
@@ -263,9 +494,9 @@ const UserProfile = () => {
                       'fullName',
                       'streetAddress',
                       'apartment',
+                      'zipcode',
                       'townCity',
                       'state',
-                      'zipcode',
                       'phoneNumber',
                       'emailAddress',
                     ].map((field) => (

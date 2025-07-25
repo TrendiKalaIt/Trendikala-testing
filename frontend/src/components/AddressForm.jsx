@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
@@ -6,9 +5,9 @@ const AddressForm = ({
   token,
   setShowForm,
   setSavedAddresses,
-  guestMode = false,          // naya prop, default false
-  address = null,             // guest ke liye initial address (optional)
-  onAddressChange = () => { }, // guest ke liye address change notify karne ke liye
+  guestMode = false,
+  address = null,
+  onAddressChange = () => { },
 }) => {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -33,62 +32,73 @@ const AddressForm = ({
     const errors = {};
     if (!formData.fullName.trim())
       errors.fullName = 'Full Name is required';
-
     if (!formData.streetAddress.trim())
       errors.streetAddress = 'House No. / Building Name is required';
-
     if (!formData.apartment.trim())
       errors.apartment = 'Road Name / Area / Colony is required';
-
     if (!formData.townCity.trim())
-      errors.townCity = 'Nearby Landmark is required';
-
+      errors.townCity = 'City / District is required';
     if (!formData.state.trim())
       errors.state = 'State is required';
-    
     if (!formData.zipcode.trim())
       errors.zipcode = 'ZIP / PIN Code is required';
-
     else if (!/^\d{6}$/.test(formData.zipcode))
       errors.zipcode = 'Enter a valid 6-digit PIN Code';
-
     if (!/^[6-9]\d{9}$/.test(formData.phoneNumber))
       errors.phoneNumber = 'Enter a valid 10-digit Indian phone number';
-
     if (!/\S+@\S+\.\S+/.test(formData.emailAddress))
       errors.emailAddress = 'Enter a valid email address';
 
     return errors;
   };
 
-  // Guest mode: har input change pe parent ko notify karo
-  const handleInputChange = (field, value) => {
+  const fetchAddressByPincode = async (pincode) => {
+    try {
+      const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+      const data = await response.json();
+      if (data[0].Status === 'Success') {
+        const postOffice = data[0].PostOffice[0];
+        return {
+          state: postOffice.State,
+          district: postOffice.District,
+        };
+      } else {
+        return null;
+      }
+    } catch (err) {
+      console.error('Error fetching pincode data:', err);
+      return null;
+    }
+  };
+
+  const handleInputChange = async (field, value) => {
     const newFormData = { ...formData, [field]: value };
     setFormData(newFormData);
+
     if (guestMode) {
       onAddressChange(newFormData);
+    }
+
+    // PIN code auto-fill logic
+    if (field === 'zipcode' && value.length === 6) {
+      const result = await fetchAddressByPincode(value);
+      if (result) {
+        setFormData((prev) => ({
+          ...prev,
+          state: result.state,
+          townCity: result.district,
+          zipcode: value,
+        }));
+        toast.success('PIN code verified: State & City auto-filled');
+      } else {
+        toast.error('Invalid PIN code');
+      }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (guestMode) {
-      // Guest mode me save nahi karenge, sirf validation karenge aur parent ko notify karenge
-      const errors = validateForm();
-      setFormErrors(errors);
-
-      if (Object.keys(errors).length > 0) {
-        Object.values(errors).forEach((err) => toast.error(err));
-        return;
-      }
-
-      toast.success('Address filled!');
-      // Agar aap chahte ho toh yahan kuch aur kar sakte hain, lekin save nahi hoga
-      return;
-    }
-
-    // Logged in user logic: save address API call
     const errors = validateForm();
     setFormErrors(errors);
 
@@ -97,13 +107,20 @@ const AddressForm = ({
       return;
     }
 
+    if (guestMode) {
+      toast.success('Guest address validated');
+      return;
+    }
+
     try {
       const axios = await import('axios');
-       const response = await axios.default.post(
-    `${import.meta.env.VITE_API_URL}/api/addresses/save`,
-    formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.default.post(
+        `${import.meta.env.VITE_API_URL}/api/addresses/save`,
+        formData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       toast.success('Address saved!');
       setShowForm(false);
@@ -118,13 +135,13 @@ const AddressForm = ({
         emailAddress: '',
       });
 
-      // Refresh address list
       const res = await axios.default.get('/api/addresses/my', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setSavedAddresses(res.data.addresses || []);
-    } catch {
-      toast.error('Failed to save address.');
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Failed to save address.';
+      toast.error(errorMessage);
     }
   };
 
@@ -132,11 +149,11 @@ const AddressForm = ({
     <form className="space-y-4 mt-4" onSubmit={handleSubmit}>
       {[
         ['fullName', 'Full Name*'],
-        ['streetAddress', 'House No., Building Name*'],
-        ['apartment', 'Road Name, Area, Colony*'],
-        ['townCity', 'Nearby Landmark (Shop/Mall/etc.)*'],
-        ['state', 'State*'],
+        ['apartment', 'House No., Building Name,Road Name, Area, Colony*'],
+        ['streetAddress', 'Nearby Landmark (Shop/Mall/etc.)*'],
         ['zipcode', 'ZIP / PIN Code*'],
+        ['townCity', 'City*'],
+        ['state', 'State*'],
         ['phoneNumber', 'Phone Number*'],
         ['emailAddress', 'Email Address*'],
       ].map(([id, label]) => (
