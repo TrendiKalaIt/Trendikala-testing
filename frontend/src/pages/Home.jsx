@@ -6,6 +6,7 @@ import NewArrivals from '../components/NewArrivals';
 import Outfit from '../components/Outfit';
 import ProductCard from '../components/ProductCard';
 import PosterComponent from '../components/PosterComponent';
+import Categories from '../components/CategoriesComponent';
 
 import { useDispatch } from 'react-redux';
 import { showLoader, hideLoader } from '../utility/loaderSlice';
@@ -50,6 +51,7 @@ const Home = () => {
       <NewArrivals />
       <Outfit />
       <PosterComponent />
+      <Categories />
 
       <div className="px-10 py-2">
         <h2 className="text-2xl font-bold text-[#93A87E] mb-6">Featured Products</h2>

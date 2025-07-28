@@ -15,7 +15,7 @@ const reviewSchema = new mongoose.Schema({
 
 const productSchema = new mongoose.Schema({
   productName: { type: String, required: true },
-  category: String,
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
   brand: String,
   media: [mediaSchema],
   thumbnail: String,

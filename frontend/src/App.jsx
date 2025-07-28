@@ -33,6 +33,7 @@ import Enquiry from './components/EnquiryForm';
 // import TermsConditions from './pages/TermsConditions';
 import ComingSoon from './components/ComingSoon';
 import UserProfilePage from "./pages/UserProfilePage";
+import CategoryProducts from './pages/CategoryProducts';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -61,6 +62,7 @@ function App() {
               <Route path="/enquiry" element={<Enquiry />} />
               <Route path="/checkout" element={<CheckoutDetails />} />
               <Route path="/thankyou" element={<Thankyou />} />
+              <Route path="/category/:categoryId" element={<CategoryProducts />} />
 
               {/* Protected Routes */}
               <Route element={<ProtectedRoute />}>

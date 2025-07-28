@@ -81,28 +81,29 @@ exports.createProduct = async (req, res) => {
 // Get all products with optional filtering
 exports.getAllProducts = async (req, res) => {
     try {
-        // Building the query based on request parameters
         const query = {};
 
-        // Filter by category if provided
+        // Filter by category if provided (category id expected)
         if (req.query.category) {
             query.category = req.query.category;
         }
 
-        // Filter by brand if provided
+        // Filter by brand
         if (req.query.brand) {
             query.brand = req.query.brand;
         }
 
-        // Filter by price range if provided
+        // Filter by price range
         if (req.query.minPrice || req.query.maxPrice) {
             query.price = {};
             if (req.query.minPrice) query.price.$gte = Number(req.query.minPrice);
             if (req.query.maxPrice) query.price.$lte = Number(req.query.maxPrice);
         }
 
-        // Execute query
-        const products = await Product.find(query);
+        // Find products with category populated (only required fields)
+        const products = await Product.find(query)
+            .populate('category', 'name slug icon')  // Populate category name, slug, icon
+            .exec();
 
         res.status(200).json({
             success: true,
@@ -302,38 +303,38 @@ exports.addProductReview = async (req, res) => {
 
 // Search products by name, category, description, brand, and tags (partial, case-insensitive match)
 exports.searchProducts = async (req, res) => {
-  try {
-    const query = req.query.query?.trim();
+    try {
+        const query = req.query.query?.trim();
 
-    if (!query) {
-      return res.status(400).json({
-        success: false,
-        message: 'Search query is required',
-      });
+        if (!query) {
+            return res.status(400).json({
+                success: false,
+                message: 'Search query is required',
+            });
+        }
+
+        const products = await Product.find({
+            $or: [
+                { productName: { $regex: query, $options: 'i' } },
+                { category: { $regex: query, $options: 'i' } },
+                // { description: { $regex: query, $options: 'i' } },
+                // { brand: { $regex: query, $options: 'i' } },
+                // { tags: { $elemMatch: { $regex: query, $options: 'i' } } }, 
+            ],
+        });
+
+        res.status(200).json({
+            success: true,
+            count: products.length,
+            data: products,
+        });
+    } catch (error) {
+        console.error('Search Error:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to search products',
+            error: error.message,
+        });
     }
-
-    const products = await Product.find({
-      $or: [
-        { productName: { $regex: query, $options: 'i' } },
-        { category: { $regex: query, $options: 'i' } },
-        // { description: { $regex: query, $options: 'i' } },
-        // { brand: { $regex: query, $options: 'i' } },
-        // { tags: { $elemMatch: { $regex: query, $options: 'i' } } }, 
-      ],
-    });
-
-    res.status(200).json({
-      success: true,
-      count: products.length,
-      data: products,
-    });
-  } catch (error) {
-    console.error('Search Error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Failed to search products',
-      error: error.message,
-    });
-  }
 };
 
