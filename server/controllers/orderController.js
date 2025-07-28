@@ -83,10 +83,15 @@ exports.placeOrder = async (req, res) => {
     </thead>
     <tbody>
       ${orderItemsTableHtml}
-      <tr>
-        <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">Subtotal:</td>
-        <td style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">₹${(totalAmount - shippingCost).toFixed(2)}</td>
-      </tr>
+     <tr>
+  <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">Subtotal:</td>
+  <td style="padding: 10px; text-align: right; font-size: 14px; border: 1px solid #ddd;">₹${(totalAmount - shippingCost).toFixed(2)}</td>
+</tr>
+<tr>
+  <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">Shipping:</td>
+  <td style="padding: 10px; text-align: right; font-size: 14px; border: 1px solid #ddd;">₹${shippingCost.toFixed(2)}</td>
+</tr>
+
     </tbody>
   </table>
 `;
@@ -148,7 +153,7 @@ exports.placeOrder = async (req, res) => {
 
                     ${orderSummaryTableStructure}
 
-                    <p style="font-weight: bold;">Total Paid: ₹${totalAmount.toFixed(2)}</p>
+                    <p style="font-weight: bold;text-align: right;">Total Paid: ₹${totalAmount.toFixed(2)}</p>
 
                     <h3>Customer & Shipping Information:</h3>
                     ${shippingDetailsHtml}
@@ -269,10 +274,14 @@ exports.guestPlaceOrder = async (req, res) => {
         </thead>
         <tbody>
             ${orderItemsTableHtml}
-            <tr>
-                <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">Subtotal:</td>
-                <td style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">₹${(totalAmount - shippingCost).toFixed(2)}</td>
-            </tr>
+              <tr>
+  <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">Subtotal:</td>
+  <td style="padding: 10px; text-align: right; font-size: 14px; border: 1px solid #ddd;">₹${(totalAmount - shippingCost).toFixed(2)}</td>
+</tr>
+<tr>
+  <td colspan="2" style="padding: 10px; text-align: right; font-weight: bold; font-size: 14px; border: 1px solid #ddd;">Shipping:</td>
+  <td style="padding: 10px; text-align: right; font-size: 14px; border: 1px solid #ddd;">₹${shippingCost.toFixed(2)}</td>
+</tr>
         </tbody>
     </table>
 `;
@@ -325,7 +334,7 @@ exports.guestPlaceOrder = async (req, res) => {
 
             ${orderSummaryTableStructure}
 
-            <p style="font-weight: bold;">Total Paid: ₹${totalAmount.toFixed(2)}</p>
+            <p style="font-weight: bold; text-align: right;">Total Paid: ₹${totalAmount.toFixed(2)}</p>
 
             <h3>Customer & Shipping Information:</h3>
             ${shippingDetailsHtml}
