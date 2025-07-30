@@ -3,7 +3,7 @@ import { Heart, ShoppingCart, Search, User, Menu, X } from 'lucide-react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../utility/auth/authSlice';
-import { selectCartCount } from '../utility/cartSlice';
+import { selectCartCount,clearLocalCart  } from '../utility/cartSlice';
 import { selectWishlistCount,fetchWishlist } from '../utility/wishlistSlice';
 
 
@@ -82,7 +82,7 @@ export default function Navbar({ links }) {
     dispatch(logout());
     localStorage.removeItem('cart');
     localStorage.removeItem('user');
-    setShowDropdown(false);
+    setShowUserDropdown(false);
     setIsMenuOpen(false);
     navigate('/');
   };

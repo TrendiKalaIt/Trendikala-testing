@@ -1,4 +1,3 @@
-
 // redux/features/orderSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -11,21 +10,21 @@ export const placeOrder = createAsyncThunk(
   async ({ orderPayload, token }, { rejectWithValue }) => {
     try {
       const isLoggedIn = Boolean(token);
-      const url = isLoggedIn ?
-        `${BASE_URL}/api/orders/place`
+      const url = isLoggedIn
+        ? `${BASE_URL}/api/orders/place`
         : `${BASE_URL}/api/orders/guest-place-order`;
       const config = isLoggedIn
         ? {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
         : {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        };
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          };
 
       const res = await axios.post(url, orderPayload, config);
       return res.data.order;
@@ -77,6 +76,10 @@ const orderSlice = createSlice({
     toggleOrderHistory: (state, action) => {
       state.showOrderHistory = action.payload;
     },
+    // New reducer to manually set order details (for Razorpay flow)
+    setOrderDetails: (state, action) => {
+      state.currentOrder = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -115,6 +118,7 @@ export const {
   setBuyNowProduct,
   clearBuyNowProduct,
   toggleOrderHistory,
+  setOrderDetails, // export the new action here
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

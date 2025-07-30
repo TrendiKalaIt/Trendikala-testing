@@ -8,6 +8,7 @@ const {
   resetPassword,
   getUserProfile,
   updateUserProfile,
+  getTotalRegisteredUsers ,
 } = require('../controllers/userController');
 const protect = require('../middleware/authMiddleware');
 
@@ -26,5 +27,7 @@ router.get('/profile', protect, getUserProfile);
 // For profile update with image upload, use multer middleware `upload.single('profileImage')`
 router.put('/profile', protect, upload.single('profileImage'), updateUserProfile);
 
+//GET TOTAL USER ROUTE
+router.get('/total-registered-users', getTotalRegisteredUsers);
 
 module.exports = router;

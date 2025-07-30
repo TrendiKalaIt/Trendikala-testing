@@ -1,7 +1,7 @@
 // emails/customerEmailTemplate.js
 const { getOrderSummaryTable } = require('./emailHelpers');
 
-exports.generateCustomerEmail = (order, shippingInfo, orderItems, totalAmount, shippingCost) => {
+exports.generateCustomerEmail = (order, shippingInfo, orderItems, paymentMethod, totalAmount, shippingCost) => {
   const orderSummaryTable = getOrderSummaryTable(orderItems, totalAmount, shippingCost);
 
   return `

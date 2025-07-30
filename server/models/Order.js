@@ -28,7 +28,7 @@ const orderSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: false },
   items: [orderItemSchema],
   shippingInfo: shippingInfoSchema,
-  paymentMethod: { type: String, enum: ['bank', 'cashOnDelivery'], default: 'cashOnDelivery', required: true },
+  paymentMethod: { type: String, enum: ['bank', 'cashOnDelivery', 'Razorpay'], default: 'cashOnDelivery', required: true },
   shippingCost: {
     type: Number,
     required: true,

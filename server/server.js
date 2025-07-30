@@ -15,6 +15,7 @@ const addressRoutes = require('./routes/addressRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const enquiryRoutes = require('./routes/enquiryRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 
 // Load environment variables
 
@@ -44,6 +45,7 @@ app.use('/api/addresses', addressRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // Test POST route
 app.post('/test', (req, res) => {

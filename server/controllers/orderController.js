@@ -46,7 +46,14 @@ exports.placeOrder = async (req, res) => {
         }
 
         // Generate email HTML using imported functions
-        const customerEmailHtml = generateCustomerEmail(newOrder, shippingInfo, orderItems, totalAmount, shippingCost);
+        const customerEmailHtml = generateCustomerEmail(
+            newOrder,
+            shippingInfo,
+            items,
+            paymentMethod,
+            Number(totalAmount),
+            Number(shippingCost)
+        );
         const adminEmailHtml = generateAdminEmail(newOrder, shippingInfo, orderItems, paymentMethod, totalAmount, shippingCost);
 
         // Send emails
@@ -80,55 +87,95 @@ exports.getMyOrders = async (req, res) => {
 
 // guest order place 
 exports.guestPlaceOrder = async (req, res) => {
-  try {
-    const { shippingInfo, paymentMethod, items, shippingCost = 0, totalAmount } = req.body;
+    try {
+        const { shippingInfo, paymentMethod, items, shippingCost = 0, totalAmount } = req.body;
 
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ message: 'Order items are required' });
+        if (!items || !Array.isArray(items) || items.length === 0) {
+            return res.status(400).json({ message: 'Order items are required' });
+        }
+
+        if (
+            !shippingInfo?.fullName ||
+            !shippingInfo?.streetAddress ||
+            !shippingInfo?.townCity ||
+            !shippingInfo?.phoneNumber ||
+            !shippingInfo?.emailAddress
+        ) {
+            return res.status(400).json({ message: 'Complete shipping info is required' });
+        }
+
+        const newOrder = new Order({
+            user: null,
+            isGuest: true,
+            items,
+            shippingInfo,
+            paymentMethod,
+            shippingCost,
+            totalAmount,
+            shippingOption: 'fixed_12_percent_delivery',
+        });
+
+        const lastOrder = await Order.findOne().sort({ orderId: -1 }).select('orderId');
+        newOrder.orderId = (lastOrder && lastOrder.orderId ? lastOrder.orderId : 0) + 1;
+
+        await newOrder.save();
+
+        const customerEmailHtml = generateCustomerEmail(
+            newOrder,
+            shippingInfo,
+            items,
+            paymentMethod,
+            Number(totalAmount),
+            Number(shippingCost)
+        );
+
+        const adminEmailHtml = generateAdminEmail(newOrder, shippingInfo, items, paymentMethod, totalAmount, shippingCost);
+
+        await sendEmail(shippingInfo.emailAddress, `Your TrendiKala Order #${newOrder.orderId} Confirmed!`, customerEmailHtml);
+
+        if (process.env.ADMIN_EMAIL) {
+            await sendEmail(process.env.ADMIN_EMAIL, `NEW GUEST ORDER: #${newOrder.orderId}`, adminEmailHtml);
+        }
+
+        res.status(201).json({
+            message: 'Guest order placed successfully and emails sent',
+            order: newOrder,
+        });
+    } catch (error) {
+        console.error('Guest order error:', error);
+        res.status(500).json({ message: 'Failed to place guest order', error: error.message });
     }
+};
 
-    if (
-      !shippingInfo?.fullName ||
-      !shippingInfo?.streetAddress ||
-      !shippingInfo?.townCity ||
-      !shippingInfo?.phoneNumber ||
-      !shippingInfo?.emailAddress
-    ) {
-      return res.status(400).json({ message: 'Complete shipping info is required' });
+//GET TOTAL REVENUE
+exports.getTotalRevenue = async (req, res) => {
+    try {
+        const result = await Order.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    totalRevenue: { $sum: "$totalAmount" }
+                }
+            }
+        ]);
+
+        const totalRevenue = result[0]?.totalRevenue || 0;
+        res.status(200).json({ totalRevenue });
+    } catch (error) {
+        console.error("Error calculating total revenue:", error);
+        res.status(500).json({ message: "Server error" });
     }
+};
 
-    const newOrder = new Order({
-      user: null,
-      isGuest: true,
-      items,
-      shippingInfo,
-      paymentMethod,
-      shippingCost,
-      totalAmount,
-      shippingOption: 'fixed_12_percent_delivery',
-    });
 
-    const lastOrder = await Order.findOne().sort({ orderId: -1 }).select('orderId');
-    newOrder.orderId = (lastOrder && lastOrder.orderId ? lastOrder.orderId : 0) + 1;
-
-    await newOrder.save();
-
-    const customerEmailHtml = generateCustomerEmail(newOrder, shippingInfo, items, paymentMethod, totalAmount, shippingCost);
-    const adminEmailHtml = generateAdminEmail(newOrder, shippingInfo, items, paymentMethod, totalAmount, shippingCost);
-
-    await sendEmail(shippingInfo.emailAddress, `Your TrendiKala Order #${newOrder.orderId} Confirmed!`, customerEmailHtml);
-
-    if (process.env.ADMIN_EMAIL) {
-      await sendEmail(process.env.ADMIN_EMAIL, `NEW GUEST ORDER: #${newOrder.orderId}`, adminEmailHtml);
+//GET TOTAL CUSTOMERS
+exports.getTotalCustomers = async (req, res) => {
+    try {
+        const uniqueUsers = await Order.distinct('user', { user: { $ne: null } });
+        const totalCustomers = uniqueUsers.length;
+        res.status(200).json({ totalCustomers });
+    } catch (error) {
+        console.error("Error fetching total customers:", error);
+        res.status(500).json({ message: "Server error" });
     }
-
-    res.status(201).json({
-      message: 'Guest order placed successfully and emails sent',
-      order: newOrder,
-    });
-  } catch (error) {
-    console.error('Guest order error:', error);
-    res.status(500).json({ message: 'Failed to place guest order', error: error.message });
-  }
-};  
-
+};

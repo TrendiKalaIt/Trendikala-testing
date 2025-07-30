@@ -4,11 +4,29 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { placeOrder } from '../utility/orderSlice';
+import { placeOrder, setOrderDetails  } from '../utility/orderSlice';
 import { clearCart } from '../utility/cartSlice';
 import { clearOrderDetails, clearCartFromCheckout } from '../utility/checkoutSlice';
-import { CreditCard, Banknote, Apple, SquareX } from 'lucide-react';
+import { SquareX } from 'lucide-react';
 import AddressForm from '../components/AddressForm';
+import { IoWalletOutline } from "react-icons/io5";
+
+
+
+const loadRazorpayScript = () => {
+  return new Promise((resolve) => {
+    if (document.getElementById('razorpay-script')) {
+      resolve(true);
+      return;
+    }
+    const script = document.createElement('script');
+    script.id = 'razorpay-script';
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
 
 const AddressSection = ({
   token,
@@ -45,7 +63,7 @@ const AddressSection = ({
     if (!window.confirm('Are you sure you want to delete this address?')) return;
 
     try {
-      setLoading(true); 
+      setLoading(true);
       await axios.delete(`${import.meta.env.VITE_API_URL}/api/addresses/${addressId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -191,7 +209,7 @@ const CheckoutSection = ({
     <div className="mt-8 space-y-4">
       <h3 className="text-lg font-semibold text-gray-800 mb-4">Payment Method</h3>
       {[
-        { id: 'bank', label: 'Bank / UPI / Wallets', icons: [CreditCard, Banknote, Apple] },
+        { id: 'bank', label: 'Bank / UPI / Wallets', icons: [IoWalletOutline] },
         { id: 'cashOnDelivery', label: 'Cash on Delivery' },
       ].map(({ id, label, icons }) => (
         <div
@@ -272,36 +290,140 @@ const CheckoutDetails = () => {
       return;
     }
 
-    const orderPayload = {
-      shippingInfo: finalSelectedAddress,
-      paymentMethod,
-      items: cart,
-      shippingCost: shipping,
-      totalAmount: total,
-    };
-
-    setLoadingSubmit(true);
-    try {
-      const result = await dispatch(
-        isGuest ? placeOrder({ orderPayload }) : placeOrder({ orderPayload, token })
-      );
-
-      if (placeOrder.fulfilled.match(result)) {
-        toast.success('Order placed successfully!');
-        if (orderDetails) {
-          dispatch(clearOrderDetails());
-        } else {
-          dispatch(clearCart());
-          dispatch(clearCartFromCheckout());
-        }
-        navigate('/thankyou');
-      } else {
-        toast.error(result.payload || 'Order failed');
+    if (paymentMethod === 'bank') {
+      // Razorpay payment flow
+      const isScriptLoaded = await loadRazorpayScript();
+      if (!isScriptLoaded) {
+        toast.error('Failed to load Razorpay SDK. Please check your connection.');
+        return;
       }
-    } catch (err) {
-      toast.error('Something went wrong during order submission.');
-    } finally {
-      setLoadingSubmit(false);
+
+      setLoadingSubmit(true);
+
+      try {
+        // Create Razorpay order on backend
+        const orderPayload = {
+          shippingInfo: finalSelectedAddress,
+          paymentMethod,
+          items: cart,
+          shippingCost: shipping,
+          totalAmount: total,
+        };
+
+        // Adjust API URL & token as per your backend
+        const amountInPaisa = Math.round(total * 100);
+        const { data: razorpayOrder } = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/payment/create-order`,
+          { amount: amountInPaisa },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+
+        if (!razorpayOrder?.id) {
+          toast.error('Failed to initiate payment. Please try again.');
+          setLoadingSubmit(false);
+          return;
+        }
+
+        // Configure Razorpay options
+        const options = {
+          key: import.meta.env.VITE_RAZORPAY_KEY, // Your Razorpay key
+          amount: razorpayOrder.amount,
+          currency: razorpayOrder.currency,
+          name: 'Your Store Name',
+          description: 'Order Payment',
+          order_id: razorpayOrder.id,
+          handler: async function (response) {
+            // On payment success, send payment details to backend to confirm order
+            try {
+              const paymentResult = await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/payment/verify-payment`,
+                {
+                  razorpay_order_id: razorpayOrder.id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  orderPayload,
+                },
+                {
+                  headers: { Authorization: `Bearer ${token}` },
+                }
+              );
+
+              if (paymentResult.data.success) {
+                toast.success('Payment successful and order placed!');
+                dispatch(setOrderDetails(paymentResult.data.order));
+                dispatch(clearCart());
+                dispatch(clearCartFromCheckout());
+
+                navigate('/thankyou');
+              }
+              else {
+                toast.error('Payment verification failed.');
+              }
+            } catch (err) {
+              toast.error('Payment failed verification.');
+              console.error(err);
+            }
+            setLoadingSubmit(false);
+          },
+          modal: {
+            ondismiss: function () {
+              toast.error('Payment cancelled.');
+              setLoadingSubmit(false);
+            },
+          },
+          theme: {
+            color: '#22c55e',
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } catch (error) {
+        toast.error('Payment failed. Please try again.');
+        setLoadingSubmit(false);
+        console.error(error);
+      }
+    } else {
+      // Existing COD / other payment flow
+      if (!finalSelectedAddress) {
+        toast.error('Please provide a delivery address.');
+        return;
+      }
+
+      const orderPayload = {
+        shippingInfo: finalSelectedAddress,
+        paymentMethod,
+        items: cart,
+        shippingCost: shipping,
+        totalAmount: total,
+      };
+
+      setLoadingSubmit(true);
+      try {
+        const result = await dispatch(
+          isGuest ? placeOrder({ orderPayload }) : placeOrder({ orderPayload, token })
+        );
+
+        if (placeOrder.fulfilled.match(result)) {
+          toast.success('Order placed successfully!');
+          if (orderDetails) {
+            dispatch(clearOrderDetails());
+          } else {
+            dispatch(clearCart());
+            dispatch(clearCartFromCheckout());
+          }
+          navigate('/thankyou');
+        } else {
+          toast.error(result.payload || 'Order failed');
+        }
+      } catch (err) {
+        toast.error('Something went wrong during order submission.');
+      } finally {
+        setLoadingSubmit(false);
+      }
     }
   };
 
@@ -339,3 +461,5 @@ const CheckoutDetails = () => {
 };
 
 export default CheckoutDetails;
+
+
