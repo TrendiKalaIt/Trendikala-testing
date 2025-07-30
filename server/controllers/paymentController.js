@@ -20,7 +20,7 @@ exports.createOrder = async (req, res) => {
     }
 
     try {
-        const amountInPaise = Math.round(parseFloat(amount) * 100);
+        const amountInPaise = Math.round(parseFloat(amount) * 1);
 
         const options = {
             amount: amountInPaise,
