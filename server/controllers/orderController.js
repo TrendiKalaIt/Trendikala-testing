@@ -34,6 +34,7 @@ exports.placeOrder = async (req, res) => {
             shippingCost,
             totalAmount,
             shippingOption: 'fixed_12_percent_delivery',
+            paymentStatus: paymentMethod === 'Razorpay' ? 'Paid' : 'Pending',
         });
 
         const lastOrder = await Order.findOne().sort({ orderId: -1 }).select('orderId');
@@ -113,6 +114,7 @@ exports.guestPlaceOrder = async (req, res) => {
             shippingCost,
             totalAmount,
             shippingOption: 'fixed_12_percent_delivery',
+            paymentStatus: paymentMethod === 'Razorpay' ? 'Paid' : 'Pending',
         });
 
         const lastOrder = await Order.findOne().sort({ orderId: -1 }).select('orderId');

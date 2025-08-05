@@ -94,7 +94,7 @@ exports.verifyPayment = async (req, res) => {
             razorpay_signature,
             isPaid: true,
             paidAt: new Date(),
-            status: 'Paid',
+            paymentStatus: 'Paid',
             orderId: nextOrderId,
         });
 
