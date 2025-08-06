@@ -56,9 +56,9 @@ function App() {
               <Route path="/search" element={<SearchResults />} />
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/contact" element={<ContactUs />} />
-              <Route path="/cancellation-return" element={<ComingSoon title="Terms & Conditions" />} />
+              <Route path="/cancellation-return" element={<ComingSoon title="Cancellation & Return" />} />
               <Route path="/privacy-policy" element={<ComingSoon title="Privacy Policy" />} />
-              <Route path="/terms-conditions" element={<ComingSoon title="Cancellation & Return" />} />
+              <Route path="/terms-conditions" element={<ComingSoon title=" Terms & Conditions" />} />
               <Route path="/enquiry" element={<Enquiry />} />
               <Route path="/checkout" element={<CheckoutDetails />} />
               <Route path="/thankyou" element={<Thankyou />} />
