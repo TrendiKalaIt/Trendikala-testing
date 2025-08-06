@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../utility/auth/authSlice';
 import { selectCartCount,clearLocalCart  } from '../utility/cartSlice';
 import { selectWishlistCount,fetchWishlist } from '../utility/wishlistSlice';
-
+import { persistor } from '../utility/store';
 
 
 export default function Navbar({ links }) {
@@ -78,10 +78,12 @@ export default function Navbar({ links }) {
 
   // Logout
   const handleLogout = () => {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     dispatch(logout());
+    persistor.purge();
     localStorage.removeItem('cart');
     localStorage.removeItem('user');
+    localStorage.removeItem('persist:root');
     setShowUserDropdown(false);
     setIsMenuOpen(false);
     navigate('/');

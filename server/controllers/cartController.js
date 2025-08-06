@@ -1,14 +1,29 @@
 // controllers/cartController.js
+
+
 const mongoose = require('mongoose');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
+
+const getProductImage = (product) => {
+  if (product.thumbnail && product.thumbnail.trim() !== '') {
+    return product.thumbnail;
+  }
+  if (product.media && product.media.length > 0) {
+    return product.media[0].url;
+  }
+  return '';
+};
+
+
+
+
 exports.getUserCart = async (req, res) => {
   try {
-    // Get cart for logged-in user with product details
     const cart = await Cart.findOne({ user: req.user._id }).populate('items.product');
-    if (!cart) return res.status(200).json({ items: [] });  // Return empty if no cart
-    res.status(200).json(cart);
+    if (!cart) return res.status(200).json({ items: [] });  // empty cart
+    res.status(200).json({ items: cart.items });  // <-- return only items array inside an object
   } catch (err) {
     res.status(500).json({ message: 'Error fetching cart', error: err.message });
   }
@@ -48,26 +63,30 @@ exports.addToCart = async (req, res) => {
       }
 
       if (existingItem) {
-        // Update existing item
         existingItem.quantity = quantity;
         existingItem.discountPrice = product.discountPrice;
         existingItem.productName = product.productName;
-        existingItem.image = product.thumbnail || '';
+        existingItem.image = Array.isArray(product.media) && product.media.length > 0
+          ? product.media[0].url
+          : product.thumbnail || '';
+
         existingItem.color = color;
         existingItem.size = size;
       } else {
-        // Add new item to cart
         cart.items.push({
           _id: new mongoose.Types.ObjectId(),
           product: product._id,
           quantity,
           discountPrice: product.discountPrice,
           productName: product.productName,
-          image: product.thumbnail || '',
+          image: Array.isArray(product.media) && product.media.length > 0
+            ? product.media[0].url
+            : product.thumbnail || '',
           color,
           size
         });
       }
+
     }
 
     // Set or update shipping option
@@ -76,7 +95,9 @@ exports.addToCart = async (req, res) => {
 
     await cart.save();
 
-    res.status(200).json({ message: 'Cart updated successfully', cart });
+    cart = await cart.populate('items.product');
+    res.status(200).json({ message: 'Cart updated successfully', cart: { items: cart.items } });
+
 
   } catch (err) {
     res.status(500).json({ message: 'Error updating cart', error: err.message });
@@ -109,8 +130,8 @@ exports.updateCartItem = async (req, res) => {
     if (size) item.size = size;
 
     await cart.save();
-
-    res.status(200).json({ message: 'Cart item updated', cart });
+    cart = await cart.populate('items.product');
+    res.status(200).json({ message: 'Cart item updated', cart: { items: cart.items } });
   } catch (err) {
     res.status(500).json({ message: 'Error updating cart item', error: err.message });
   }
@@ -129,8 +150,8 @@ exports.removeCartItem = async (req, res) => {
     cart.items = cart.items.filter(item => item && item._id && item._id.toString() !== itemId);
 
     await cart.save();
-
-    res.status(200).json({ message: 'Item removed', cart });
+    cart = await cart.populate('items.product');
+    res.status(200).json({ message: 'Item removed', cart: { items: cart.items } });
   } catch (err) {
     res.status(500).json({ message: 'Error removing item', error: err.message });
   }

@@ -30,6 +30,10 @@ function CartPage() {
     }
   }, [dispatch, status]);
 
+  useEffect(() => {
+    console.log('Cart products:', products);
+  }, [products]);
+
   const changeQuantity = async (id, diff) => {
     const product = products.find(p => p._id === id || p.id === id);
     if (!product) return;
@@ -96,20 +100,20 @@ function CartPage() {
           }}
           className="form-radio accent-green-600 h-5 w-5"
         />
-        <span className="ml-3 text-gray-700 text-lg">{label}</span> 
+        <span className="ml-3 text-gray-700 text-lg">{label}</span>
       </div>
-      <span className="font-medium text-gray-700 text-lg">{displayPrice}</span> 
+      <span className="font-medium text-gray-700 text-lg">{displayPrice}</span>
     </label>
   );
   // --- END OF MODIFIED ShippingRadio COMPONENT ---
 
 
   if (status === 'loading') {
-    return <p className="text-center mt-8 text-gray-500 text-lg">Loading cart...</p>; 
+    return <p className="text-center mt-8 text-gray-500 text-lg">Loading cart...</p>;
   }
 
   if (status === 'failed') {
-    return <p className="text-center mt-8 text-red-500 text-lg">Error: {error}</p>; 
+    return <p className="text-center mt-8 text-red-500 text-lg">Error: {error}</p>;
   }
 
   return (
@@ -127,7 +131,7 @@ function CartPage() {
             </div>
             <span
               className={`mt-2  ${i === 0 ? 'text-green-700  font-medium border-b-2 border-green-700 pb-1 ' : 'text-gray-400'
-                } lg:text-3xl`} 
+                } lg:text-3xl`}
             >
               {step}
             </span>
@@ -138,14 +142,14 @@ function CartPage() {
       <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
         <div className="flex-1 bg-white p-4 sm:p-6 rounded-lg shadow-sm">
           {products.length === 0 ? (
-            <p className="text-gray-500 text-center text-lg">Your cart is empty.</p> 
+            <p className="text-gray-500 text-center text-lg">Your cart is empty.</p>
           ) : (
             <>
-              <div className="hidden md:grid grid-cols-4 gap-4 pb-4 border-b border-gray-200 font-medium text-gray-500 text-lg"> 
+              <div className="hidden md:grid grid-cols-4 gap-4 pb-4 border-b border-gray-200 font-medium text-gray-500 text-lg">
                 <div className="col-span-2">Product</div>
                 <div>Quantity</div>
                 <div>Price</div>
-                
+
               </div>
 
               {products.map(product => (
@@ -155,17 +159,26 @@ function CartPage() {
                 >
                   <div className="md:col-span-2 flex items-start sm:items-center gap-4">
                     <img
-                      src={product.image || `https://placehold.co/100x100`}
+                      src={
+                        product.image
+                          ? product.image
+                          : product.thumbnail && product.thumbnail.trim() !== ''
+                            ? product.thumbnail
+                            : product.media && product.media.length > 0
+                              ? product.media[0].url
+                              : 'https://placehold.co/100x100'
+                      }
                       alt={product.productName || product.name}
                       className="w-24 h-24 object-cover rounded-lg shrink-0"
                     />
+
                     <div>
-                      <h3 className="font-semibold text-gray-800 text-lg">{product.productName || product.name}</h3> 
-                      <p className="text-base text-gray-500">Color: {product.color || 'N/A'}</p> 
-                      <p className="text-base text-gray-500">Size: {product.size || 'N/A'}</p> 
+                      <h3 className="font-semibold text-gray-800 text-lg">{product.productName || product.name}</h3>
+                      <p className="text-base text-gray-500">Color: {product.color || 'N/A'}</p>
+                      <p className="text-base text-gray-500">Size: {product.size || 'N/A'}</p>
                       <button
                         onClick={() => handleRemove(product._id || product.id)}
-                        className="text-red-500 text-base mt-2 hover:underline" 
+                        className="text-red-500 text-base mt-2 hover:underline"
                       >
                         Remove
                       </button>
@@ -175,14 +188,14 @@ function CartPage() {
                   <div className="flex items-center sm:justify-start">
                     <button
                       onClick={() => changeQuantity(product._id || product.id, -1)}
-                      className="px-3 py-1 text-gray-600 hover:bg-gray-100 border rounded-l-md text-lg" 
+                      className="px-3 py-1 text-gray-600 hover:bg-gray-100 border rounded-l-md text-lg"
                     >
                       -
                     </button>
-                    <span className="px-3 py-1 border-y text-lg">{product.quantity}</span> 
+                    <span className="px-3 py-1 border-y text-lg">{product.quantity}</span>
                     <button
                       onClick={() => changeQuantity(product._id || product.id, 1)}
-                      className="px-3 py-1 text-gray-600 hover:bg-gray-100 border rounded-r-md text-lg" 
+                      className="px-3 py-1 text-gray-600 hover:bg-gray-100 border rounded-r-md text-lg"
                     >
                       +
                     </button>
@@ -190,8 +203,8 @@ function CartPage() {
 
                   <div className="flex flex-col justify-center gap-1">
                     {/* <div className="text-gray-700 text-base md:text-lg">₹{product.discountPrice}</div>  */}
-                    <div className="font-semibold flex text-gray-800 text-base md:text-lg"> 
-                     ₹{(product.quantity * product.discountPrice).toFixed(2)}
+                    <div className="font-semibold flex text-gray-800 text-base md:text-lg">
+                      ₹{(product.quantity * product.discountPrice).toFixed(2)}
                     </div>
                   </div>
                 </div>
@@ -202,7 +215,7 @@ function CartPage() {
 
         {/* --- START OF MODIFIED CART SUMMARY SECTION --- */}
         <div className="w-full lg:w-96 bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Cart summary</h2> 
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Cart summary</h2>
           <div className="space-y-4">
             {/* Displaying the fixed 12% Delivery Charge */}
             <ShippingRadio
@@ -214,16 +227,16 @@ function CartPage() {
                 For now, only the 12% charge is shown */}
           </div>
           <div className="border-t border-gray-200 mt-6 pt-4 space-y-3">
-            <div className="flex justify-between text-gray-700 text-lg"> 
+            <div className="flex justify-between text-gray-700 text-lg">
               <span>Subtotal</span>
               <span className="font-medium">₹{subtotal.toFixed(2)}</span>
             </div>
             {/* Explicitly showing the Delivery Charge line */}
-            <div className="flex justify-between text-gray-700 text-lg"> 
+            <div className="flex justify-between text-gray-700 text-lg">
               <span>Delivery Charge</span>
               <span className="font-medium">₹{deliveryCharge.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-2xl font-semibold text-gray-800"> 
+            <div className="flex justify-between text-2xl font-semibold text-gray-800">
               <span>Total</span>
               <span>₹{total.toFixed(2)}</span>
             </div>
@@ -238,7 +251,7 @@ function CartPage() {
               toast.success('Proceeding to checkout...');
               setTimeout(() => navigate('/checkout'), 1000);
             }}
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg mt-6 transition-colors duration-200 text-lg" 
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg mt-6 transition-colors duration-200 text-lg"
           >
             Checkout
           </button>

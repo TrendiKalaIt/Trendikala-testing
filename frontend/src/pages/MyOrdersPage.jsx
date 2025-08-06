@@ -79,6 +79,11 @@ const MyOrdersPage = () => {
               </p>
               <p>
                 <span className="font-medium text-green-500">Status:</span>{" "}
+                <span className="text-blue-600 font-semibold">{order.paymentStatus}</span>
+
+              </p>
+              <p>
+                  <span className="font-medium text-green-500">Deleviry Status:</span>{" "}
                 <span className="text-blue-600 font-semibold">{order.orderStatus}</span>
               </p>
             </div>

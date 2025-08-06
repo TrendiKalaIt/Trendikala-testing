@@ -88,6 +88,32 @@ exports.registerUser = async (req, res) => {
 };
 
 // VERIFY EMAIL (OTP)
+// exports.verifyEmail = async (req, res) => {
+//   const { email, otp } = req.body;
+
+//   try {
+//     const user = await User.findOne({ email });
+//     if (!user) return res.status(404).json({ message: "User not found" });
+
+//     if (user.isVerified) return res.status(400).json({ message: "Email already verified" });
+
+//     if (user.otp !== otp || user.otpExpires < Date.now()) {
+//       return res.status(400).json({ message: "Invalid or expired OTP" });
+//     }
+
+//     user.isVerified = true;
+//     user.otp = undefined;
+//     user.otpExpires = undefined;
+//     await user.save();
+
+//     res.status(200).json({ message: "Email verified successfully" });
+
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
 exports.verifyEmail = async (req, res) => {
   const { email, otp } = req.body;
 
@@ -101,17 +127,36 @@ exports.verifyEmail = async (req, res) => {
       return res.status(400).json({ message: "Invalid or expired OTP" });
     }
 
+    // Mark email as verified
     user.isVerified = true;
     user.otp = undefined;
     user.otpExpires = undefined;
     await user.save();
 
-    res.status(200).json({ message: "Email verified successfully" });
+    // ✅ Create JWT token
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET, // Make sure it's defined in .env
+      { expiresIn: '7d' }
+    );
+
+    // ✅ Send back token and user info
+    res.status(200).json({
+      message: "Email verified and logged in successfully",
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        // add other fields if needed
+      },
+    });
 
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // LOGIN USER
 exports.loginUser = async (req, res) => {
@@ -275,7 +320,7 @@ exports.updateUserProfile = async (req, res) => {
 
     // multer saves file info in req.file
     if (req.file && req.file.path) {
-      user.profileImage = req.file.path; 
+      user.profileImage = req.file.path;
     }
 
     await user.save();

@@ -33,7 +33,7 @@ const Categories = () => {
         Product Categories
       </h2>
       <div className="flex justify-center">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-6 gap-8 ">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-8 ">
           {categories.map((category) => {
             const hasImage = category.icon && typeof category.icon === 'string';
 

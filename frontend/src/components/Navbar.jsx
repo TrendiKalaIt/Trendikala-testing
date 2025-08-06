@@ -5,6 +5,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../utility/auth/authSlice';
 import { selectCartCount } from '../utility/cartSlice';
+import { persistor } from '../utility/store';
 
 export default function Navbar({ links }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,10 +41,12 @@ export default function Navbar({ links }) {
   }, [showDropdown]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem('token');
+    localStorage.removeItem('token');
     dispatch(logout());
+    persistor.purge();
     localStorage.removeItem('cart');
     localStorage.removeItem('user');
+    localStorage.removeItem('persist:root');
     setShowDropdown(false);
     setIsMenuOpen(false);
     navigate('/');
@@ -171,14 +174,11 @@ export default function Navbar({ links }) {
                   />
                 ) : (
                   <div className="w-8 h-8 rounded-full bg-green-700 text-white flex items-center justify-center font-semibold text-sm">
-                    {user
-                      ? user.name
-                        .split(' ')
-                        .map((w) => w[0])
-                        .join('')
-                        .toUpperCase()
+                    {user?.name
+                      ? user.name.split(' ').map(w => w[0]).join('').toUpperCase()
                       : <User className="w-6 h-6" />}
                   </div>
+
                 )}
                 {user ? (
                   <span className="text-sm hidden md:inline">{user.name}</span>

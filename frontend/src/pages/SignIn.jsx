@@ -1,11 +1,66 @@
+// import React, { useState } from 'react';
+// import { Eye, EyeOff } from 'lucide-react';
+// import { useNavigate, useLocation } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+// import axios from 'axios';
+// import toast from 'react-hot-toast';
+// import { login } from '../utility/auth/authSlice';
+// import { showLoader, hideLoader } from '../utility/loaderSlice';  // Import loader actions
+
+// const SignIn = () => {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [showPassword, setShowPassword] = useState(false);
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
+//   const location = useLocation();
+
+//   const handleLogin = async (e) => {
+//     e.preventDefault();
+//     try {
+//       dispatch(showLoader());  // Show spinner before API call
+//       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+//         email,
+//         password,
+//       });
+
+//       const userData = {
+//         id: response.data.user.id,
+//         name: response.data.user.name,
+//         email: response.data.user.email,
+//         profileImage: response.data.user.profileImage || null,
+//         token: response.data.token,
+//       };
+
+//       // Store user in localStorage & Redux
+//       // ✅ CORRECT
+//       localStorage.setItem('user', JSON.stringify(userData));
+//       localStorage.setItem('token', response.data.token);
+//       dispatch(login(userData));
+
+//       toast.success('Login successful');
+
+//       const params = new URLSearchParams(location.search);
+//       const redirectPath = params.get('redirect') || '/';
+
+//       navigate(redirectPath);
+
+//     } catch (error) {
+//       toast.error(error.response?.data?.message || 'Login failed');
+//       console.error('Login error:', error);
+//     } finally {
+//       dispatch(hideLoader());  // Hide spinner after API call (success or failure)
+//     }
+//   };
+
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { login } from '../utility/auth/authSlice';
-import { showLoader, hideLoader } from '../utility/loaderSlice';  // Import loader actions
+import { showLoader, hideLoader } from '../utility/loaderSlice';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -13,11 +68,12 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      dispatch(showLoader());  // Show spinner before API call
+      dispatch(showLoader());
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
         email,
         password,
@@ -31,19 +87,22 @@ const SignIn = () => {
         token: response.data.token,
       };
 
-      // Store user in localStorage & Redux
-      // ✅ CORRECT
       localStorage.setItem('user', JSON.stringify(userData));
       localStorage.setItem('token', response.data.token);
       dispatch(login(userData));
 
       toast.success('Login successful');
-      navigate('/');
+
+      // Redirect logic: get redirect param or default to '/'
+      const params = new URLSearchParams(location.search);
+      const redirectPath = params.get('redirect') || '/';
+      navigate(redirectPath);
+
     } catch (error) {
       toast.error(error.response?.data?.message || 'Login failed');
       console.error('Login error:', error);
     } finally {
-      dispatch(hideLoader());  // Hide spinner after API call (success or failure)
+      dispatch(hideLoader());
     }
   };
 

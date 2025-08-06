@@ -1,149 +1,4 @@
 
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { useDispatch } from 'react-redux';
-// import { updateUser } from '../utility/auth/authSlice';
-
-// const UserProfile = () => {
-//   const [user, setUser] = useState(null);
-//   const [editedUser, setEditedUser] = useState(null);
-//   const [editMode, setEditMode] = useState(false);
-
-//   // Store selected image preview URL
-//   const [selectedImage, setSelectedImage] = useState(null);
-//   // Store selected image file for upload
-//   const [selectedFile, setSelectedFile] = useState(null);
-//   const [isSaving, setIsSaving] = useState(false);
-
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     const fetchUser = async () => {
-//       try {
-//         const token = sessionStorage.getItem('token');;
-//         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
-//           headers: { Authorization: `Bearer ${token}` },
-//         });
-//         setUser(res.data);
-//         setEditedUser(res.data);
-//         setSelectedImage(res.data.profileImage || null);
-//         setSelectedFile(null);
-//       } catch (err) {
-//         console.error(err);
-//       }
-//     };
-
-//     fetchUser();
-//   }, []);
-
-//   // When editedUser changes (e.g. cancel edit), reset image preview & file
-//   useEffect(() => {
-//     if (editedUser) {
-//       setSelectedImage(editedUser.profileImage || null);
-//       setSelectedFile(null);
-//     }
-//   }, [editedUser]);
-
-//   const handleChange = (e) => {
-//     setEditedUser({ ...editedUser, [e.target.name]: e.target.value });
-//   };
-
-//   const handleAddressChange = async (index, field, value) => {
-//     const updatedAddresses = [...(editedUser.addresses || [])];
-//     updatedAddresses[index] = { ...updatedAddresses[index], [field]: value };
-
-//     // Auto-fill city/state on valid 6-digit PIN
-//     if (field === 'zipcode' && /^\d{6}$/.test(value)) {
-//       const { city, state } = await fetchCityStateByPincode(value);
-//       if (city && state) {
-//         updatedAddresses[index].townCity = city;
-//         updatedAddresses[index].state = state;
-//       }
-//     }
-
-//     setEditedUser({ ...editedUser, addresses: updatedAddresses });
-//   };
-
-
-//   const addNewAddress = () => {
-//     setEditedUser({
-//       ...editedUser,
-//       addresses: [
-//         ...(editedUser.addresses || []),
-//         {
-//           fullName: '',
-//           streetAddress: '',
-//           apartment: '',
-//           townCity: '',
-//           state: '',
-//           zipcode: '',
-//           phoneNumber: '',
-//           emailAddress: '',
-//         },
-//       ],
-//     });
-//   };
-
-//   const removeAddress = (index) => {
-//     const updated = [...(editedUser.addresses || [])];
-//     updated.splice(index, 1);
-//     setEditedUser({ ...editedUser, addresses: updated });
-//   };
-
-//   // Handle selecting a new image file
-//   const handleImageChange = (e) => {
-//     const file = e.target.files[0];
-//     if (file) {
-//       // Preview URL
-//       const previewUrl = URL.createObjectURL(file);
-//       setSelectedImage(previewUrl);
-//       setSelectedFile(file);
-//     }
-//   };
-
-//   const handleSave = async () => {
-//     try {
-//       setIsSaving(true);
-
-//       const token = sessionStorage.getItem('token');
-
-//       const formData = new FormData();
-//       formData.append('name', editedUser.name || '');
-//       formData.append('mobile', editedUser.mobile || '');
-//       formData.append('addresses', JSON.stringify(editedUser.addresses || []));
-
-//       if (selectedFile) {
-//         formData.append('profileImage', selectedFile);
-//       }
-
-//       const res = await axios.put(
-//         `${import.meta.env.VITE_API_URL}/api/auth/profile`,
-//         formData,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//             'Content-Type': 'multipart/form-data',
-//           },
-//         }
-//       );
-
-//       setUser(res.data.user);
-//       setEditedUser(res.data.user);
-//       setEditMode(false);
-//       setSelectedFile(null);
-//       setSelectedImage(res.data.user.profileImage || null);
-
-
-//       dispatch(updateUser(res.data.user));
-
-//     } catch (err) {
-//       console.error('Save failed:', err);
-//     } finally {
-//       setIsSaving(false);
-//     }
-//   };
-//   if (!user || !editedUser) return <div className="p-5">Loading...</div>;
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -184,7 +39,8 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = sessionStorage.getItem('token');
+        const token = localStorage.getItem('token');
+        console.log('Token:', token);
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -324,7 +180,7 @@ const UserProfile = () => {
         }
       }
 
-      const token = sessionStorage.getItem('token');
+      const token = localStorage.getItem('token');
       const formData = new FormData();
       formData.append('name', editedUser.name || '');
       formData.append('mobile', editedUser.mobile || '');

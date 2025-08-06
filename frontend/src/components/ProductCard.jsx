@@ -77,26 +77,62 @@ const ProductCard = ({ product = {} }) => {
       .catch(() => toast.error('Failed to add to cart'));
   };
 
-  const handleCheckout = () => {
-    if (!selectedColor || !selectedSize) {
-      toast.error('Please select size and color before checkout');
-      return;
-    }
+//   const handleCheckout = () => {
+//     if (!selectedColor || !selectedSize) {
+//       toast.error('Please select size and color before checkout');
+//       return;
+//     }
 
-    const productToBuy = {
-      product: _id,
-      productName,
-      discountPrice,
-      color: selectedColor,
-      size: selectedSize,
-      quantity,
-      image: media?.[0]?.url || '',
-    };
+//     const productToBuy = {
+//       product: _id,
+//       productName,
+//       discountPrice,
+//       color: selectedColor,
+//       size: selectedSize,
+//       quantity,
+//       image: media?.[0]?.url || '',
+//     };
 
-    dispatch(setOrderDetails(productToBuy));
-    navigate('/checkout');
+//     dispatch(setOrderDetails(productToBuy));
+//     navigate('/checkout');
 
-  };
+//   };
+
+
+const handleCheckout = () => {
+  if (!selectedColor || !selectedSize) {
+    toast.error('Please select size and color before checkout');
+    return;
+  }
+
+  const productToBuy = {
+    product: _id,
+    productName,
+    discountPrice,
+    color: selectedColor,
+    size: selectedSize,
+    quantity,
+    image: media?.[0]?.url || '',
+  };
+
+  // Save to localStorage before redirect
+  localStorage.setItem('checkoutState', JSON.stringify({
+    orderDetails: productToBuy,
+    cartFromCheckout: [],
+  }));
+
+  setIsModalOpen(false);
+
+  if (!user) {
+    navigate('/signin?redirect=/checkout'); // user will be redirected to /checkout after login
+    return;
+  }
+
+  dispatch(setOrderDetails(productToBuy));
+  navigate('/checkout');
+};
+
+
 
   const isWishlisted = wishlist.some((item) => item._id === _id);
 

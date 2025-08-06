@@ -1,8 +1,58 @@
 
+// import axios from 'axios';
+// import React, { useState } from 'react';
+// import { Eye, EyeOff } from 'lucide-react';
+// import { useNavigate } from 'react-router-dom';
+// import toast from 'react-hot-toast';
+// import { useDispatch } from 'react-redux';
+// import { showLoader, hideLoader } from '../utility/loaderSlice';
+
+// const SignUp = () => {
+//   const [email, setEmail] = useState('');
+//   const [mobile, setMobile] = useState('');
+
+//   const [fullName, setFullName] = useState('');
+//   const [password, setPassword] = useState('');
+//   const [confirmPassword, setConfirmPassword] = useState('');
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch(); // 
+
+//   const handleSignUp = async (e) => {
+//     e.preventDefault();
+
+//     if (password !== confirmPassword) {
+//       toast.error('Passwords do not match');
+//       return;
+//     }
+
+//     try {
+//       dispatch(showLoader());
+
+//       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+//         name: fullName,
+//         email,
+//         mobile,
+//         password,
+//       });
+
+//       toast.success(response.data.message);
+//       localStorage.setItem('emailForOTP', email);
+//       navigate('/verify-otp');
+//     } catch (error) {
+//       const msg = error.response?.data?.message || 'Registration failed';
+//       console.error('Signup Error:', msg);
+//       toast.error(msg);
+//     } finally {
+//       dispatch(hideLoader());
+//     }
+//   };
+
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { showLoader, hideLoader } from '../utility/loaderSlice';
@@ -10,14 +60,87 @@ import { showLoader, hideLoader } from '../utility/loaderSlice';
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
-
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch(); // 
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  // const handleSignUp = async (e) => {
+  //   e.preventDefault();
+
+  //   if (password !== confirmPassword) {
+  //     toast.error('Passwords do not match');
+  //     return;
+  //   }
+
+  //   try {
+  //     dispatch(showLoader());
+
+  //     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+  //       name: fullName,
+  //       email,
+  //       mobile,
+  //       password,
+  //     });
+
+  //     toast.success(response.data.message);
+  //     localStorage.setItem('emailForOTP', email);
+
+  //     // After signup success, redirect based on query param
+  //     const params = new URLSearchParams(location.search);
+  //     const redirectPath = params.get('redirect') || '/';
+  //     navigate(redirectPath);
+
+  //   } catch (error) {
+  //     const msg = error.response?.data?.message || 'Registration failed';
+  //     console.error('Signup Error:', msg);
+  //     toast.error(msg);
+  //   } finally {
+  //     dispatch(hideLoader());
+  //   }
+  // };
+
+  //   const handleSignUp = async (e) => {
+  //   e.preventDefault();
+
+  //   if (password !== confirmPassword) {
+  //     toast.error('Passwords do not match');
+  //     return;
+  //   }
+
+  //   try {
+  //     dispatch(showLoader());
+
+  //     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+  //       name: fullName,
+  //       email,
+  //       mobile,
+  //       password,
+  //     });
+
+  //     toast.success(response.data.message);
+  //     localStorage.setItem('emailForOTP', email);
+
+  //     // Get redirect param from current URL or default to '/'
+  //     const params = new URLSearchParams(location.search);
+  //     const redirectPath = params.get('redirect') || '/';
+
+  //     // Redirect to OTP page with redirect param
+  //     navigate(`/verify-otp?redirect=${encodeURIComponent(redirectPath)}`);
+
+  //   } catch (error) {
+  //     const msg = error.response?.data?.message || 'Registration failed';
+  //     console.error('Signup Error:', msg);
+  //     toast.error(msg);
+  //   } finally {
+  //     dispatch(hideLoader());
+  //   }
+  // };
+
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -39,7 +162,10 @@ const SignUp = () => {
 
       toast.success(response.data.message);
       localStorage.setItem('emailForOTP', email);
-      navigate('/verify-otp');
+
+      // Always redirect to OTP page with redirect param
+      navigate(`/verify-otp?redirect=/checkout`);
+
     } catch (error) {
       const msg = error.response?.data?.message || 'Registration failed';
       console.error('Signup Error:', msg);
@@ -48,6 +174,9 @@ const SignUp = () => {
       dispatch(hideLoader());
     }
   };
+
+
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center pt-8 px-4 mb-2">
       {/* Header */}

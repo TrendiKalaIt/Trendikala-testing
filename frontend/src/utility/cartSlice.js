@@ -15,12 +15,12 @@ const authHeaders = () => ({
 export const fetchCart = createAsyncThunk(
   'cart/fetchCart',
   async (_, thunkAPI) => {
-    try {
-      const response = await axios.get(API_URL, authHeaders());
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
-    }
+  try {
+    const response = await axios.get(API_URL, authHeaders());
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+  }
   }
 );
 
@@ -28,12 +28,12 @@ export const fetchCart = createAsyncThunk(
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
   async (items, thunkAPI) => {
-    try {
-      const response = await axios.post(API_URL, { items }, authHeaders());
-      return response.data.cart;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
-    }
+  try {
+    const response = await axios.post(API_URL, { items }, authHeaders());
+    return response.data.cart;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+  }
   }
 );
 
@@ -55,12 +55,12 @@ export const updateQuantity = createAsyncThunk(
 export const removeFromCart = createAsyncThunk(
   'cart/removeFromCart',
   async (id, thunkAPI) => {
-    try {
-      const response = await axios.delete(`${API_URL}/${id}`, authHeaders());
-      return response.data.cart;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
-    }
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`, authHeaders());
+    return response.data.cart;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+  }
   }
 );
 
@@ -68,12 +68,12 @@ export const removeFromCart = createAsyncThunk(
 export const clearCart = createAsyncThunk(
   'cart/clearCart',
   async (_, thunkAPI) => {
-    try {
-      await axios.delete(API_URL, authHeaders());
-      return [];
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
-    }
+  try {
+    await axios.delete(API_URL, authHeaders());
+    return [];
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message || error.message);
+  }
   }
 );
 

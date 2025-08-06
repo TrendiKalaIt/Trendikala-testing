@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const AddressForm = ({
   token,
@@ -9,6 +10,17 @@ const AddressForm = ({
   address = null,
   onAddressChange = () => { },
 }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      // Agar token nahi hai to signin page par redirect karo
+      navigate('/signin?redirect=/checkout');
+    }
+  }, [token, navigate]);
+
+  // ... baaki aapka existing code ...
+
   const [formData, setFormData] = useState({
     fullName: '',
     streetAddress: '',
@@ -19,6 +31,7 @@ const AddressForm = ({
     phoneNumber: '',
     emailAddress: '',
   });
+
 
   useEffect(() => {
     if (address) {
