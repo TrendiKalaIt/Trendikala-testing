@@ -17,8 +17,6 @@ const getProductImage = (product) => {
 };
 
 
-
-
 exports.getUserCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user._id }).populate('items.product');
@@ -113,7 +111,7 @@ exports.updateCartItem = async (req, res) => {
       return res.status(400).json({ message: 'Quantity must be at least 1' });
     }
 
-    const cart = await Cart.findOne({ user: req.user._id });
+    let cart = await Cart.findOne({ user: req.user._id });
     if (!cart) return res.status(404).json({ message: 'Cart not found' });
 
     // Find item in cart by ID
@@ -143,7 +141,7 @@ exports.removeCartItem = async (req, res) => {
     const { itemId } = req.params;
     if (!itemId) return res.status(400).json({ message: 'ItemId param missing' });
 
-    const cart = await Cart.findOne({ user: req.user._id });
+    let cart = await Cart.findOne({ user: req.user._id });
     if (!cart) return res.status(404).json({ message: 'Cart not found' });
 
     // Remove item from cart items array

@@ -55,8 +55,12 @@ function CartPage() {
   };
 
   const handleRemove = async (id) => {
+    console.log("Cart item id for update/delete:", id);
+    
     const product = products.find(p => p._id === id || p.id === id);
     if (!product) return;
+    console.log("Quantity update to:", product.quantity);
+
 
     try {
       await dispatch(removeFromCart(id)).unwrap();
