@@ -6,14 +6,15 @@ exports.generateCustomerEmail = (order, shippingInfo, orderItems, paymentMethod,
 
   return `
     <div style="font-family: Arial; max-width: 600px; margin: auto; background-color: #fff; border: 1px solid #ddd;">
-      <div style="background-color: #5bbd72; padding: 20px; color: white;">
+      <div style="background-color: #bedaa4; padding: 20px; color: white;">
         <h1>Thanks for your order, ${shippingInfo.fullName.split(' ')[0]}</h1>
         <p>Your order number is <strong>${order.orderId}</strong></p>
+        <p><strong>Payment Method:</strong> ${paymentMethod}</p>
       </div>
       <div style="padding: 20px;">
         ${orderSummaryTable}
       </div>
-      <div style="text-align: center; padding: 15px; font-size: 12px; color: #999;">
+      <div style="background-color: #f5f5f5; text-align: center; padding: 15px; font-size: 12px; color: #999;">
         &copy; ${new Date().getFullYear()} Trendikala
       </div>
     </div>

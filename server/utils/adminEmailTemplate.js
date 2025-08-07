@@ -6,7 +6,7 @@ exports.generateAdminEmail = (order, shippingInfo, orderItems, paymentMethod, to
 
   return `
     <div style="font-family: Arial; max-width: 600px; margin: auto; border: 1px solid #ccc;">
-      <div style="background-color: #5bbd72; padding: 15px; text-align: center; color: white;">
+      <div style="background-color: #bedaa4; padding: 15px; text-align: center; color: white;">
         <h2>New Order - ${order.orderId}</h2>
       </div>
       <div style="padding: 20px;">

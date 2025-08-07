@@ -50,7 +50,7 @@ exports.placeOrder = async (req, res) => {
         const customerEmailHtml = generateCustomerEmail(
             newOrder,
             shippingInfo,
-            items,
+            orderItems,
             paymentMethod,
             Number(totalAmount),
             Number(shippingCost)
