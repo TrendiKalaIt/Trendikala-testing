@@ -15,7 +15,7 @@ const AddressForm = ({
   useEffect(() => {
     if (!token) {
       // Agar token nahi hai to signin page par redirect karo
-      navigate('/signin?redirect=/checkout');
+      navigate('/signup?redirect=/checkout')
     }
   }, [token, navigate]);
 

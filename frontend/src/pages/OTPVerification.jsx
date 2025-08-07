@@ -17,60 +17,9 @@ const OTPVerification = () => {
 
   // Get redirect path from query, default to '/checkout'
   const params = new URLSearchParams(location.search);
-  const redirectPath = params.get('redirect') || '/checkout';
-
-//  const handleOTPSubmit = async (e) => {
-//   e.preventDefault();
-//   setError('');
-//   dispatch(showLoader());
-
-//   try {
-//     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`, {
-//       email,
-//       otp,
-//     });
-//     console.log("OTP verification response:", response.data);
-
-
-//     const { token, user } = response.data;
-
-//     if (!token || !user) {
-//       throw new Error("Token or user info missing from server response.");
-//     }
-
-//     const { id, name, email: userEmail, profileImage } = user;
-
-//     localStorage.setItem('token', token);
-//     localStorage.setItem('user', JSON.stringify({
-//       id,
-//       name,
-//       email: userEmail,
-//       profileImage: profileImage || null,
-//       token
-//     }));
-//     localStorage.removeItem('emailForOTP');
-
-//     dispatch(login({
-//       id,
-//       name,
-//       email: userEmail,
-//       profileImage: profileImage || null,
-//       token
-//     }));
-
-//     toast.success('Email verified successfully!');
-//     navigate(redirectPath);
-//   } catch (error) {
-//     const message = error.response?.data?.message || error.message || 'OTP verification failed';
-//     setError(message);
-//     toast.error(message);
-//     console.error('OTP verification failed:', error);
-//   } finally {
-//     dispatch(hideLoader());
-//   }
-// };
-
-const handleOTPSubmit = async (e) => {
+  const redirectPath = params.get('redirect') || '/';
+ 
+  const handleOTPSubmit = async (e) => {
     e.preventDefault();
     setError('');
     dispatch(showLoader());
@@ -114,18 +63,21 @@ const handleOTPSubmit = async (e) => {
 
       toast.success('Email verified successfully!');
 
-      // Restore checkout product if available
-      const savedCheckoutState = localStorage.getItem('checkoutState');
+      // DEBUGGING - check localStorage
+      const savedCheckoutState = sessionStorage.getItem('checkoutState');
+
       if (savedCheckoutState) {
         const parsedCheckoutState = JSON.parse(savedCheckoutState);
         dispatch(setOrderDetails(parsedCheckoutState.orderDetails));
-        console.log("✅ Restored checkout details:", parsedCheckoutState.orderDetails);
+        console.log("Restored checkout details:", parsedCheckoutState.orderDetails);
 
-        // Small delay to let Redux update before navigation
+        // Navigate to checkout after slight delay
         setTimeout(() => {
           navigate('/checkout');
         }, 100);
       } else {
+        // No checkoutState - navigate to redirectPath or home
+        console.log('No checkoutState found, redirecting to:', redirectPath);
         navigate(redirectPath);
       }
     } catch (error) {
@@ -139,64 +91,6 @@ const handleOTPSubmit = async (e) => {
     }
   };
 
-// const handleOTPSubmit = async (e) => {
-//   e.preventDefault();
-//   setError('');
-//   dispatch(showLoader());
-
-//   try {
-//     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/verify-otp`, {
-//       email,
-//       otp,
-//     });
-
-//     const { token, user } = response.data;
-
-//     if (!token || !user) {
-//       throw new Error("Token or user info missing from server response.");
-//     }
-
-//     const { id, name, email: userEmail, profileImage } = user;
-
-//     localStorage.setItem('token', token);
-//     localStorage.setItem('user', JSON.stringify({
-//       id,
-//       name,
-//       email: userEmail,
-//       profileImage: profileImage || null,
-//       token
-//     }));
-//     localStorage.removeItem('emailForOTP');
-
-//     dispatch(login({
-//       id,
-//       name,
-//       email: userEmail,
-//       profileImage: profileImage || null,
-//       token
-//     }));
-
-//     toast.success('Email verified successfully!');
-
-//     // ✅ Restore checkout product if available
-//     const savedCheckoutState = localStorage.getItem('checkoutState');
-//     if (savedCheckoutState) {
-//       const parsedCheckoutState = JSON.parse(savedCheckoutState);
-//       dispatch(setOrderDetails(parsedCheckoutState.orderDetails));
-//       navigate('/checkout');
-//     } else {
-//       navigate(redirectPath); // fallback if no checkoutState
-//     }
-
-//   } catch (error) {
-//     const message = error.response?.data?.message || error.message || 'OTP verification failed';
-//     setError(message);
-//     toast.error(message);
-//     console.error('OTP verification failed:', error);
-//   } finally {
-//     dispatch(hideLoader());
-//   }
-// };
 
 
   return (

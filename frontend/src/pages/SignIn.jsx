@@ -16,42 +16,6 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     dispatch(showLoader());
-  //     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-  //       email,
-  //       password,
-  //     });
-
-  //     const userData = {
-  //       id: response.data.user.id,
-  //       name: response.data.user.name,
-  //       email: response.data.user.email,
-  //       profileImage: response.data.user.profileImage || null,
-  //       token: response.data.token,
-  //     };
-
-  //     localStorage.setItem('user', JSON.stringify(userData));
-  //     localStorage.setItem('token', response.data.token);
-  //     dispatch(login(userData));
-
-  //     toast.success('Login successful');
-
-  //     // Redirect logic: get redirect param or default to '/'
-  //     const params = new URLSearchParams(location.search);
-  //     const redirectPath = params.get('redirect') || '/';
-  //     navigate(redirectPath);
-
-  //   } catch (error) {
-  //     toast.error(error.response?.data?.message || 'Login failed');
-  //     console.error('Login error:', error);
-  //   } finally {
-  //     dispatch(hideLoader());
-  //   }
-  // };
-
 
   const handleLogin = async (e) => {
   e.preventDefault();

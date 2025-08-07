@@ -19,6 +19,8 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
+
+
   const handleSignUp = async (e) => {
     e.preventDefault();
 
@@ -40,10 +42,11 @@ const SignUp = () => {
       toast.success(response.data.message);
       localStorage.setItem('emailForOTP', email);
 
-      // After signup success, redirect based on query param
       const params = new URLSearchParams(location.search);
       const redirectPath = params.get('redirect') || '/';
-      navigate(redirectPath);
+
+      navigate(`/verify-otp?redirect=${encodeURIComponent(redirectPath)}`);
+
 
     } catch (error) {
       const msg = error.response?.data?.message || 'Registration failed';
@@ -53,6 +56,7 @@ const SignUp = () => {
       dispatch(hideLoader());
     }
   };
+
 
 
   return (

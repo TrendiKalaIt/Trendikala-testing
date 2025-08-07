@@ -53,7 +53,7 @@ const Home = () => {
       <PosterComponent />
       <Categories />
 
-      <div className="px-10 py-2">
+      <div className="px-10 py-2 mb-3">
         <h2 className="text-2xl font-bold text-[#93A87E] mb-6">Featured Products</h2>
 
         {error && <p className="text-red-600">{error}</p>}

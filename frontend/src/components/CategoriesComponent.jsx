@@ -28,7 +28,7 @@ const Categories = () => {
   }
 
   return (
-    <section className="bg-white p-6 md:p-8 rounded-lg my-8 max-w-7xl mx-auto">
+    <section className="bg-white p-6 md:p-8 rounded-lg max-w-7xl mx-auto">
       <h2 className="text-2xl sm:text-3xl font-semibold text-[#93A87E] text-center mb-8">
         Product Categories
       </h2>

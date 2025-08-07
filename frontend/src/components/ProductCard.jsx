@@ -123,10 +123,10 @@ const handleCheckout = () => {
 
   setIsModalOpen(false);
 
-  if (!user) {
-    navigate('/signin?redirect=/checkout'); // user will be redirected to /checkout after login
-    return;
-  }
+if (!user) {
+  navigate('/signup?redirect=/checkout');
+}
+
 
   dispatch(setOrderDetails(productToBuy));
   navigate('/checkout');

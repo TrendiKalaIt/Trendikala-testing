@@ -24,7 +24,7 @@ const CategoryProducts = () => {
   if (error) return <p className="text-red-600 text-center mt-10">{error}</p>;
 
   return (
-    <div className=" sm:p-8 max-w-7xl mx-auto ">
+    <div className=" sm:p-8 max-w-7xl mx-auto p-8 ">
 
 
       {products.length === 0 ? (

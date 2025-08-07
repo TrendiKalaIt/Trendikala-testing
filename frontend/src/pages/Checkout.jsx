@@ -729,7 +729,7 @@ const CheckoutDetails = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate('/signin?redirect=/checkout');
+      navigate('/signup?redirect=/checkout')
     } else {
       setCheckingAuth(false);
     }
