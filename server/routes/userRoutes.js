@@ -10,12 +10,15 @@ const {
   updateUserProfile,
   getTotalRegisteredUsers ,
 } = require('../controllers/userController');
+//  Validation imports
 const protect = require('../middleware/authMiddleware');
+const { registerValidation, loginValidation } = require('../middleware/validators/userValidator');
+const validate = require('../middleware/validators/validate');
 
 const router = express.Router();
 
-router.post('/register', registerUser);
-router.post('/login', loginUser);
+router.post('/register', registerValidation, validate, registerUser);
+router.post('/login',loginValidation, validate, loginUser);
 router.post('/verify-otp', verifyEmail);
 
 //for reset Password
