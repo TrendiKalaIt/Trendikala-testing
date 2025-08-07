@@ -56,7 +56,7 @@ function CartPage() {
 
   const handleRemove = async (id) => {
     console.log("Cart item id for update/delete:", id);
-    
+
     const product = products.find(p => p._id === id || p.id === id);
     if (!product) return;
     console.log("Quantity update to:", product.quantity);
@@ -247,10 +247,11 @@ function CartPage() {
           </div>
           <button
             onClick={() => {
-              dispatch(clearOrderDetails()); // Clears any 'Buy Now' product details
-              // When navigating to checkout, we dispatch the 'products' from the cart.
-              // The 'CheckoutDetails' page will then need to independently calculate
-              // the 12% shipping cost based on these received products to maintain consistency.
+              if (products.length === 0) {
+                toast('Your cart is empty. Please add items before checking out.');
+                return;
+              }
+              dispatch(clearOrderDetails());
               dispatch(setCartFromCheckout(products));
               toast.success('Proceeding to checkout...');
               setTimeout(() => navigate('/checkout'), 1000);
@@ -259,6 +260,7 @@ function CartPage() {
           >
             Checkout
           </button>
+
         </div>
         {/* --- END OF MODIFIED CART SUMMARY SECTION --- */}
       </div>
