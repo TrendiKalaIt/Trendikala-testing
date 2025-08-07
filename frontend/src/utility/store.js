@@ -39,7 +39,8 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'cart', 'checkout'], // persist karne wale slices
+  whitelist: ['auth', 'checkout'], //  cart remove here fron not save localStorage
+  
 };
 
 // 3. Persisted reducer
