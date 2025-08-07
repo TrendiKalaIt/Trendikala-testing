@@ -40,6 +40,16 @@ export default function Navbar({ links }) {
     return () => window.removeEventListener('mousedown', handleClickOutside);
   }, [showDropdown]);
 
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (searchText.trim()) {
+        navigate(`/search?query=${encodeURIComponent(searchText.trim())}`);
+      }
+    }, 100); 
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchText, navigate]);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     dispatch(logout());
@@ -144,16 +154,10 @@ export default function Navbar({ links }) {
                     placeholder="Search products..."
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' && searchText.trim()) {
-                        navigate(`/search?query=${encodeURIComponent(searchText.trim())}`);
-                        setIsSearchInputOpen(false);
-                        setSearchText('');
-                      }
-                    }}
                     autoFocus
-                    className="w-full text-green-500 p-2 border  rounded-md shadow focus:outline-none focus:ring-2 "
+                    className="w-full text-green-500 p-2 border rounded-md shadow focus:outline-none focus:ring-2"
                   />
+
                 </div>
               )}
 

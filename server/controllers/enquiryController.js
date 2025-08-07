@@ -1,8 +1,5 @@
 const Enquiry = require('../models/enquiryModel');
 
-// @desc    Save enquiry to DB
-// @route   POST /api/enquiries/send-enquiry
-// @access  Public
 exports.sendEnquiry = async (req, res) => {
   try {
     const enquiry = await Enquiry.create(req.body);

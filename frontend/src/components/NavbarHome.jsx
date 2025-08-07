@@ -45,7 +45,9 @@ export default function Navbar({ links }) {
     }
     window.addEventListener('mousedown', handleClick);
     return () => window.removeEventListener('mousedown', handleClick);
-  }, [showUserDropdown]);
+  }, [showUserDropdown]);  
+  
+  
 
   // NavLink active class helper
   const getNavLinkClass = (isActive) => {
@@ -178,7 +180,7 @@ export default function Navbar({ links }) {
             </NavLink>
 
 
-            <div className="relative inline-block">
+            {/* <div className="relative inline-block">
               <Search
                 className={`w-6 h-6 cursor-pointer transition ${isScrolled ? 'text-green-700' : 'lg:text-white'
                   }`}
@@ -205,7 +207,7 @@ export default function Navbar({ links }) {
                   />
                 </div>
               )}
-            </div>
+            </div> */}
 
             {/* User/Login Button with Dropdown */}
             <div className="relative user-dropdown hidden md:block">

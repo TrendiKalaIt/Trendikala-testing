@@ -313,21 +313,34 @@ exports.searchProducts = async (req, res) => {
             });
         }
 
-        const products = await Product.find({
-            $or: [
-                { productName: { $regex: query, $options: 'i' } },
-                { category: { $regex: query, $options: 'i' } },
-                // { description: { $regex: query, $options: 'i' } },
-                // { brand: { $regex: query, $options: 'i' } },
-                // { tags: { $elemMatch: { $regex: query, $options: 'i' } } }, 
-            ],
-        });
+        const products = await Product.aggregate([
+            {
+                $lookup: {
+                    from: 'categories',            
+                    localField: 'category',
+                    foreignField: '_id',
+                    as: 'categoryData'
+                }
+            },
+            { $unwind: '$categoryData' },     
+            {
+                $match: {
+                    $or: [
+                        { productName: { $regex: query, $options: 'i' } },
+                        { brand: { $regex: query, $options: 'i' } },
+                        { description: { $regex: query, $options: 'i' } },
+                        { 'categoryData.name': { $regex: query, $options: 'i' } }
+                    ]
+                }
+            }
+        ]);
 
         res.status(200).json({
             success: true,
             count: products.length,
             data: products,
         });
+
     } catch (error) {
         console.error('Search Error:', error);
         res.status(500).json({
@@ -337,4 +350,5 @@ exports.searchProducts = async (req, res) => {
         });
     }
 };
+
 
