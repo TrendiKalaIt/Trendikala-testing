@@ -6,6 +6,7 @@ const AddressForm = ({
   token,
   setShowForm,
   setSavedAddresses,
+  setSelectedAddress,
   guestMode = false,
   address = null,
   onAddressChange = () => { },
@@ -65,6 +66,7 @@ const AddressForm = ({
     return errors;
   };
 
+
   const fetchAddressByPincode = async (pincode) => {
     try {
       const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
@@ -83,6 +85,8 @@ const AddressForm = ({
       return null;
     }
   };
+
+
 
   const handleInputChange = async (field, value) => {
     const newFormData = { ...formData, [field]: value };
@@ -148,10 +152,17 @@ const AddressForm = ({
         emailAddress: '',
       });
 
-      const res = await axios.default.get('/api/addresses/my', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setSavedAddresses(res.data.addresses || []);
+      // ✅ Refresh address list and select the latest one (no error toast if this fails)
+      try {
+        const res = await axios.default.get('/api/addresses/my', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setSavedAddresses(res.data.addresses || []);
+        setSelectedAddress(res.data.addresses?.[res.data.addresses.length - 1]);
+      } catch (err) {
+        console.warn('Address list refresh failed silently:', err);
+      }
+
     } catch (error) {
       const errorMessage = error.response?.data?.message || 'Failed to save address.';
       toast.error(errorMessage);

@@ -50,16 +50,37 @@ exports.saveAddress = async (req, res) => {
       emailAddress,
     };
 
+    // const alreadyExists = user.addresses.some(
+    //   (addr) =>
+    //     addr.streetAddress === newAddress.streetAddress &&
+    //     addr.townCity === newAddress.townCity
+    // );
+
+    // if (!alreadyExists) {
+    //   user.addresses.push(newAddress);
+    //   await user.save();
+    // }
+
     const alreadyExists = user.addresses.some(
       (addr) =>
+        addr.fullName === newAddress.fullName &&
         addr.streetAddress === newAddress.streetAddress &&
-        addr.townCity === newAddress.townCity
+        addr.apartment === newAddress.apartment &&
+        addr.townCity === newAddress.townCity &&
+        addr.state === newAddress.state &&
+        addr.zipcode === newAddress.zipcode &&
+        addr.phoneNumber === newAddress.phoneNumber &&
+        addr.emailAddress === newAddress.emailAddress
     );
 
     if (!alreadyExists) {
       user.addresses.push(newAddress);
       await user.save();
     }
+
+
+
+
 
     res.status(200).json({ message: 'Address saved successfully', addresses: user.addresses });
   } catch (err) {
