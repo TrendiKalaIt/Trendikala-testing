@@ -74,7 +74,7 @@ const ProductCard = ({ product = {} }) => {
         setSelectedSize('');
         setQuantity(1);
       })
-      .catch(() => toast.error('Failed to add to cart'));
+      .catch(() => toast('Please login first to continue.'));
   };
 
 //   const handleCheckout = () => {
