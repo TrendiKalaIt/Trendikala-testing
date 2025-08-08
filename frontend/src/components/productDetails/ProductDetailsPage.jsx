@@ -25,7 +25,35 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
 
 
+  // const handleAddToCart = () => {
+  //   const cartItem = {
+  //     product: product._id,
+  //     productName: product.productName,
+  //     price: product.discountPrice,
+  //     selectedColor,
+  //     selectedSize,
+  //     quantity,
+  //     thumbnail: product.media?.[0]?.url || '',
+  //   };
+
+  //   console.log('Cart item to add:', cartItem);
+
+  //   dispatch(addToCart([cartItem]))
+  //     .unwrap()
+  //     .then(() => {
+  //       toast.success('Item added to cart!');
+  //     })
+  //     .catch((err) => {
+  //       toast.error(`Error: ${err}`);
+  //     });
+  // };
+
   const handleAddToCart = () => {
+    if (!product || product.stock <= 0) {
+      toast.error('Product is out of stock');
+      return;
+    }
+
     const cartItem = {
       product: product._id,
       productName: product.productName,
@@ -47,6 +75,7 @@ const ProductDetailPage = () => {
         toast.error(`Error: ${err}`);
       });
   };
+
 
   const getAvgRating = (reviews) => {
     if (!reviews?.length) return 0;
@@ -246,10 +275,15 @@ const ProductDetailPage = () => {
             </div>
             <button
               onClick={handleAddToCart}
-              className="w-full bg-[#93A87E] hover:bg-[#80996D] text-white font-medium py-1 md:px-6 text-xl rounded-full shadow-lg transition"
+              disabled={product.stock <= 0}
+              className={`w-full font-medium py-1 md:px-6 text-xl rounded-full shadow-lg transition ${product.stock <= 0
+                  ? 'bg-gray-400 cursor-not-allowed text-white'
+                  : 'bg-[#93A87E] hover:bg-[#80996D] text-white'
+                }`}
             >
-              Add to Cart
+              {product.stock <= 0 ? 'Out of Stock' : 'Add to Cart'}
             </button>
+
 
           </div>
         </div>

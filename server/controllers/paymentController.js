@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const Razorpay = require('razorpay');
 
 const Order = require('../models/Order');
+const Product = require('../models/Product.js');
 const { generateCustomerEmail } = require('../utils/customerEmailTemplate.js');
 const { generateAdminEmail } = require('../utils/adminEmailTemplate.js');
 const sendEmail = require('../utils/sendEmail');
@@ -78,7 +79,19 @@ exports.verifyPayment = async (req, res) => {
         // Generate incremental orderId
         const lastOrder = await Order.findOne().sort({ orderId: -1 }).select('orderId');
         const nextOrderId = (lastOrder && lastOrder.orderId ? lastOrder.orderId : 0) + 1;
+        for (const item of items) {
+            const product = await Product.findById(item.product);
+            if (!product) {
+                return res.status(400).json({ success: false, message: `Product not found.` });
+            }
 
+            if (product.stock < item.quantity) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Product "${product.productName}" is out of stock or has only ${product.stock} left.`,
+                });
+            }
+        }
         // Save order
         const newOrder = new Order({
             user: req.user?._id || null,
@@ -99,6 +112,18 @@ exports.verifyPayment = async (req, res) => {
         });
 
         await newOrder.save();
+
+
+        // *** Stock update logic ***
+        for (const item of items) {
+            const product = await Product.findById(item.product);
+            if (!product) continue;
+
+            product.stock = Math.max(product.stock - item.quantity, 0);
+
+            await product.save();
+        }
+
 
         // Generate emails — pass numbers (no toFixed here)
         const customerEmailHtml = generateCustomerEmail(

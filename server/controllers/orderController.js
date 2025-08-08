@@ -5,11 +5,13 @@ const Order = require('../models/Order.js');
 const Cart = require('../models/Cart.js');
 const sendEmail = require('../utils/sendEmail');
 const Counter = require('../models/counterSchema');
+const Product = require('../models/Product.js');
+
 
 const dotenv = require('dotenv');
 dotenv.config();
 
-// Place order for  logged-in user
+
 exports.placeOrder = async (req, res) => {
     try {
         const userId = req.user._id;
@@ -26,6 +28,21 @@ exports.placeOrder = async (req, res) => {
             orderItems = cart.items;
         }
 
+        //  Validate stock before placing the order
+        for (const item of orderItems) {
+            const product = await Product.findById(item.product);
+            if (!product) {
+                return res.status(400).json({ message: 'Product not found' });
+            }
+
+            if (product.stock < item.quantity) {
+                return res.status(400).json({
+                    message: `Product "${product.productName}" is out of stock or has only ${product.stock} left.`,
+                });
+            }
+        }
+
+        // Create new order
         const newOrder = new Order({
             user: userId,
             items: orderItems,
@@ -37,16 +54,30 @@ exports.placeOrder = async (req, res) => {
             paymentStatus: paymentMethod === 'Razorpay' ? 'Paid' : 'Pending',
         });
 
+        // Generate orderId
         const lastOrder = await Order.findOne().sort({ orderId: -1 }).select('orderId');
         newOrder.orderId = (lastOrder && lastOrder.orderId ? lastOrder.orderId : 0) + 1;
 
         await newOrder.save();
 
+        // Update stock for each product in the order
+        for (const item of orderItems) {
+            // Assuming item.product holds the product ID, and item.quantity holds quantity ordered
+            const product = await Product.findById(item.product);
+            if (!product) continue;
+
+            // Decrease stock but don't go below 0
+            product.stock = Math.max(product.stock - item.quantity, 0);
+
+            await product.save();
+        }
+
+        // Clear cart if items were taken from cart
         if (!items || items.length === 0) {
             await Cart.findOneAndDelete({ user: userId });
         }
 
-        // Generate email HTML using imported functions
+        // Generate emails
         const customerEmailHtml = generateCustomerEmail(
             newOrder,
             shippingInfo,
@@ -69,6 +100,68 @@ exports.placeOrder = async (req, res) => {
         res.status(500).json({ message: 'Failed to place order', error: err.message });
     }
 };
+
+
+// // Place order for  logged-in user
+// exports.placeOrder = async (req, res) => {
+//     try {
+//         const userId = req.user._id;
+//         const { shippingInfo, paymentMethod, items, shippingCost, totalAmount } = req.body;
+
+//         let orderItems;
+//         if (items && Array.isArray(items) && items.length > 0) {
+//             orderItems = items;
+//         } else {
+//             const cart = await Cart.findOne({ user: userId });
+//             if (!cart || cart.items.length === 0) {
+//                 return res.status(400).json({ message: 'Cart is empty' });
+//             }
+//             orderItems = cart.items;
+//         }
+
+//         const newOrder = new Order({
+//             user: userId,
+//             items: orderItems,
+//             shippingInfo,
+//             paymentMethod,
+//             shippingCost,
+//             totalAmount,
+//             shippingOption: 'fixed_12_percent_delivery',
+//             paymentStatus: paymentMethod === 'Razorpay' ? 'Paid' : 'Pending',
+//         });
+
+//         const lastOrder = await Order.findOne().sort({ orderId: -1 }).select('orderId');
+//         newOrder.orderId = (lastOrder && lastOrder.orderId ? lastOrder.orderId : 0) + 1;
+
+//         await newOrder.save();
+
+//         if (!items || items.length === 0) {
+//             await Cart.findOneAndDelete({ user: userId });
+//         }
+
+//         // Generate email HTML using imported functions
+//         const customerEmailHtml = generateCustomerEmail(
+//             newOrder,
+//             shippingInfo,
+//             orderItems,
+//             paymentMethod,
+//             Number(totalAmount),
+//             Number(shippingCost)
+//         );
+//         const adminEmailHtml = generateAdminEmail(newOrder, shippingInfo, orderItems, paymentMethod, totalAmount, shippingCost);
+
+//         // Send emails
+//         await sendEmail(shippingInfo.emailAddress, `Your TrendiKala Order ${newOrder.orderId} Confirmed!`, customerEmailHtml);
+//         if (process.env.ADMIN_EMAIL) {
+//             await sendEmail(process.env.ADMIN_EMAIL, `NEW ORDER: ${newOrder._id} from ${shippingInfo.fullName}`, adminEmailHtml);
+//         }
+
+//         res.status(201).json({ message: 'Order placed successfully and emails sent', order: newOrder });
+//     } catch (err) {
+//         console.error('Order placement error:', err);
+//         res.status(500).json({ message: 'Failed to place order', error: err.message });
+//     }
+// };
 
 // Get all orders for a logged-in user
 exports.getMyOrders = async (req, res) => {
