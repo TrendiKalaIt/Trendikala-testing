@@ -50,16 +50,6 @@ exports.saveAddress = async (req, res) => {
       emailAddress,
     };
 
-    // const alreadyExists = user.addresses.some(
-    //   (addr) =>
-    //     addr.streetAddress === newAddress.streetAddress &&
-    //     addr.townCity === newAddress.townCity
-    // );
-
-    // if (!alreadyExists) {
-    //   user.addresses.push(newAddress);
-    //   await user.save();
-    // }
 
     const alreadyExists = user.addresses.some(
       (addr) =>
@@ -84,7 +74,7 @@ exports.saveAddress = async (req, res) => {
 
     res.status(200).json({ message: 'Address saved successfully', addresses: user.addresses });
   } catch (err) {
-    console.error('❌ Save address error:', err);
+    console.error(' Save address error:', err);
     res.status(500).json({ message: 'Failed to save address', error: err.message });
   }
 };
