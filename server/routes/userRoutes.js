@@ -6,6 +6,7 @@ const {
   verifyEmail,
   forgotPassword,
   resetPassword,
+  resendOtp,
   getUserProfile,
   updateUserProfile,
   getTotalRegisteredUsers ,
@@ -19,7 +20,9 @@ const router = express.Router();
 
 router.post('/register', registerValidation, validate, registerUser);
 router.post('/login',loginValidation, validate, loginUser);
+router.post('/resend-otp', resendOtp);
 router.post('/verify-otp', verifyEmail);
+
 
 //for reset Password
 router.post('/forgot-password', forgotPassword);

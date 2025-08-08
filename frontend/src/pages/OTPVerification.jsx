@@ -18,7 +18,23 @@ const OTPVerification = () => {
   // Get redirect path from query, default to '/checkout'
   const params = new URLSearchParams(location.search);
   const redirectPath = params.get('redirect') || '/';
- 
+
+
+  const handleResendOTP = async () => {
+    if (!email) return toast.error("No email found to resend OTP.");
+
+    try {
+      dispatch(showLoader());
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/resend-otp`, { email });
+      toast.success("OTP resent successfully!");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to resend OTP.");
+    } finally {
+      dispatch(hideLoader());
+    }
+  };
+
+
   const handleOTPSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -168,6 +184,14 @@ const OTPVerification = () => {
               {error}
             </div>
           )}
+          {/* resend otp */}
+          <button
+            type="button"
+            className="text-sm text-green-500 hover:underline my-2 mb-4"
+            onClick={handleResendOTP}
+          >
+            Didn't receive OTP? Resend
+          </button>
 
           {/* Submit */}
           <div>

@@ -267,6 +267,78 @@ exports.verifyEmail = async (req, res) => {
   }
 };
 
+// RESEND OTP Controller
+exports.resendOtp = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Check if user is already registered and verified
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already verified. Please login." });
+    }
+
+    // Check if the user exists in temp store
+    const tempUser = tempUsers[email];
+    if (!tempUser) {
+      return res.status(404).json({ message: "No pending registration found for this email." });
+    }
+
+    // Generate new OTP
+    const otp = generateOTP();
+    const otpExpires = Date.now() + 10 * 60 * 1000;
+
+    // Update in temp storage
+    tempUsers[email].otp = otp;
+    tempUsers[email].otpExpires = otpExpires;
+
+    // Prepare email HTML (same format as before)
+    const emailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; background-color: #ffffff;">
+        <div style="background-color: #5bbd72; padding: 15px 30px; text-align: start; color: #ffffff;">
+          <h1 style="margin: 0; font-size: 28px; font-weight: bold;">Resend OTP</h1>
+          <p style="font-size: 16px; margin-top: 15px;">Hi ${tempUser.name.split(' ')[0]},</p>
+          <p style="font-size: 16px; margin-top: 5px;">Here is your new OTP to verify your email with Trendikala:</p>
+        </div>
+
+        <div style="padding: 30px; text-align: center;">
+          <p style="font-size: 32px; font-weight: bold; color: #5bbd72; margin-bottom: 25px; letter-spacing: 5px;">
+            ${otp}
+          </p>
+          <p style="font-size: 14px; color: #555;">
+            This OTP is valid for <strong>10 minutes</strong>.
+          </p>
+        </div>
+
+        <div style="padding: 20px 30px; text-align: center; font-size: 12px; color: #999; background-color: #f8f8f8;">
+          &copy; ${new Date().getFullYear()} Trendikala.
+        </div>
+      </div>
+    `;
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    await transporter.sendMail({
+      to: email,
+      subject: 'Resend OTP - Trendikala',
+      html: emailHtml
+    });
+
+    return res.status(200).json({ message: "OTP resent successfully. Please check your email." });
+
+  } catch (error) {
+    console.error('Resend OTP error:', error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 
 // LOGIN USER
 exports.loginUser = async (req, res) => {
