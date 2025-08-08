@@ -192,7 +192,7 @@ if (!user) {
         {/* Content Section */}
         <div className="h-2/5 p-3 flex flex-col justify-between bg-white rounded-b-3xl">
           <div>
-            <p className="text-sm text-[#93a87e86] font-semibold">{category?.name || 'Category'}</p>
+            <p className="text-sm text-[#93a87e86] font-semibold"> { category?.name || 'Category'}</p>
             <h3
               onClick={handleNavigate}
               className="text-md font-bold text-[#93A87E] truncate cursor-pointer hover:underline"

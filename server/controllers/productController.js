@@ -1,6 +1,7 @@
 // controllers/productController.js
 const Product = require('../models/Product'); // Adjust path as needed
 const mongoose = require('mongoose');
+const category = require('../models/Category')
 
 // Create a new product
 exports.createProduct = async (req, res) => {
@@ -319,17 +320,17 @@ exports.searchProducts = async (req, res) => {
                     from: 'categories',            
                     localField: 'category',
                     foreignField: '_id',
-                    as: 'categoryData'
+                    as: 'category'
                 }
             },
-            { $unwind: '$categoryData' },     
+            { $unwind: '$category' },     
             {
                 $match: {
                     $or: [
                         { productName: { $regex: query, $options: 'i' } },
-                        { brand: { $regex: query, $options: 'i' } },
-                        { description: { $regex: query, $options: 'i' } },
-                        { 'categoryData.name': { $regex: query, $options: 'i' } }
+                        // { brand: { $regex: query, $options: 'i' } },
+                        // { description: { $regex: query, $options: 'i' } },
+                       // { category: { $regex: query, $options: 'i' } }
                     ]
                 }
             }

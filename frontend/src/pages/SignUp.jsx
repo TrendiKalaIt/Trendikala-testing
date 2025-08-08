@@ -51,8 +51,16 @@ const SignUp = () => {
     } catch (error) {
       const msg = error.response?.data?.message || 'Registration failed';
       console.error('Signup Error:', msg);
-      toast(msg);
-    } finally {
+      toast.error(msg);
+
+      // Agar OTP already sent hai to waha redirect bhi karo:
+      if (msg.includes('OTP already sent')) {
+        const params = new URLSearchParams(location.search);
+        const redirectPath = params.get('redirect') || '/';
+        navigate(`/verify-otp?redirect=${encodeURIComponent(redirectPath)}`);
+      }
+    }
+    finally {
       dispatch(hideLoader());
     }
   };
