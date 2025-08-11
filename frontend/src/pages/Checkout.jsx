@@ -173,12 +173,12 @@ const CheckoutSection = ({
         ))
       )}
       <div className="flex justify-between text-gray-700 pt-4">
-        <span>Subtotal:</span>
+        <span>Subtotal</span>
         <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
       </div>
       <div className="flex justify-between text-gray-700">
-        <span>Delivery Charge (12%):</span>
-        <span className="font-semibold text-green-600">₹{shipping.toFixed(2)}</span>
+        <span>Delivery Charge</span>
+        <span className="text-sm text-green-600">₹{shipping.toFixed(2)}</span>
       </div>
       <div className="flex justify-between text-lg font-bold text-gray-900 border-t-2 border-gray-200 pt-4">
         <span>Total:</span>
@@ -269,8 +269,8 @@ const CheckoutDetails = () => {
   const cart = orderDetails ? [orderDetails] : cartFromCheckout;
 
   const subtotal = cart.reduce((sum, p) => sum + (p.quantity || 1) * p.discountPrice, 0);
-  const DELIVERY_CHARGE_PERCENTAGE = 0.12;
-  const shipping = subtotal * DELIVERY_CHARGE_PERCENTAGE;
+  const DELIVERY_CHARGE = 100;
+  const shipping = DELIVERY_CHARGE;
   const total = subtotal + shipping;
 
   const finalSelectedAddress = selectedAddress;

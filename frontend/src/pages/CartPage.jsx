@@ -72,9 +72,11 @@ function CartPage() {
 
   const subtotal = products.reduce((sum, p) => sum + p.discountPrice * p.quantity, 0);
 
-  // --- START OF MODIFIED LOGIC FOR 12% DELIVERY CHARGE ---
-  const DELIVERY_CHARGE_PERCENTAGE = 0.12; // Define 12% as a constant
-  const deliveryCharge = subtotal * DELIVERY_CHARGE_PERCENTAGE; // Calculate 12% of subtotal
+  // // --- START OF MODIFIED LOGIC FOR 12% DELIVERY CHARGE ---
+  // const DELIVERY_CHARGE_PERCENTAGE = 0.12; // Define 12% as a constant
+  // const deliveryCharge = subtotal * DELIVERY_CHARGE_PERCENTAGE; // Calculate 12% of subtotal
+  const DELIVERY_CHARGE = 100; // Fixed delivery charge in rupees
+  const deliveryCharge = DELIVERY_CHARGE; // Always ₹100
 
   // The 'shippingCost' used in the total calculation now directly uses the 'deliveryCharge'
   const shippingCost = deliveryCharge;
@@ -222,13 +224,14 @@ function CartPage() {
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Cart summary</h2>
           <div className="space-y-4">
             {/* Displaying the fixed 12% Delivery Charge */}
-            <ShippingRadio
-              value="deliveryCharge" // A new value to uniquely identify this fixed option
-              label="Delivery Charge (12%)"
-              displayPrice={`₹${deliveryCharge.toFixed(2)}`} // Display the calculated 12% charge
-            />
-            {/* If you had other shipping options to display (but not select), you'd put them here.
-                For now, only the 12% charge is shown */}
+            {/* <ShippingRadio
+              value="deliveryCharge"
+              label="Delivery Charge"
+              displayPrice={`₹${deliveryCharge.toFixed(2)}`}
+            /> */}
+            <span className="text-sm text-gray-600">Delivery Charge  ₹{deliveryCharge.toFixed(2)}</span>
+          
+            {/* fix 100Rs delivery charge */}
           </div>
           <div className="border-t border-gray-200 mt-6 pt-4 space-y-3">
             <div className="flex justify-between text-gray-700 text-lg">
@@ -236,11 +239,11 @@ function CartPage() {
               <span className="font-medium">₹{subtotal.toFixed(2)}</span>
             </div>
             {/* Explicitly showing the Delivery Charge line */}
-            <div className="flex justify-between text-gray-700 text-lg">
+            <div className="flex justify-between text-gray-700 text-sm">
               <span>Delivery Charge</span>
               <span className="font-medium">₹{deliveryCharge.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-2xl font-semibold text-gray-800">
+            <div className="flex justify-between text-xl  text-gray-800">
               <span>Total</span>
               <span>₹{total.toFixed(2)}</span>
             </div>
