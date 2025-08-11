@@ -19,8 +19,9 @@ const Layout = () => {
 
   return (
     <div className="flex flex-col min-h-screen relative">
-      {loading && <Spinner />}
+     
       <NavbarHome links={navLinks} />
+       {loading && <Spinner />}
       <main className="flex-grow">
         <Outlet />
         <Badge/>

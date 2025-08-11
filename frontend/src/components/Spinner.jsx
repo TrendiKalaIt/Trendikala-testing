@@ -3,7 +3,7 @@ import {Logo} from '../assets/assets'
 
 const Spinner = () => {
   return (
-    <div className="flex flex-col justify-center items-center h-screen border">
+    <div className="flex flex-col justify-center items-center h-screen ">
        <div>
          <img src={Logo} className='h-24 animate-pulse' alt="" />
        </div>

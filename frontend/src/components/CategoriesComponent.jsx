@@ -14,7 +14,7 @@ const Categories = () => {
         if (res.data?.data?.length > 0) {
           setCategories(res.data.data);
         } else {
-          setError('⚠️ No categories found from server.');
+          setError(' No categories found from server.');
         }
       } catch (err) {
         setError('Something went wrong while loading categories.');
@@ -42,7 +42,7 @@ const Categories = () => {
                 key={category._id}
                 className="    flex flex-col items-center justify-center
                 cursor-pointer transform transition-transform duration-200 hover:scale-105 
-                focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+                focus:outline-none "
                 tabIndex="0"
                 role="button"
                 aria-label={`View ${category.name || 'Unknown'} category`}
