@@ -33,7 +33,7 @@ const ComingSoon = () => {
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(interval);
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  }, []); 
 
   return (
     // Main container using flexbox for the two-column layout
@@ -77,7 +77,7 @@ const ComingSoon = () => {
         </div>
       </div>
 
-      {/* Right section with the image, takes up 1/2 of the screen on desktop */}
+      
       <div className="flex-1 md:w-1/2 h-screen overflow-hidden flex items-center justify-center">
         <video
           src={commingSoonvideo} // ← replace with your own video URL
@@ -95,7 +95,7 @@ const ComingSoon = () => {
   );
 };
 
-// Main App component to render the ComingSoon component
+
 const App = () => {
   return <ComingSoon />;
 };
