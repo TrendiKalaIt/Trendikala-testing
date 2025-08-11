@@ -8,6 +8,9 @@ import { useDispatch } from 'react-redux';
 import { showLoader, hideLoader } from '../utility/loaderSlice';
 
 const SignUp = () => {
+
+
+
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [fullName, setFullName] = useState('');
@@ -18,6 +21,9 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+    // Get redirect query param from URL
+  const params = new URLSearchParams(location.search);
+  const redirectPath = params.get('redirect') || '/';
 
 
 
@@ -198,7 +204,7 @@ const SignUp = () => {
           <button
             type="button"
             className="border w-full border-[#35894E] text-[#35894E] font-bold py-2 px-6 rounded-full hover:bg-green-50 transition duration-200"
-            onClick={() => navigate('/signin')}
+            onClick={() => navigate(`/signin?redirect=${encodeURIComponent(redirectPath)}`)}
           >
             SIGN IN
           </button>

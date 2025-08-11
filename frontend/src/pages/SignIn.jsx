@@ -15,53 +15,55 @@ const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const redirectPath = params.get('redirect') || '/';
 
 
   const handleLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!/\S+@\S+\.\S+/.test(email)) {
-    toast.error("Enter a valid email");
-    return;
-  }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      toast.error("Enter a valid email");
+      return;
+    }
 
-  if (!password.trim()) {
-    toast.error("Password is required");
-    return;
-  }
+    if (!password.trim()) {
+      toast.error("Password is required");
+      return;
+    }
 
-  try {
-    dispatch(showLoader());
+    try {
+      dispatch(showLoader());
 
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
-      email,
-      password,
-    });
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+        email,
+        password,
+      });
 
-    const userData = {
-      id: response.data.user.id,
-      name: response.data.user.name,
-      email: response.data.user.email,
-      profileImage: response.data.user.profileImage || null,
-      token: response.data.token,
-    };
+      const userData = {
+        id: response.data.user.id,
+        name: response.data.user.name,
+        email: response.data.user.email,
+        profileImage: response.data.user.profileImage || null,
+        token: response.data.token,
+      };
 
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('token', response.data.token);
-    dispatch(login(userData));
-    toast.success('Login successful');
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', response.data.token);
+      dispatch(login(userData));
+      toast.success('Login successful');
 
-    const params = new URLSearchParams(location.search);
-    const redirectPath = params.get('redirect') || '/';
-    navigate(redirectPath);
+      const params = new URLSearchParams(location.search);
+      const redirectPath = params.get('redirect') || '/';
+      navigate(redirectPath);
 
-  } catch (error) {
-    toast.error(error.response?.data?.message || 'Login failed');
-    console.error('Login error:', error);
-  } finally {
-    dispatch(hideLoader());
-  }
-};
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Login failed');
+      console.error('Login error:', error);
+    } finally {
+      dispatch(hideLoader());
+    }
+  };
 
   return (
     <div className="h-full bg-gray-50 flex flex-col items-center pt-8 px-4 mb-2">
@@ -134,7 +136,7 @@ const SignIn = () => {
           <button
             type="button"
             className="w-full border border-[#35894E] text-[#35894E] font-bold py-2 px-6 rounded-full hover:bg-green-50 transition"
-            onClick={() => navigate('/signup')}
+            onClick={() => navigate(`/signup?redirect=${encodeURIComponent(redirectPath)}`)}
           >
             CREATE ACCOUNT
           </button>
