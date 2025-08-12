@@ -140,7 +140,9 @@ const AddressForm = ({
       );
 
       toast.success('Address saved!');
-      setSavedAddresses(prev => [...prev, response.data.address]);
+      // setSavedAddresses(prev => [...prev, response.data.address]);
+      setSavedAddresses(response.data.addresses);  
+      setSelectedAddress(response.data.addresses[response.data.addresses.length - 1]);
       setShowForm(false);
       setFormData({
         fullName: '',
