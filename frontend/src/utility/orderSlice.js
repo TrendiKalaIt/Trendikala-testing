@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_API_URL || '';
 
-//  Place order (logged-in or guest)
+//  Place order 
 export const placeOrder = createAsyncThunk(
   'order/placeOrder',
   async ({ orderPayload, token }, { rejectWithValue }) => {
@@ -118,12 +118,12 @@ export const {
   setBuyNowProduct,
   clearBuyNowProduct,
   toggleOrderHistory,
-  setOrderDetails, // export the new action here
+  setOrderDetails, 
 } = orderSlice.actions;
 
 export default orderSlice.reducer;
 
-//  Selectors
+
 export const selectPlacedOrder = (state) => state.order.currentOrder;
 export const selectMyOrders = (state) => state.order.myOrders;
 export const selectOrderLoading = (state) => state.order.loading;

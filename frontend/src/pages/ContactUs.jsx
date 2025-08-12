@@ -35,7 +35,6 @@ const ContactUs = () => {
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white shadow-md rounded-xl">
-          {/* Contact Form Section */}
           <div className=" p-8 ">
             <h2 className="text-2xl font-bold text-green-600 mb-6">Send Us a Message</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -103,7 +102,6 @@ const ContactUs = () => {
             </form>
           </div>
 
-          {/* Contact Info Section */}
           <div className=" p-8 ">
             <h2 className="text-2xl font-bold text-green-600 mb-6">Contact Information</h2>
             <div className="space-y-6">

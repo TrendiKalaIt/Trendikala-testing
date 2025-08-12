@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react'; // Import icons from Lucide React
+import { ChevronDown, ChevronUp } from 'lucide-react'; 
 
 const FAQPage = () => {
-  // State to manage which FAQ item is currently open within the selected topic
   const [openFAQIndex, setOpenFAQIndex] = useState(null);
-  // State to manage the currently selected topic from the left navigation
   const [selectedTopic, setSelectedTopic] = useState('General Questions'); // Default selected topic
 
-  // Data structure for topics and their associated FAQs
   const faqData = [
     {
       topic: 'General Questions',
@@ -72,10 +69,8 @@ const FAQPage = () => {
   ];
 
 
-  // Find the FAQs for the currently selected topic
   const currentTopicFAQs = faqData.find(data => data.topic === selectedTopic)?.faqs || [];
 
-  // Reset openFAQIndex when the selected topic changes
   useEffect(() => {
     setOpenFAQIndex(null);
   }, [selectedTopic]);
@@ -87,7 +82,6 @@ const FAQPage = () => {
   return (
     <div className="min-h-screen   p-8 font-sans">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
-        {/* Left Side: Topic Navigation */}
         <div className="w-full lg:w-1/4">
           <h2 className="text-xl font-bold mb-6 ">Topic Navigation</h2>
           <nav className="space-y-4 mb-12">
@@ -108,7 +102,6 @@ const FAQPage = () => {
 
         </div>
 
-        {/* Right Side: Common Questions (FAQs) */}
         <div className="w-full lg:w-3/4">
           <h1 className="text-4xl font-bold mb-8 ">{selectedTopic}</h1>
           <div className="space-y-4">

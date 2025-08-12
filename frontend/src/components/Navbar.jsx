@@ -69,7 +69,7 @@ export default function Navbar({ links }) {
   };
 
 
-  // Add this function inside Navbar component, before return
+  
   const getProfileImageUrl = () => {
     if (!user?.profileImage) return null;
 
@@ -169,7 +169,7 @@ export default function Navbar({ links }) {
                 onClick={() => setShowDropdown(!showDropdown)}
                 className="flex items-center gap-2 hover:text-green-500 focus:outline-none"
               >
-                {/* Profile image or initials */}
+                {/* Profile image/ initials */}
                 {profileImageUrl ? (
                   <img
                     src={profileImageUrl}

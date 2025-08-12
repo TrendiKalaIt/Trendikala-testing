@@ -16,7 +16,7 @@ const CheckCircleIcon = () => (
 );
 
 const ReviewCard = ({ review }) => (
-  <div className="bg-white p-6 rounded-xl shadow-sm border border-[#35894E] flex flex-col justify-between">
+  <div className="bg-white p-6 hover:shadow-lg rounded-xl shadow-sm border border-[#35894E] flex flex-col justify-between">
     <div>
       <div className="flex mb-2">
         {[...Array(5)].map((_, i) => (
@@ -60,7 +60,7 @@ const ProductReviews = ({ reviews = [], error = null }) => {
       toast.error(`Failed to load reviews: ${error}`);
       hasShownToastRef.current = true;
     }
-    // Removed success toast on loading reviews to avoid duplicate toasts
+   
   }, [error]);
 
   return (

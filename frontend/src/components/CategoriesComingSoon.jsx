@@ -7,21 +7,19 @@ import commingSoonvideo from '../assets/comming soon.mp4';
 const ComingSoon = () => {
   const [timeLeft, setTimeLeft] = useState({});
 
-  // Set the launch date to August 15, 2025, at midnight
-  const launchDate = new Date("2025-08-15T00:00:00");
+  // Set the launch date to August 22, 2025, at midnight
+  const launchDate = new Date("2025-08-22T00:00:00");
 
   useEffect(() => {
-    // Set up an interval to update the countdown every second
+
     const interval = setInterval(() => {
       const now = new Date();
-      const difference = launchDate - now; // Calculate the time difference in milliseconds
+      const difference = launchDate - now; 
 
       if (difference <= 0) {
-        // If the launch date has passed, clear the interval and set all time units to 0
         clearInterval(interval);
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
       } else {
-        // Calculate days, hours, minutes, and seconds from the difference
         setTimeLeft({
           days: Math.floor(difference / (1000 * 60 * 60 * 24)),
           hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
@@ -29,17 +27,14 @@ const ComingSoon = () => {
           seconds: Math.floor((difference / 1000) % 60),
         });
       }
-    }, 1000); // Update every 1000 milliseconds (1 second)
+    }, 1000); 
 
-    // Clean up the interval when the component unmounts
     return () => clearInterval(interval);
   }, []); 
 
   return (
-    // Main container using flexbox for the two-column layout
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-600 font-sans text-gray-800">
 
-      {/* Left section with text, timer, and social media icons */}
       <div className=" md:w-1/2 flex-1 p-8 md:p-20 flex flex-col justify-between">
         <div>
           <h1 className="text-6xl  font-semibold mb-4 mt-8 md:mt-0 tracking-tight text-white uppercase">
@@ -49,7 +44,6 @@ const ComingSoon = () => {
             We’re working on a fresh collection of fashionable and comfortable clothing. Stay connected for the big reveal.
           </p>
 
-          {/* Countdown timer display, replacing the email section */}
           <div className="flex justify-start space-x-4 md:space-x-6 ">
             {["days", "hours", "minutes", "seconds"].map((unit) => (
               <div key={unit} className="text-center">
@@ -62,7 +56,6 @@ const ComingSoon = () => {
           </div>
         </div>
 
-        {/* Social media icons at the bottom of the left column */}
         <div className="flex space-x-6  md:mt-0 text-[#749d63]">
           <a href="#" className="hover:text-gray-700 transition">
             <Facebook size={24} />

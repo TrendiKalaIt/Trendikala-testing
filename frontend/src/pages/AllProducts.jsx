@@ -38,7 +38,6 @@ const Products = () => {
       <div className="px-4">
         <h2 className="text-2xl text-[#93A87E] mb-6">Featured Products</h2>
 
-        {/* Remove local loading message — global spinner shows automatically */}
 
         {error && <p className="text-red-600">{error}</p>}
 

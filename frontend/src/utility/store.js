@@ -39,7 +39,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth', 'checkout'], //  cart remove here fron not save localStorage
+  whitelist: ['auth', 'checkout'],
   
 };
 

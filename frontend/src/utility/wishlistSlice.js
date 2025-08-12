@@ -81,7 +81,7 @@ const wishlistSlice = createSlice({
     error: null,
   },
   reducers: {
-    // Optional: Add non-async actions if needed
+    
   },
   extraReducers: (builder) => {
     builder

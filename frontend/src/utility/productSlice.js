@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  products: [], // This must match the key used in your selectors
+  products: [],
 };
 
 const productSlice = createSlice({

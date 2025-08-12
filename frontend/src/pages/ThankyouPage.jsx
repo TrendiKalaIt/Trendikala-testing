@@ -11,7 +11,6 @@ const Thankyou = () => {
 
   const orderDetails = useSelector(selectPlacedOrder);
 
-  // Show loading if orderDetails not available yet
   if (!orderDetails) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -20,20 +19,19 @@ const Thankyou = () => {
     );
   }
 
-  // Calculates the subtotal of items
+  // Calculates  subtotal of items
   const calculateSubtotal = (items) =>
     items?.reduce((acc, item) => acc + item.discountPrice * item.quantity, 0).toFixed(2);
 
   // Handles the "Back to Shopping" button click
   const handleBackToShopping = () => {
     dispatch(clearOrder()); // Dispatch Redux action to clear order
-    navigate('/'); // Navigate to home page using React Router
+    navigate('/'); 
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center  font-inter">
       <div className="w-full max-w-4xl bg-white shadow-xl  p-4 sm:p-6 md:p-4">
-        {/* Thank You Message Section */}
         <div className="bg-gradient-to-r rounded-xl from-[#D4F387] to-[#A8E6CF] text-green-900 p-2 sm:p-6  flex flex-col items-center text-center mb-6 shadow-lg">
           <div className="flex lg:flex-row flex-col items-center mb-3">
             <h2 className="text-lg sm:text-2xl lg:text-3xl font-bold lg:font-extrabold mr-2 leading-tight">
@@ -41,9 +39,7 @@ const Thankyou = () => {
             </h2>
             <CheckCircle className="lg:w-8 lg:h-8 h-6 w-8 mt-1 text-green-700 animate-bounce" />
           </div>
-          {/* <p className="lg:text-lg sm:text-xl font-bold mb-2 text-green-800">
-            Order ID: <span className="text-green-700">{orderDetails.orderId}</span>
-          </p> */}
+         
           <p className="text-gray-700 text-sm sm:text-base max-w-prose">
             We appreciate your order! It's now being packed, and you'll receive tracking information via email shortly at{' '}
             <span className="font-semibold">{orderDetails?.shippingInfo?.emailAddress}</span>.

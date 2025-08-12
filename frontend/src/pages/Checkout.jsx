@@ -63,6 +63,8 @@ const AddressSection = ({
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Address deleted successfully');
+     setSavedAddresses(prev => [...prev, res.data.address]);
+
       const updatedAddresses = savedAddresses.filter((addr) => addr._id !== addressId);
       setSavedAddresses(updatedAddresses);
       if (selectedAddress?._id === addressId) {
@@ -262,7 +264,7 @@ const CheckoutDetails = () => {
   }, [token, navigate]);
 
   if (checkingAuth) {
-    // While auth is being checked, show nothing or a loader if you want
+    
     return null;
   }
 

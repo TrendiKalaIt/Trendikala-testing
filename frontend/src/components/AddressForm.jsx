@@ -15,12 +15,12 @@ const AddressForm = ({
 
   useEffect(() => {
     if (!token) {
-      // Agar token nahi hai to signin page par redirect karo
+    
       navigate('/signup?redirect=/checkout')
     }
   }, [token, navigate]);
 
-  // ... baaki aapka existing code ...
+  
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -96,7 +96,7 @@ const AddressForm = ({
       onAddressChange(newFormData);
     }
 
-    // PIN code auto-fill logic
+    
     if (field === 'zipcode' && value.length === 6) {
       const result = await fetchAddressByPincode(value);
       if (result) {
@@ -152,7 +152,7 @@ const AddressForm = ({
         emailAddress: '',
       });
 
-      // ✅ Refresh address list and select the latest one (no error toast if this fails)
+      
       try {
         const res = await axios.default.get('/api/addresses/my', {
           headers: { Authorization: `Bearer ${token}` },

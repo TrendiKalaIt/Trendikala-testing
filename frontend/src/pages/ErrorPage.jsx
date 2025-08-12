@@ -5,7 +5,6 @@ const ErrorPage = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="relative bg-white rounded-3xl shadow-xl border border-gray-200 p-8 md:p-16 flex flex-col md:flex-row items-center justify-center w-full max-w-5xl">
-        {/* Left Section - Logo */}
         <div className="flex-shrink-0 mb-8 md:mb-0 md:mr-16">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <div className="flex items-center space-x-2">
@@ -14,7 +13,6 @@ const ErrorPage = () => {
                   src="/trendikala_logo_bg.png"
                   alt="Trendi Kala Logo"
                   className="w-full h-full object-contain"
-                  // Fallback image if /trendikala_logo_bg.png isn't found
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/120x40/E5E7EB/4B5563?text=Logo'; }}
                 />
               </div>
@@ -23,13 +21,10 @@ const ErrorPage = () => {
           </div>
         </div>
 
-        {/* Divider for larger screens */}
         <div className="hidden md:block border-l-2 border-green-700 h-48 mx-8"></div>
-        {/* Horizontal divider for smaller screens */}
         <div className="block md:hidden border-b-2 border-green-700 w-full mb-8"></div>
 
 
-        {/* Right Section - Error Message */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <h2 className="text-red-600 text-3xl md:text-4xl font-bold mb-4">
             Oops! This page is not available
@@ -49,7 +44,6 @@ const ErrorPage = () => {
           </button>
         </div>
 
-        {/* Footer Text - Absolute positioning for design matching */}
         <div className="absolute bottom-8 text-sm text-gray-500 w-full text-center">
           &copy; 2025 Trendi kala. All rights reserved. Unauthorized use is prohibited.
         </div>

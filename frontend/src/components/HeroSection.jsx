@@ -8,7 +8,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    navigate('/allproducts');  // or wherever you want to navigate
+    navigate('/allproducts'); 
   };
 
 

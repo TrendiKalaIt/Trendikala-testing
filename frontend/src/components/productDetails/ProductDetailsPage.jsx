@@ -25,28 +25,6 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
 
 
-  // const handleAddToCart = () => {
-  //   const cartItem = {
-  //     product: product._id,
-  //     productName: product.productName,
-  //     price: product.discountPrice,
-  //     selectedColor,
-  //     selectedSize,
-  //     quantity,
-  //     thumbnail: product.media?.[0]?.url || '',
-  //   };
-
-  //   console.log('Cart item to add:', cartItem);
-
-  //   dispatch(addToCart([cartItem]))
-  //     .unwrap()
-  //     .then(() => {
-  //       toast.success('Item added to cart!');
-  //     })
-  //     .catch((err) => {
-  //       toast.error(`Error: ${err}`);
-  //     });
-  // };
 
   const handleAddToCart = () => {
     if (!product || product.stock <= 0) {
@@ -126,7 +104,7 @@ const ProductDetailPage = () => {
         return (
           <>
             <ProductReviews reviews={product.reviews} />
-            <ProductReviewForm productId={product._id} /> {/* ✅ Add Review Form */}
+            <ProductReviewForm productId={product._id} /> 
           </>
         );
       default:

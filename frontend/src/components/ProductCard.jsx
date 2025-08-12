@@ -20,7 +20,7 @@ const ProductCard = ({ product = {} }) => {
     price = 0,
     colors = [],
     sizes = [],
-    stock = 0, // <--- stock added here, must be part of product object
+    stock = 0,
     _id,
   } = product;
 
@@ -30,12 +30,12 @@ const ProductCard = ({ product = {} }) => {
   const wishlist = useSelector((state) => state.wishlist.items);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState('cart'); // 'cart' or 'buy'
+  const [modalType, setModalType] = useState('cart');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
 
-  // Check stock (make sure stock is numeric)
+  // Check stock 
   const stockInt = Math.floor(Number(stock)) || 0;
   const isOutOfStock = stockInt <= 0;
 
@@ -220,7 +220,7 @@ const ProductCard = ({ product = {} }) => {
             </button> */}
             <button
               onClick={handleAddToCartClick}
-              // ❌ remove: disabled={isOutOfStock}
+
               className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 
     bg-gray-200 text-gray-700 hover:bg-gray-300`}
             >
@@ -230,8 +230,8 @@ const ProductCard = ({ product = {} }) => {
               onClick={handleBuyNowClick}
               disabled={isOutOfStock}
               className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 ${isOutOfStock
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none'
-                  : 'bg-[#93A87E] text-white hover:bg-green-700'
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none'
+                : 'bg-[#93A87E] text-white hover:bg-green-700'
                 }`}
             >
               Buy Now

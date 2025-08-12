@@ -19,9 +19,6 @@ function CartPage() {
 
   const { items: products, status, error } = useSelector(state => state.cart);
 
-  // This state `shippingOption` is kept here for consistency with your original code,
-  // but its value won't directly affect the 12% delivery charge calculation in the summary.
-  // It might be used elsewhere if you have other shipping options not shown in the summary.
   const [shippingOption, setShippingOption] = useState('free');
 
   useEffect(() => {
@@ -40,7 +37,7 @@ function CartPage() {
 
     const newQty = product.quantity + diff;
     if (newQty < 1) {
-      toast.error('Quantity cannot be less than 1');
+      toast('Quantity cannot be less than 1');
       return;
     }
 
@@ -72,22 +69,13 @@ function CartPage() {
 
   const subtotal = products.reduce((sum, p) => sum + p.discountPrice * p.quantity, 0);
 
-  // // --- START OF MODIFIED LOGIC FOR 12% DELIVERY CHARGE ---
-  // const DELIVERY_CHARGE_PERCENTAGE = 0.12; // Define 12% as a constant
-  // const deliveryCharge = subtotal * DELIVERY_CHARGE_PERCENTAGE; // Calculate 12% of subtotal
   const DELIVERY_CHARGE = 100; // Fixed delivery charge in rupees
-  const deliveryCharge = DELIVERY_CHARGE; // Always ₹100
-
-  // The 'shippingCost' used in the total calculation now directly uses the 'deliveryCharge'
+  const deliveryCharge = DELIVERY_CHARGE;
   const shippingCost = deliveryCharge;
-  // --- END OF MODIFIED LOGIC FOR 12% DELIVERY CHARGE ---
 
   const total = subtotal + shippingCost; // Total includes the 12% delivery charge
 
-  // --- START OF MODIFIED ShippingRadio COMPONENT ---
-  // This component is now adapted to display the fixed 12% delivery charge.
-  // The radio button's functionality for selection is effectively disabled
-  // as there's only one fixed delivery charge option.
+
   const ShippingRadio = ({ value, label, displayPrice }) => (
     <label
       className={`flex items-center justify-between p-3 border rounded-lg cursor-pointer transition-all duration-200
@@ -98,11 +86,8 @@ function CartPage() {
           type="radio"
           name="shipping"
           value={value}
-          checked={value === 'deliveryCharge'} // Always checked for the single option
+          checked={value === 'deliveryCharge'}
           onChange={() => {
-            // No action needed here as shipping is fixed at 12%
-            // setShippingOption(value); // This line is commented out as it's not relevant for fixed charge
-            // toast.success(`Shipping changed to "${label}"`); // This toast is also not relevant
           }}
           className="form-radio accent-green-600 h-5 w-5"
         />
@@ -111,7 +96,6 @@ function CartPage() {
       <span className="font-medium text-gray-700 text-lg">{displayPrice}</span>
     </label>
   );
-  // --- END OF MODIFIED ShippingRadio COMPONENT ---
 
 
   if (status === 'loading') {
@@ -124,7 +108,6 @@ function CartPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
-      {/* <h1 className="text-4xl font-semibold text-green-700 text-center mb-12">Cart</h1> */}
 
       <div className="flex justify-center items-center mb-12 space-x-8">
         {['Shopping cart', 'Checkout details', 'Order complete'].map((step, i) => (
@@ -208,7 +191,6 @@ function CartPage() {
                   </div>
 
                   <div className="flex flex-col justify-center gap-1">
-                    {/* <div className="text-gray-700 text-base md:text-lg">₹{product.discountPrice}</div>  */}
                     <div className="font-semibold flex text-gray-800 text-base md:text-lg">
                       ₹{(product.quantity * product.discountPrice).toFixed(2)}
                     </div>
@@ -219,26 +201,18 @@ function CartPage() {
           )}
         </div>
 
-        {/* --- START OF MODIFIED CART SUMMARY SECTION --- */}
         <div className="w-full lg:w-96 bg-white p-6 rounded-lg shadow-sm">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Cart summary</h2>
           <div className="space-y-4">
-            {/* Displaying the fixed 12% Delivery Charge */}
-            {/* <ShippingRadio
-              value="deliveryCharge"
-              label="Delivery Charge"
-              displayPrice={`₹${deliveryCharge.toFixed(2)}`}
-            /> */}
+
             <span className="text-sm text-gray-600">Delivery Charge  ₹{deliveryCharge.toFixed(2)}</span>
-          
-            {/* fix 100Rs delivery charge */}
+
           </div>
           <div className="border-t border-gray-200 mt-6 pt-4 space-y-3">
             <div className="flex justify-between text-gray-700 text-lg">
               <span>Subtotal</span>
               <span className="font-medium">₹{subtotal.toFixed(2)}</span>
             </div>
-            {/* Explicitly showing the Delivery Charge line */}
             <div className="flex justify-between text-gray-700 text-sm">
               <span>Delivery Charge</span>
               <span className="font-medium">₹{deliveryCharge.toFixed(2)}</span>
@@ -265,7 +239,6 @@ function CartPage() {
           </button>
 
         </div>
-        {/* --- END OF MODIFIED CART SUMMARY SECTION --- */}
       </div>
     </div>
   );

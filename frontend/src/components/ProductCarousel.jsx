@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 
-// --- Assuming your JSON data is imported or defined here ---
-// If it's a separate file, you'd do:
-// import carouselSlidesData from './slidesData.json';
-// For this example, we'll define it inline as a JS array of objects.
 const carouselSlidesData = [
   {
     "id": "slide1",
-    "image": "image_a1ac6a.jpg", // Make sure this path is correct or use a direct import
+    "image": "image_a1ac6a.jpg", 
     "textLines": [
       "ROOTROOTED IN HERITAGE,",
       "STYLED FOR TODAY ROOTED IN",
@@ -41,7 +37,7 @@ const carouselSlidesData = [
 const ProductCarousel = () => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
 
-  // Get the current slide's data from the JSON-like array
+  
   const currentSlide = carouselSlidesData[currentSlideIndex];
 
   return (
@@ -58,19 +54,19 @@ const ProductCarousel = () => {
           }}
         />
 
-        {/* Overlay Content: Text and Button */}
+        
         <div className="absolute inset-0 z-20 flex flex-col justify-between items-center p-6 text-white text-center">
-          {/* Top part, potentially for a logo or title if needed */}
+         
           <div></div>
 
-          {/* Main Text Content */}
+        
           <div className="flex flex-col items-center justify-center flex-grow">
             <p className="text-xl md:text-2xl font-bold leading-tight drop-shadow-md tracking-wide">
-              {/* Map over textLines to render each line with a <br /> */}
+              
               {currentSlide.textLines.map((line, index) => (
                 <React.Fragment key={index}>
                   {line}
-                  {index < currentSlide.textLines.length - 1 && <br />} {/* Add <br /> after each line except the last */}
+                  {index < currentSlide.textLines.length - 1 && <br />} 
                 </React.Fragment>
               ))}
             </p>
@@ -86,7 +82,7 @@ const ProductCarousel = () => {
 
         {/* Dots Navigation */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-30">
-          {carouselSlidesData.map((_, index) => ( // Iterate over carouselSlidesData to create dots
+          {carouselSlidesData.map((_, index) => ( 
             <button
               key={index}
               onClick={() => setCurrentSlideIndex(index)}
