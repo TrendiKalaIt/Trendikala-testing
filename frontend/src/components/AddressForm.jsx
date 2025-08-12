@@ -157,11 +157,6 @@ const AddressForm = ({
 
 
       try {
-        // const res = await axios.default.get('/api/addresses/my', {
-        //   headers: { Authorization: `Bearer ${token}` },
-        // });
-        // setSavedAddresses(res.data.addresses || []);
-        // setSelectedAddress(res.data.addresses?.[res.data.addresses.length - 1]);
         const res = await axios.default.get(`${import.meta.env.VITE_API_URL}/api/addresses/my`, {
           headers: { Authorization: `Bearer ${token}` },
         });
