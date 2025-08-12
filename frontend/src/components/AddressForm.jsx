@@ -15,12 +15,12 @@ const AddressForm = ({
 
   useEffect(() => {
     if (!token) {
-    
+
       navigate('/signup?redirect=/checkout')
     }
   }, [token, navigate]);
 
-  
+
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -96,7 +96,7 @@ const AddressForm = ({
       onAddressChange(newFormData);
     }
 
-    
+
     if (field === 'zipcode' && value.length === 6) {
       const result = await fetchAddressByPincode(value);
       if (result) {
@@ -140,6 +140,7 @@ const AddressForm = ({
       );
 
       toast.success('Address saved!');
+      setSavedAddresses(prev => [...prev, response.data.address]);
       setShowForm(false);
       setFormData({
         fullName: '',
@@ -152,7 +153,7 @@ const AddressForm = ({
         emailAddress: '',
       });
 
-      
+
       try {
         const res = await axios.default.get('/api/addresses/my', {
           headers: { Authorization: `Bearer ${token}` },

@@ -28,7 +28,6 @@ function CartPage() {
   }, [dispatch, status]);
 
   useEffect(() => {
-    console.log('Cart products:', products);
   }, [products]);
 
   const changeQuantity = async (id, diff) => {

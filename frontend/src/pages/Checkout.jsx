@@ -63,8 +63,6 @@ const AddressSection = ({
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success('Address deleted successfully');
-     setSavedAddresses(prev => [...prev, res.data.address]);
-
       const updatedAddresses = savedAddresses.filter((addr) => addr._id !== addressId);
       setSavedAddresses(updatedAddresses);
       if (selectedAddress?._id === addressId) {
@@ -87,35 +85,37 @@ const AddressSection = ({
         <>
           <ul className="space-y-2">
             {savedAddresses.map((addr) => (
-              <li
-                key={addr._id}
-                className={`p-3 border rounded-md cursor-pointer flex justify-between items-start ${selectedAddress && selectedAddress._id === addr._id
+              addr && (
+                <li
+                  key={addr._id}
+                  className={`p-3 border rounded-md cursor-pointer flex justify-between items-start ${selectedAddress && selectedAddress._id === addr._id
                     ? 'border-green-600 bg-green-50'
                     : 'border-gray-300'
-                  }`}
-                onClick={() => setSelectedAddress(addr)}
-              >
-                <div>
-                  <div className="font-semibold">{addr.fullName}</div>
-                  <div>
-                    {addr.streetAddress}
-                    {addr.apartment ? `, ${addr.apartment}` : ''}, {addr.townCity},{addr.zipcode}
-                  </div>
-                  <div>
-                    {addr.phoneNumber} | {addr.emailAddress}
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDelete(addr._id);
-                  }}
-                  className="text-red-500 hover:text-red-700 ml-4 order rounded px-2"
+                    }`}
+                  onClick={() => setSelectedAddress(addr)}
                 >
-                  <SquareX />
-                </button>
-              </li>
+                  <div>
+                    <div className="font-semibold">{addr.fullName}</div>
+                    <div>
+                      {addr.streetAddress}
+                      {addr.apartment ? `, ${addr.apartment}` : ''}, {addr.townCity},{addr.zipcode}
+                    </div>
+                    <div>
+                      {addr.phoneNumber} | {addr.emailAddress}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(addr._id);
+                    }}
+                    className="text-red-500 hover:text-red-700 ml-4 order rounded px-2"
+                  >
+                    <SquareX />
+                  </button>
+                </li>
+              )
             ))}
           </ul>
           <button
@@ -130,6 +130,7 @@ const AddressSection = ({
               token={token}
               setShowForm={setShowForm}
               setSavedAddresses={setSavedAddresses}
+              setSelectedAddress={setSelectedAddress}
             />
           )}
         </>
@@ -264,7 +265,7 @@ const CheckoutDetails = () => {
   }, [token, navigate]);
 
   if (checkingAuth) {
-    
+
     return null;
   }
 
@@ -303,7 +304,7 @@ const CheckoutDetails = () => {
           totalAmount: total,
 
         };
-          console.log("Order payload:", orderPayload);
+        console.log("Order payload:", orderPayload);
 
 
 
