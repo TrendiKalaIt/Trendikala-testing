@@ -141,7 +141,7 @@ const AddressForm = ({
 
       toast.success('Address saved!');
       // setSavedAddresses(prev => [...prev, response.data.address]);
-      setSavedAddresses(response.data.addresses);  
+      setSavedAddresses(response.data.addresses);
       setSelectedAddress(response.data.addresses[response.data.addresses.length - 1]);
       setShowForm(false);
       setFormData({
@@ -157,11 +157,15 @@ const AddressForm = ({
 
 
       try {
-        const res = await axios.default.get('/api/addresses/my', {
+        // const res = await axios.default.get('/api/addresses/my', {
+        //   headers: { Authorization: `Bearer ${token}` },
+        // });
+        // setSavedAddresses(res.data.addresses || []);
+        // setSelectedAddress(res.data.addresses?.[res.data.addresses.length - 1]);
+        const res = await axios.default.get(`${import.meta.env.VITE_API_URL}/api/addresses/my`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setSavedAddresses(res.data.addresses || []);
-        setSelectedAddress(res.data.addresses?.[res.data.addresses.length - 1]);
+
       } catch (err) {
         console.warn('Address list refresh failed silently:', err);
       }
