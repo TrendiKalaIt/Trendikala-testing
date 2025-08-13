@@ -83,7 +83,7 @@ orderSchema.pre('save', async function (next) {
 
   const seqNumber = String(counter.seq).padStart(4, '0');
 
-  // orderId me category/product ka code ab bhi show hoga, bas sequence global hoga
+  // orderId  category/product  code  show ,sequence global   
   this.orderId = `${dateStr}-${categoryCode}-${productCode}-${seqNumber}`;
 
   next();
