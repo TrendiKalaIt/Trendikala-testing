@@ -4,79 +4,79 @@ const mongoose = require('mongoose');
 const category = require('../models/Category')
 
 // Create a new product
-exports.createProduct = async (req, res) => {
-    try {
-        const {
-            productName,
-            category,
-            brand,
-            price,
-            discountPrice,
-            media: mediaFromBody, // JSON se media URLs
-            ...additionalFields
-        } = req.body;
+// exports.createProduct = async (req, res) => {
+//     try {
+//         const {
+//             productName,
+//             category,
+//             brand,
+//             price,
+//             discountPrice,
+//             media: mediaFromBody, // JSON se media URLs
+//             ...additionalFields
+//         } = req.body;
 
-        if (!productName) {
-            return res.status(400).json({
-                success: false,
-                message: 'Product name is required',
-            });
-        }
+//         if (!productName) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: 'Product name is required',
+//             });
+//         }
 
-        let mediaFiles = [];
+//         let mediaFiles = [];
 
-        if (req.files && req.files.length > 0) {
-            // Agar files upload hui hain to unko use karo
-            mediaFiles = req.files.map(file => ({
-                url: file.path,
-                type: file.mimetype.startsWith('video') ? 'video' : 'image',
-            }));
-        } else if (mediaFromBody && mediaFromBody.length > 0) {
-            // Files nahi, par media URLs JSON me mile hain
-            mediaFiles = mediaFromBody;
-        } else {
-            return res.status(400).json({
-                success: false,
-                message: 'At least one media file or media URL is required',
-            });
-        }
+//         if (req.files && req.files.length > 0) {
+//             // Agar files upload hui hain to unko use karo
+//             mediaFiles = req.files.map(file => ({
+//                 url: file.path,
+//                 type: file.mimetype.startsWith('video') ? 'video' : 'image',
+//             }));
+//         } else if (mediaFromBody && mediaFromBody.length > 0) {
+//             // Files nahi, par media URLs JSON me mile hain
+//             mediaFiles = mediaFromBody;
+//         } else {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: 'At least one media file or media URL is required',
+//             });
+//         }
 
-        const parsedPrice = parseFloat(price);
-        const parsedDiscountPrice = parseFloat(discountPrice);
+//         const parsedPrice = parseFloat(price);
+//         const parsedDiscountPrice = parseFloat(discountPrice);
 
-        const thumbnail = mediaFiles.find(file => file.type === 'image')?.url;
+//         const thumbnail = mediaFiles.find(file => file.type === 'image')?.url;
 
-        const discountPercent =
-            parsedPrice && parsedDiscountPrice
-                ? Math.round(((parsedPrice - parsedDiscountPrice) / parsedPrice) * 100)
-                : undefined;
+//         const discountPercent =
+//             parsedPrice && parsedDiscountPrice
+//                 ? Math.round(((parsedPrice - parsedDiscountPrice) / parsedPrice) * 100)
+//                 : undefined;
 
-        const newProduct = new Product({
-            productName,
-            category,
-            brand,
-            price: parsedPrice,
-            discountPrice: parsedDiscountPrice,
-            discountPercent,
-            media: mediaFiles,
-            thumbnail,
-            ...additionalFields,
-        });
+//         const newProduct = new Product({
+//             productName,
+//             category,
+//             brand,
+//             price: parsedPrice,
+//             discountPrice: parsedDiscountPrice,
+//             discountPercent,
+//             media: mediaFiles,
+//             thumbnail,
+//             ...additionalFields,
+//         });
 
-        await newProduct.save();
+//         await newProduct.save();
 
-        res.status(201).json({
-            success: true,
-            data: newProduct,
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Failed to create product',
-            error: error.message,
-        });
-    }
-};
+//         res.status(201).json({
+//             success: true,
+//             data: newProduct,
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             success: false,
+//             message: 'Failed to create product',
+//             error: error.message,
+//         });
+//     }
+// };
 
 
 // Get all products with optional filtering
@@ -152,122 +152,122 @@ exports.getProduct = async (req, res) => {
 };
 
 // Update product by ID
-exports.updateProduct = async (req, res) => {
-    try {
-        const updates = Object.keys(req.body);
-        const allowedUpdates = [
-            'productName', 'category', 'brand', 'media', 'thumbnail',
-            'price', 'discountPrice', 'discountPercent', 'description',
-            'detailedDescription', 'colors', 'sizes', 'details',
-            'materialWashing', 'sizeShape'
-        ];
-        const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+// exports.updateProduct = async (req, res) => {
+//     try {
+//         const updates = Object.keys(req.body);
+//         const allowedUpdates = [
+//             'productName', 'category', 'brand', 'media', 'thumbnail',
+//             'price', 'discountPrice', 'discountPercent', 'description',
+//             'detailedDescription', 'colors', 'sizes', 'details',
+//             'materialWashing', 'sizeShape'
+//         ];
+//         const isValidOperation = updates.every(update => allowedUpdates.includes(update));
 
-        if (!isValidOperation) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid updates!'
-            });
-        }
+//         if (!isValidOperation) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: 'Invalid updates!'
+//             });
+//         }
 
-        // Recalculate discountPercent if price or discountPrice is updated
-        if (updates.includes('price') || updates.includes('discountPrice')) {
-            if (req.body.price && req.body.discountPrice) {
-                req.body.discountPercent = Math.round(((req.body.price - req.body.discountPrice) / req.body.price) * 100);
-            } else {
-                req.body.discountPercent = null;
-            }
-        }
+//         // Recalculate discountPercent if price or discountPrice is updated
+//         if (updates.includes('price') || updates.includes('discountPrice')) {
+//             if (req.body.price && req.body.discountPrice) {
+//                 req.body.discountPercent = Math.round(((req.body.price - req.body.discountPrice) / req.body.price) * 100);
+//             } else {
+//                 req.body.discountPercent = null;
+//             }
+//         }
 
-        const product = await Product.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true, runValidators: true }
-        );
+//         const product = await Product.findByIdAndUpdate(
+//             req.params.id,
+//             req.body,
+//             { new: true, runValidators: true }
+//         );
 
-        if (!product) {
-            return res.status(404).json({
-                success: false,
-                message: 'Product not found'
-            });
-        }
+//         if (!product) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'Product not found'
+//             });
+//         }
 
-        res.status(200).json({
-            success: true,
-            data: product
-        });
-    } catch (error) {
-        if (error instanceof mongoose.Error.ValidationError) {
-            return res.status(400).json({
-                success: false,
-                message: 'Validation Error',
-                errors: error.errors
-            });
-        }
-        res.status(500).json({
-            success: false,
-            message: 'Failed to update product',
-            error: error.message
-        });
-    }
-};
+//         res.status(200).json({
+//             success: true,
+//             data: product
+//         });
+//     } catch (error) {
+//         if (error instanceof mongoose.Error.ValidationError) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: 'Validation Error',
+//                 errors: error.errors
+//             });
+//         }
+//         res.status(500).json({
+//             success: false,
+//             message: 'Failed to update product',
+//             error: error.message
+//         });
+//     }
+// };
 
-// Delete product by ID
-exports.deleteProduct = async (req, res) => {
-    try {
-        const product = await Product.findByIdAndDelete(req.params.id);
+// // Delete product by ID
+// exports.deleteProduct = async (req, res) => {
+//     try {
+//         const product = await Product.findByIdAndDelete(req.params.id);
 
-        if (!product) {
-            return res.status(404).json({
-                success: false,
-                message: 'Product not found'
-            });
-        }
+//         if (!product) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'Product not found'
+//             });
+//         }
 
-        res.status(200).json({
-            success: true,
-            data: {}
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Failed to delete product',
-            error: error.message
-        });
-    }
-};
+//         res.status(200).json({
+//             success: true,
+//             data: {}
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             success: false,
+//             message: 'Failed to delete product',
+//             error: error.message
+//         });
+//     }
+// };
 
-// Get product statistics (count by category, average price, etc.)
-exports.getProductStats = async (req, res) => {
-    try {
-        const stats = await Product.aggregate([
-            {
-                $group: {
-                    _id: '$category',
-                    count: { $sum: 1 },
-                    avgPrice: { $avg: '$price' },
-                    minPrice: { $min: '$price' },
-                    maxPrice: { $max: '$price' }
-                }
-            },
-            {
-                $sort: { avgPrice: -1 }
-            }
-        ]);
+// // Get product statistics (count by category, average price, etc.)
+// exports.getProductStats = async (req, res) => {
+//     try {
+//         const stats = await Product.aggregate([
+//             {
+//                 $group: {
+//                     _id: '$category',
+//                     count: { $sum: 1 },
+//                     avgPrice: { $avg: '$price' },
+//                     minPrice: { $min: '$price' },
+//                     maxPrice: { $max: '$price' }
+//                 }
+//             },
+//             {
+//                 $sort: { avgPrice: -1 }
+//             }
+//         ]);
 
-        res.status(200).json({
-            success: true,
-            count: stats.length,
-            data: stats
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Failed to fetch product statistics',
-            error: error.message
-        });
-    }
-};
+//         res.status(200).json({
+//             success: true,
+//             count: stats.length,
+//             data: stats
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             success: false,
+//             message: 'Failed to fetch product statistics',
+//             error: error.message
+//         });
+//     }
+// };
 
 
 

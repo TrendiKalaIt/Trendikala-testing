@@ -63,7 +63,7 @@ function generateOrderEmails(newOrder, shippingInfo, paymentMethod, items, shipp
 
       <div style="padding: 25px;">
         <h2 style="color: #2E7D32; font-size: 26px; margin-top: 0; margin-bottom: 20px;">Hi ${shippingInfo.fullName}, thank you for your order!</h2>
-        <p style="margin-bottom: 25px; font-size: 17px;">Your order <strong style="color: #007bff;">#${newOrder.orderId}</strong> has been successfully placed with TrendiKala. We're excited for you to receive your items!</p>
+        <p style="margin-bottom: 25px; font-size: 17px;">Your order <strong style="color: #007bff;">${newOrder.orderId}</strong> has been successfully placed with TrendiKala. We're excited for you to receive your items!</p>
 
         <div style="background-color: #f9f9f9; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
           <p style="font-size: 18px; margin-bottom: 8px;"><strong>Order Date:</strong> ${new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
