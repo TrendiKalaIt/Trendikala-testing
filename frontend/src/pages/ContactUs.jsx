@@ -156,10 +156,10 @@ const ContactUs = () => {
             <div className="mt-8 pt-6 border-t border-gray-200">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Connect With Us</h3>
               <div className="flex space-x-4">
-                <a href="https://facebook.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                <a href="https://www.facebook.com/share/14JLn8svZCB/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                   <SiFacebook className="h-7 w-7" />
                 </a>
-                <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer" className="text-red-400">
+                <a href="https://www.instagram.com/trendikalaofficial?igsh=MXdidTA0YmY2Ymd3YQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-red-400">
                   <SiInstagram className="h-7 w-7" />
                 </a>
                 <a href="https://www.youtube.com/@trendikala" target="_blank" rel="noopener noreferrer" className=" text-red-600">
