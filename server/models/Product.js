@@ -14,6 +14,7 @@ const reviewSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const productSchema = new mongoose.Schema({
+  productCode: { type: String, required: true, unique: true, uppercase: true, trim: true },
   productName: { type: String, required: true },
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
   brand: String,

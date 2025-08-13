@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
+const Product = require('./Product')
+const Counter = require('./counterSchema')
 
 const orderItemSchema = new mongoose.Schema({
   product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
@@ -21,7 +24,7 @@ const shippingInfoSchema = new mongoose.Schema({
 
 const orderSchema = new mongoose.Schema({
   orderId: {
-    type: Number,
+    type: String,
     unique: true,
     index: true
   },
@@ -50,6 +53,40 @@ const orderSchema = new mongoose.Schema({
   },
   createdAt: { type: Date, default: Date.now },
   isGuest: { type: Boolean, default: false }
+});
+
+// Pre-save hook for generating unique orderId
+orderSchema.pre('save', async function (next) {
+  if (!this.isNew) return next();
+
+  if (!this.items.length) {
+    return next(new Error("Order must have at least one item"));
+  }
+
+  const firstProduct = await Product.findById(this.items[0].product).populate('category');
+  if (!firstProduct) {
+    return next(new Error("Product not found for order"));
+  }
+
+  const dateStr = moment().format('YYYYMMDD');
+  const categoryCode = firstProduct.category.categoryCode;
+  const productCode = firstProduct.productCode;
+
+  //date based counter
+  const counterId = `${dateStr}`;
+
+  let counter = await Counter.findOneAndUpdate(
+    { id: counterId },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
+
+  const seqNumber = String(counter.seq).padStart(4, '0');
+
+  // orderId me category/product ka code ab bhi show hoga, bas sequence global hoga
+  this.orderId = `${dateStr}-${categoryCode}-${productCode}-${seqNumber}`;
+
+  next();
 });
 
 const Order = mongoose.model('Order', orderSchema);

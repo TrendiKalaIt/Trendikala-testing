@@ -3,8 +3,8 @@ const Product = require('../models/Product');
 
 exports.createCategory = async (req, res) => {
   try {
-    const { name, description, icon, parent } = req.body;
-    const category = new Category({ name, description, icon, parent: parent || null });
+    const { name,categoryCode, description, icon, parent } = req.body;
+    const category = new Category({ name,categoryCode, description, icon, parent: parent || null });
     await category.save();
     res.status(201).json(category);
   } catch (err) {
@@ -33,9 +33,9 @@ exports.getCategoryById = async (req, res) => {
 
 exports.updateCategory = async (req, res) => {
   try {
-    const { name, description, icon, parent } = req.body;
+    const { name,categoryCode, description, icon, parent } = req.body;
     const category = await Category.findByIdAndUpdate(req.params.id,
-      { name, description, icon, parent: parent || null },
+      { name,categoryCode, description, icon, parent: parent || null },
       { new: true, runValidators: true });
     if (!category) return res.status(404).json({ error: 'Category not found' });
     res.json(category);
