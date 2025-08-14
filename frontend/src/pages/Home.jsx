@@ -7,7 +7,6 @@ import NewArrivals from '../components/NewArrivals';
 import Outfit from '../components/Outfit';
 import ProductCard from '../components/ProductCard';
 import PosterComponent from '../components/PosterComponent';
-import Categories from '../components/CategoriesComponent';
 import ProductCardSkeleton from '../components/ProductCardSkeleton';
 import { useSelector } from 'react-redux';
 
@@ -55,7 +54,6 @@ const Home = () => {
       <NewArrivals />
       <Outfit />
       <PosterComponent />
-      <Categories />
 
      
       <div className="px-10 py-2 mb-3">

@@ -3,7 +3,7 @@ const PosterComponent = () => {
   return (
     <div className="relative flex justify-center items-centern  bg-white py-4">
       {/* Container for the poster content */}
-      <div className="relative w-full mx-4 bg-[#A9C19D] rounded-2xl shadow-xl overflow-hidden pt-2 px-8 lg:px-2 flex flex-col h-[400px] ">
+      <div className="relative w-full mx-4 bg-[#A9C19D] rounded-2xl shadow-md overflow-hidden pt-2 px-8 lg:px-2 flex flex-col h-[400px] ">
         {/* Image positioned to overlap the top */}
         <div className="absolute bottom-0  right-0 w-1/2  max-w-lg md:w-1/2 lg:w-2/5 xl:w-1/3  ">
           <img
