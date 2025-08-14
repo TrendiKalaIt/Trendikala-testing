@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Media schema
 const mediaSchema = new mongoose.Schema({
   type: { type: String, enum: ['image', 'video'], required: true },
   url: { type: String, required: true },
@@ -13,6 +14,7 @@ const reviewSchema = new mongoose.Schema({
   comment: { type: String, required: true },
 }, { timestamps: true });
 
+// Product schema
 const productSchema = new mongoose.Schema({
   productCode: { type: String, required: true, unique: true, uppercase: true, trim: true },
   productName: { type: String, required: true },
@@ -20,19 +22,23 @@ const productSchema = new mongoose.Schema({
   brand: String,
   media: [mediaSchema],
   thumbnail: String,
-  price: Number,
-  discountPrice: Number,
-  discountPercent: Number,
   description: String,
   detailedDescription: {
     paragraph1: String,
     paragraph2: String,
   },
-  colors: [{
-    name: String,
-    hex: String,
+
+  colors: [{ name: String, hex: String }],
+
+  // Size-wise pricing & stock
+  sizes: [{
+    size: { type: String, required: true },          
+    price: { type: Number, required: true },        
+    discountPrice: { type: Number },                 
+    discountPercent: { type: Number },              
+    stock: { type: Number, required: true, default: 0 } 
   }],
-  sizes: [String],
+
   details: {
     fabric: String,
     fitType: String,
@@ -44,31 +50,23 @@ const productSchema = new mongoose.Schema({
     countryOfOrigin: String,
     deliveryReturns: String,
   },
-  materialWashing: [{
-    label: String,
-    value: String,
-  }],
-  sizeShape: [{
-    label: String,
-    value: String,
-  }],
 
-  // Stock tracking
-  stock: { type: Number, required: true, default: 0 }, // Add this field
+  materialWashing: [{ label: String, value: String }],
+  sizeShape: [{ label: String, value: String }],
 
-  // Embedded reviews
+  // Reviews
   reviews: [reviewSchema],
   numReviews: { type: Number, default: 0 },
   rating: { type: Number, default: 0 }
 
 }, { timestamps: true });
 
-// Virtual field to determine if product is in stock
+// Virtual field: product is in stock if any size has stock
 productSchema.virtual('inStock').get(function () {
-  return this.stock > 0;
+  return this.sizes.some(s => s.stock > 0);
 });
 
-// Ensure virtual fields are serialized in JSON and Object outputs
+// Ensure virtual fields are serialized
 productSchema.set('toObject', { virtuals: true });
 productSchema.set('toJSON', { virtuals: true });
 

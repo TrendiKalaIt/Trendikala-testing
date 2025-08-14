@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Heart, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +6,6 @@ import toast from 'react-hot-toast';
 import { addToCart } from '../utility/cartSlice';
 import { addToWishlist, removeFromWishlist } from '../utility/wishlistSlice';
 import { setOrderDetails } from '../utility/checkoutSlice';
-
 import { Dialog } from '@headlessui/react';
 
 const ProductCard = ({ product = {} }) => {
@@ -16,11 +14,8 @@ const ProductCard = ({ product = {} }) => {
     category = 'Category',
     productName = 'Product Name',
     description = 'Product description',
-    discountPrice = 0,
-    price = 0,
     colors = [],
     sizes = [],
-    stock = 0,
     _id,
   } = product;
 
@@ -34,20 +29,38 @@ const ProductCard = ({ product = {} }) => {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
+  
 
-  // Check stock 
-  const stockInt = Math.floor(Number(stock)) || 0;
-  const isOutOfStock = stockInt <= 0;
+  // Sizes with stock > 0
+  const availableSizes = sizes.filter((s) => s.stock > 0);
 
+  // Cheapest size
+  const cheapestSize = availableSizes.length
+    ? availableSizes.reduce((min, s) => {
+      const currentPrice = s.discountPrice || s.price;
+      const minPrice = min.discountPrice || min.price;
+      return currentPrice < minPrice ? s : min;
+    })
+    : null;
+
+  // Dynamic price & stock
+  const productPrice = cheapestSize ? cheapestSize.price : 0;
+  const productDiscountPrice = cheapestSize
+    ? cheapestSize.discountPrice || cheapestSize.price
+    : 0;
+  const productStock = cheapestSize ? cheapestSize.stock : 0;
+
+  const isOutOfStock = (Math.floor(Number(productStock)) || 0) <= 0;
+
+  // Navigation
   const handleNavigate = () => {
-    if (_id) {
-      navigate(`/productdetails/${_id}`);
-    }
+    if (_id) navigate(`/productdetails/${_id}`);
   };
 
+  // Button click handlers
   const handleAddToCartClick = () => {
     if (isOutOfStock) {
-      toast('Product is out of stock please add it to wishlist');
+      toast('Product is out of stock, please add it to wishlist');
       return;
     }
     setModalType('cart');
@@ -63,51 +76,84 @@ const ProductCard = ({ product = {} }) => {
     setIsModalOpen(true);
   };
 
-  const handleAddToCart = () => {
+  // Add to Cart - MODIFIED
+  const handleAddToCart = async () => {
     if (!selectedColor || !selectedSize) {
       toast.error('Please select size and color');
+      return;
+    }
+
+    // Find the selected size object to get its stock and prices
+    // FIX: Use 's.size' to find the size object
+    const selectedSizeObj = sizes.find(s => s.size === selectedSize);
+    if (!selectedSizeObj) {
+      toast.error('Invalid size selected');
+      return;
+    }
+
+    // Validate quantity against the selected size's stock
+    if (quantity > selectedSizeObj.stock) {
+      toast.error(`Sorry, there are only ${selectedSizeObj.stock} items of this size available.`);
       return;
     }
 
     const cartItem = {
       product: _id,
       productName,
-      discountPrice,
+      // Use the specific price and discount price of the selected size
+      price: selectedSizeObj.price,
+      discountPrice: selectedSizeObj.discountPrice || selectedSizeObj.price,
       color: selectedColor,
       size: selectedSize,
       quantity,
       image: media?.[0]?.url || '',
     };
 
-    dispatch(addToCart([cartItem]))
-      .unwrap()
-      .then(() => {
-        toast.success('Added to cart');
-        setIsModalOpen(false);
-        setSelectedColor('');
-        setSelectedSize('');
-        setQuantity(1);
-      })
-      .catch(() => toast('Please login first to continue.'));
+    try {
+      await dispatch(addToCart([cartItem])).unwrap();
+      toast.success('Added to cart');
+      setIsModalOpen(false);
+      setSelectedColor('');
+      setSelectedSize('');
+      setQuantity(1);
+    } catch (error) {
+      toast.error('Please login first to continue.');
+    }
   };
 
+  // Checkout - MODIFIED
   const handleCheckout = () => {
     if (!selectedColor || !selectedSize) {
       toast.error('Please select size and color before checkout');
       return;
     }
 
+    // Find the selected size object to get its stock and prices
+    // FIX: Use 's.size' to find the size object
+    const selectedSizeObj = sizes.find(s => s.size === selectedSize);
+    if (!selectedSizeObj) {
+      toast.error('Invalid size selected');
+      return;
+    }
+
+    // Validate quantity against the selected size's stock
+    if (quantity > selectedSizeObj.stock) {
+      toast.error(`Sorry, there are only ${selectedSizeObj.stock} items of this size available.`);
+      return;
+    }
+
     const productToBuy = {
       product: _id,
       productName,
-      discountPrice,
+      // Use the specific price and discount price of the selected size
+      price: selectedSizeObj.price,
+      discountPrice: selectedSizeObj.discountPrice || selectedSizeObj.price,
       color: selectedColor,
       size: selectedSize,
       quantity,
       image: media?.[0]?.url || '',
     };
 
-    // Save to localStorage before redirect
     localStorage.setItem(
       'checkoutState',
       JSON.stringify({
@@ -126,8 +172,8 @@ const ProductCard = ({ product = {} }) => {
     navigate('/checkout');
   };
 
+  // Wishlist toggle
   const isWishlisted = wishlist.some((item) => item._id === _id);
-
   const toggleWishlist = async (e) => {
     e.stopPropagation();
     try {
@@ -143,32 +189,42 @@ const ProductCard = ({ product = {} }) => {
     }
   };
 
+  // Helper function to find the stock for the selected size
+  const getSelectedSizeStock = () => {
+    // FIX: Use 's.size' to match the schema
+    const sizeObj = sizes.find(s => s.size === selectedSize);
+    return sizeObj ? sizeObj.stock : 0;
+  };
+
   return (
     <>
       <div
         className={`relative w-full max-w-xs mx-auto bg-white border-2 rounded-3xl shadow-md overflow-hidden border-[#35894e] h-96 flex flex-col
-        transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105`}
+  transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105`}
       >
-        {/* Image Section */}
+        {/* Image */}
         <div
           className="relative w-full h-3/5 overflow-hidden rounded-t-2xl cursor-pointer"
           onClick={handleNavigate}
         >
           <img
-            src={media?.[0]?.url || 'https://placehold.co/300x320/FFD368/333?text=Product+Image'}
+            src={
+              media?.[0]?.url ||
+              'https://placehold.co/300x320/FFD368/333?text=Product+Image'
+            }
             alt={productName}
             className="w-full h-full object-cover object-top transition-transform duration-300 ease-in-out hover:scale-110"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = 'https://placehold.co/300x320/FFD368/333?text=Image+Not+Found';
+              e.target.src =
+                'https://placehold.co/300x320/FFD368/333?text=Image+Not+Found';
             }}
           />
 
-          {/* Wishlist */}
+          {/* Wishlist Button */}
           {user && (
             <button
               className="absolute top-4 right-4 p-2 rounded-full text-gray-700 transition-colors duration-200 ease-in-out hover:text-red-500 hover:scale-110"
-              aria-label="Add to favorites"
               onClick={toggleWishlist}
             >
               <Heart
@@ -180,7 +236,7 @@ const ProductCard = ({ product = {} }) => {
             </button>
           )}
 
-          {/* OUT OF STOCK Label */}
+          {/* Out of Stock Label */}
           {isOutOfStock && (
             <div className="absolute top-2 left-3 bg-red-400 text-white text-xs font-bold px-2 py-1 rounded-xl">
               Out of Stock
@@ -188,10 +244,12 @@ const ProductCard = ({ product = {} }) => {
           )}
         </div>
 
-        {/* Content Section */}
+        {/* Content */}
         <div className="h-2/5 p-3 flex flex-col justify-between bg-white rounded-b-3xl">
           <div>
-            <p className="text-sm text-[#93a87e86] font-semibold">{category?.name || 'Category'}</p>
+            <p className="text-sm text-[#93a87e86] font-semibold">
+              {category?.name || 'Category'}
+            </p>
             <h3
               onClick={handleNavigate}
               className="text-md font-bold text-[#93A87E] truncate cursor-pointer hover:underline"
@@ -199,52 +257,58 @@ const ProductCard = ({ product = {} }) => {
               {productName}
             </h3>
             <p className="text-sm text-[#93a87eba] truncate">{description}</p>
+
+            {/* Price */}
             <div className="flex gap-3 pt-1">
-              <p className="text-md text-[#93A87E]">₹{discountPrice}</p>
-              <p className="text-md text-gray-500 line-through">₹{price}</p>
+              <p className="text-md text-[#93A87E]">
+                ₹{productDiscountPrice}
+              </p>
+              {productDiscountPrice !== productPrice && (
+                <p className="text-md text-gray-500 line-through">
+                  ₹{productPrice}
+                </p>
+              )}
             </div>
           </div>
 
           {/* Buttons */}
           <div className="flex gap-2 pt-2">
-            {/* <button
-              onClick={handleAddToCartClick}
-              disabled={isOutOfStock}
-              className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 ${
-                isOutOfStock
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              Add to Cart
-            </button> */}
             <button
               onClick={handleAddToCartClick}
-
-              className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 
-    bg-gray-200 text-gray-700 hover:bg-gray-300`}
+              disabled={isOutOfStock}
+              className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 ${isOutOfStock
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
             >
-              Add to Cart
+              {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
             </button>
+
             <button
               onClick={handleBuyNowClick}
               disabled={isOutOfStock}
               className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 ${isOutOfStock
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none'
+                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-[#93A87E] text-white hover:bg-green-700'
                 }`}
             >
-              Buy Now
+              {isOutOfStock ? 'Out of Stock' : 'Buy Now'}
             </button>
           </div>
         </div>
       </div>
 
       {/* Modal */}
-      <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)} className="fixed z-50 inset-0 overflow-y-auto">
+      <Dialog
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        className="fixed z-50 inset-0 overflow-y-auto"
+      >
         <div className="flex items-center justify-center min-h-screen px-4">
           <Dialog.Panel className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md space-y-4">
-            <Dialog.Title className="text-lg font-bold text-[#35894E]">Select Size & Color</Dialog.Title>
+            <Dialog.Title className="text-lg font-bold text-[#35894E]">
+              Select Size & Color
+            </Dialog.Title>
 
             {/* Colors */}
             <div>
@@ -253,49 +317,70 @@ const ProductCard = ({ product = {} }) => {
                 {colors?.map((color) => (
                   <button
                     key={color.name}
-                    className={`w-6 h-6 rounded-full border-2 transition flex items-center justify-center ${selectedColor === color.name ? 'border-green-600 scale-110' : 'border-gray-300'
+                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${selectedColor === color.name
+                      ? 'border-green-600 scale-110'
+                      : 'border-gray-300'
                       }`}
                     style={{ backgroundColor: color.hex }}
                     onClick={() => setSelectedColor(color.name)}
                   >
-                    {selectedColor === color.name && <Check size={16} color="white" />}
+                    {selectedColor === color.name && (
+                      <Check size={16} color="white" />
+                    )}
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Sizes */}
-            <div>
-              <h4 className="text-sm text-gray-600 mb-1">Sizes:</h4>
-              <div className="flex flex-wrap gap-2">
-                {sizes?.map((size) => (
+            <div className="flex flex-wrap gap-2">
+              {sizes?.map((size) => (
+                <div key={size.size} className="relative inline-block group">
                   <button
-                    key={size}
-                    onClick={() => setSelectedSize(size)}
-                    className={`px-3 py-1 text-sm rounded-full border ${selectedSize === size ? 'bg-[#93A87E] text-white border-[#93A87E]' : 'border-gray-300 text-gray-700'
-                      }`}
+                    onClick={() => setSelectedSize(size.size)} 
+                    disabled={size.stock <= 0}
+                    className={`px-3 rounded-3xl lg:px-4 lg:py-2 lg:rounded-none border text-sm font-medium transition
+          ${selectedSize === size.size ? 'bg-[#93A87E] text-white border-[#93A87E]' : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'}
+          ${size.stock <= 0 ? ' text-gray-400 cursor-not-allowed' : ''}`}
                   >
-                    {size}
+                    {size.size}
                   </button>
-                ))}
-              </div>
+
+                  {/* Tooltip */}
+                  {size.stock <= 0 && (
+                    <div className="absolute left-1/2 -top-8 transform -translate-x-1/2 bg-red-500 w-20 text-white text-xs rounded text-centre px-1 py-1 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
+                      Out of Stock
+                      <div className="absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 w-2 h-2 bg-red-500 rotate-45"></div>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
+
 
             {/* Quantity */}
             <div className="flex items-center gap-3">
               <span className="text-sm text-gray-600">Qty:</span>
               <div className="flex items-center border rounded-full overflow-hidden">
-                <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-3 text-lg">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="px-3 text-lg"
+                  disabled={quantity <= 1}
+                >
                   -
                 </button>
                 <span className="px-3">{quantity}</span>
-                <button onClick={() => setQuantity(quantity + 1)} className="px-3 text-lg">
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="px-3 text-lg"
+                  disabled={!selectedSize || quantity >= getSelectedSizeStock()}
+                >
                   +
                 </button>
               </div>
             </div>
 
-            {/* Footer Buttons */}
+            {/* Modal Footer */}
             <div className="flex justify-end gap-3 pt-4">
               <button
                 className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-full"
@@ -305,11 +390,29 @@ const ProductCard = ({ product = {} }) => {
               </button>
 
               {modalType === 'cart' ? (
-                <button className="px-4 py-2 text-sm bg-[#93A87E] text-white rounded-full" onClick={handleAddToCart}>
+                <button
+                  className="px-4 py-2 text-sm bg-[#93A87E] text-white rounded-full disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  onClick={handleAddToCart}
+                  disabled={
+                    !selectedColor ||
+                    !selectedSize ||
+                    quantity > getSelectedSizeStock() ||
+                    getSelectedSizeStock() === 0
+                  }
+                >
                   Add to Cart
                 </button>
               ) : (
-                <button className="px-4 py-2 text-sm bg-[#93A87E] text-white rounded-full" onClick={handleCheckout}>
+                <button
+                  className="px-4 py-2 text-sm bg-[#93A87E] text-white rounded-full disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  onClick={handleCheckout}
+                  disabled={
+                    !selectedColor ||
+                    !selectedSize ||
+                    quantity > getSelectedSizeStock() ||
+                    getSelectedSizeStock() === 0
+                  }
+                >
                   Checkout
                 </button>
               )}
@@ -317,6 +420,7 @@ const ProductCard = ({ product = {} }) => {
           </Dialog.Panel>
         </div>
       </Dialog>
+
     </>
   );
 };
