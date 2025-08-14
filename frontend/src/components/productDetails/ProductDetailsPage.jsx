@@ -13,7 +13,6 @@ import ProductReviewForm from './ProductReviewForm';
 const ProductDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,6 +25,7 @@ const ProductDetailPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
   const [tooltipVisible, setTooltipVisible] = useState({});
+  const { description = "No description available" } = product || {};
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -188,6 +188,10 @@ const ProductDetailPage = () => {
               </>
             )}
           </div>
+
+          {/* description */}
+          <p className="text-sm text-[#93a87eba] truncate">{description}</p>
+
 
           {/* Colors */}
           <div>
