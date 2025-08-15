@@ -69,7 +69,7 @@
 // export default Products;
 
 
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
@@ -179,8 +179,8 @@ const Products = () => {
     if (selectedCategory || selectedSubcategory) {
       fetchProducts(selectedCategory, selectedSubcategory);
 
-      if(productSectionRef.current){
-        productSectionRef.current.scrollIntoView({ behavior: "smooth"});
+      if (productSectionRef.current) {
+        productSectionRef.current.scrollIntoView({ behavior: "smooth" });
       }
     }
   }, [selectedCategory, selectedSubcategory]);
@@ -257,7 +257,9 @@ const Products = () => {
       <div className="p-8" ref={productSectionRef}>
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-semibold text-green-700">
-            {selectedCategory ? "Filtered Products" : "All Products"}
+            {selectedCategory
+              ? categories.find((cat) => cat._id === selectedCategory)?.name || "Filtered Products"
+              : "All Products"}
           </h1>
 
           {(selectedCategory || selectedSubcategory) && (
@@ -277,7 +279,7 @@ const Products = () => {
 
         <div className="border w-[150px] m-auto mb-2"></div>
         <div className="px-4">
-          <h2 className="text-2xl text-[#93A87E] mb-6">Featured Products</h2>
+
 
           {loading ? (
             <div className="flex justify-center py-10">

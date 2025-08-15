@@ -20,7 +20,7 @@ function AboutUs() {
         className="relative h-96 md:h-[500px] bg-cover bg-center flex items-center justify-center text-center p-4"
         style={{ backgroundImage: 'url(https://res.cloudinary.com/dq70cmqwb/image/upload/v1752703075/aboutbg_hpmkai.jpg)' }} >
         <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div className="relative z-10 text-white max-w-3xl mx-auto">
+        <div className="relative z-8 text-white max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 font-playfair-display">
             Crafting Experiences, One Product at a Time
           </h1>

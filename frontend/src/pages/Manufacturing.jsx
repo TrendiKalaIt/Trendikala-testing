@@ -21,7 +21,7 @@ function Manufacturing() {
         style={{ backgroundImage: 'url(https://res.cloudinary.com/dq70cmqwb/image/upload/v1752703254/Manufacturingbg_yrfope.jpg)' }}
       >
         <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div className="relative z-10 text-white max-w-3xl mx-auto">
+        <div className="relative z-8 text-white max-w-3xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 font-playfair-display">
             Where Quality Meets Craftsmanship
           </h1>

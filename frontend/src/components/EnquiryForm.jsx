@@ -93,7 +93,7 @@ const EnquiryForm = () => {
             required
             className="w-full p-2 border border-gray-300 rounded"
           >
-             <option value="" disabled selected hidden>Select Type</option>
+             <option value="" disabled  hidden>Select Type</option>
             <option value="Product">Product Related</option>
             <option value="Bulk">Bulk Order</option>
             <option value="Custom">Custom Design Request</option>

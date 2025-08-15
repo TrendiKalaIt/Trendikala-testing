@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect,useRef } from 'react';
 import { selectWishlistCount, fetchWishlist } from '../utility/wishlistSlice';
 import { Heart, ShoppingCart, Search, User, Menu, X } from 'lucide-react';
 import { useNavigate, NavLink } from 'react-router-dom';
@@ -7,7 +7,15 @@ import { logout } from '../utility/auth/authSlice';
 import { selectCartCount } from '../utility/cartSlice';
 import { persistor } from '../utility/store';
 
+
+
+
+
+
 export default function Navbar({ links }) {
+
+
+  const searchRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchInputOpen, setIsSearchInputOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,6 +47,21 @@ export default function Navbar({ links }) {
     window.addEventListener('mousedown', handleClickOutside);
     return () => window.removeEventListener('mousedown', handleClickOutside);
   }, [showDropdown]);
+
+  useEffect(() => {
+  if (!isSearchInputOpen) return;
+
+  const handleClickOutside = (e) => {
+    if (searchRef.current && !searchRef.current.contains(e.target)) {
+      setIsSearchInputOpen(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [isSearchInputOpen]);
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -142,7 +165,7 @@ export default function Navbar({ links }) {
                 )}
               </NavLink>
             )}
-            <div className='relative inline-block'>
+            <div className='relative inline-block' ref={searchRef}>
               <Search
                 className="w-6 h-6 cursor-pointer  transition"
                 onClick={() => setIsSearchInputOpen(!isSearchInputOpen)}
