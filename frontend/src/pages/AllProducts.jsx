@@ -179,9 +179,11 @@ const Products = () => {
     if (selectedCategory || selectedSubcategory) {
       fetchProducts(selectedCategory, selectedSubcategory);
 
-      if (productSectionRef.current) {
-        productSectionRef.current.scrollIntoView({ behavior: "smooth" });
-      }
+      setTimeout(() => {
+        if (productSectionRef.current) {
+          productSectionRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 100);
     }
   }, [selectedCategory, selectedSubcategory]);
 
