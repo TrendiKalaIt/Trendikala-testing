@@ -69,7 +69,7 @@
 // export default Products;
 
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
@@ -80,6 +80,7 @@ import Bannerv from "../assets/bannerM.mp4";
 
 const Products = () => {
   const dispatch = useDispatch();
+  const productSectionRef = useRef(null);
 
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
@@ -177,6 +178,10 @@ const Products = () => {
   useEffect(() => {
     if (selectedCategory || selectedSubcategory) {
       fetchProducts(selectedCategory, selectedSubcategory);
+
+      if(productSectionRef.current){
+        productSectionRef.current.scrollIntoView({ behavior: "smooth"});
+      }
     }
   }, [selectedCategory, selectedSubcategory]);
 
@@ -249,7 +254,7 @@ const Products = () => {
 
 
       {/* Products Section */}
-      <div className="p-8">
+      <div className="p-8" ref={productSectionRef}>
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-semibold text-green-700">
             {selectedCategory ? "Filtered Products" : "All Products"}
