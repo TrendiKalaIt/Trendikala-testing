@@ -60,7 +60,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="leading-relaxed text-lg font-bold text-[#a5e665c8] mb-6 text-justify"
+                className="font-home leading-relaxed text-lg font-bold text-[#a5e665c8] mb-6 text-justify"
               >
                 Trendi Kala brings you elegant ethnic fashion that blends tradition with trend,
                 offering timeless pieces designed for the bold, modern Indian.
@@ -69,7 +69,7 @@ const HeroSection = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleViewDetails}
-                className="bg-[#93A87E] hover:bg-[#93a87ec6] text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 m-auto"
+                className="font-heading bg-[#93A87E] hover:bg-[#93a87ec6] text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 m-auto"
               >
                 View Details
               </motion.button>
@@ -89,7 +89,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="text-2xl w-2/3 md:text-2xl font-semibold leading-tight mt-10 md:mt-20 text-[#a5e665c8]"
+                className=" font-heading text-2xl w-2/3 md:text-2xl font-semibold leading-tight mt-10 md:mt-20 text-[#a5e665c8]"
               >
                 "{title.toUpperCase()}"
               </motion.h1>

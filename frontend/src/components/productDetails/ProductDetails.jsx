@@ -31,7 +31,7 @@ const ProductDetails = ({ productData }) => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
       {items.map(([label, value], i) => (
         <div key={i} className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-          <span className={`font-medium text-[#93A87E] ${labelWidth} flex-shrink-0`}>
+          <span className={`font-body font-medium text-[#93A87E] ${labelWidth} flex-shrink-0`}>
             {label}:
           </span>
           <span className="text-[#93A87E] flex-1">{value || 'N/A'}</span>
@@ -68,7 +68,7 @@ const ProductDetails = ({ productData }) => {
       <div className="w-full mx-auto bg-red rounded-xl p-5 sm:p-8 border border-[#35894E]">
         
         <div className="space-y-4">
-          <h3 className="text-2xl font-bold text-[#35894E] mb-2">{productName}</h3>
+          <h3 className="font-heading text-2xl font-bold text-[#35894E] mb-2">{productName}</h3>
           {description.paragraph1 && (
             <p className="text-[#93A87E] leading-relaxed">{description.paragraph1}</p>
           )}

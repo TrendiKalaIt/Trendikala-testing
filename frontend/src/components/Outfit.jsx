@@ -3,6 +3,7 @@ import React from 'react';
 import { ChevronRight } from 'lucide-react';
 import { outfitGridItems } from '../assets/assets';
 import { Link } from 'react-router-dom';
+import OutfitImg from '../../public/OutfitImg.png'
 
 function Outfit() {
   const { mainItem, otherItems } = outfitGridItems;
@@ -14,7 +15,7 @@ function Outfit() {
         {/* Main block */}
         <div className="col-span-2 row-span-2 bg-blue-200 h-20 min-h-[300px] w-full p-4 rounded-2xl relative overflow-hidden">
           <img
-            src={mainItem.imageUrl}
+            src={OutfitImg}
             alt={mainItem.title}
             className="absolute inset-0 w-full h-full object-cover object-center rounded-2xl"
           />

@@ -1,9 +1,3 @@
-import Logo from './trendikala_logo_bg.png'
-
-// Export as one object
-export {
-  Logo
-}
 
 
 export const carouselSlides = [

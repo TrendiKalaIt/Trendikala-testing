@@ -1,5 +1,5 @@
 import React from 'react';
-import {Logo} from '../assets/assets'
+import Logo from '../../public/trendikala_logo_bg.png'
 
 const Spinner = () => {
   return (

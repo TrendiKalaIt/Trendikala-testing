@@ -41,12 +41,12 @@ const ProductReviewForm = ({ productId }) => {
   return (
     <div className="flex flex-col items-start justify-start  font-sans mt-4">
       <div className="w-full max-w-sm p-6 bg-white rounded-xl shadow-lg border border-gray-200">
-        <h3 className="text-2xl font-bold text-gray-800 mb-2 text-center">Your Feedback Matters!</h3>
-        <p className="text-gray-500 mb-6 text-center">Share your thoughts and help others make a decision.</p>
+        <h3 className="font-heading text-2xl font-bold text-gray-800 mb-2 text-center">Your Feedback Matters!</h3>
+        <p className="font-body text-gray-500 mb-6 text-center">Share your thoughts and help others make a decision.</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="font-body block text-sm font-medium text-gray-700 mb-1">
               Select Rating:
             </label>
             <div className="flex justify-start space-x-1   border-gray-300 bg-white">
@@ -72,7 +72,7 @@ const ProductReviewForm = ({ productId }) => {
           </div>
 
           <div>
-            <label htmlFor="comment" className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="comment" className="font-body block text-sm font-medium text-gray-700 mb-1">
               Your Comment:
             </label>
             <textarea
@@ -88,7 +88,7 @@ const ProductReviewForm = ({ productId }) => {
 
           <button
             type="submit"
-            className="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-green-700 
+            className=" font-home w-full bg-green-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-green-700 
               focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 transition-all duration-200 shadow-md"
           >
             Submit Review

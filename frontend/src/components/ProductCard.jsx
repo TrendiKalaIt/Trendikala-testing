@@ -199,7 +199,7 @@ const ProductCard = ({ product = {} }) => {
   return (
     <>
       <div
-        className={`relative w-full max-w-xs mx-auto bg-white border-2 rounded-3xl shadow-md overflow-hidden border-[#35894e] h-96 flex flex-col
+        className={`relative w-full max-w-xs mx-auto bg-white border-2 rounded-3xl  overflow-hidden  h-96 flex flex-col
   transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105`}
       >
         {/* Image */}
@@ -245,18 +245,18 @@ const ProductCard = ({ product = {} }) => {
         </div>
 
         {/* Content */}
-        <div className="h-2/5 p-3 flex flex-col justify-between bg-white rounded-b-3xl">
+        <div className="h-2/5 p-3 flex flex-col justify-between bg-green-50 rounded-b-3xl">
           <div>
-            <p className="text-sm text-[#93a87e86] font-semibold">
+            <p className="font-home uppercase text-sm text-[#93a87eb7]">
               {category?.name || 'Category'}
             </p>
             <h3
               onClick={handleNavigate}
-              className="text-md font-bold text-[#93A87E] truncate cursor-pointer hover:underline"
+              className=" font-heading text-lg font-bold text-[#7e8f6cfd] truncate cursor-pointer hover:underline"
             >
               {productName}
             </h3>
-            <p className="text-sm text-[#93a87eba] truncate">{description}</p>
+            <p className="font-body text-sm text-[#93a87eba] truncate">{description}</p>
 
             {/* Price */}
             <div className="flex gap-3 pt-1">
@@ -272,13 +272,13 @@ const ProductCard = ({ product = {} }) => {
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-2 pt-2">
+          <div className="flex gap-2 pt-2 ">
             <button
               onClick={handleAddToCartClick}
               disabled={isOutOfStock}
-              className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 ${isOutOfStock
+              className={`font-home flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 ${isOutOfStock
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                : 'bg-gray-300 text-gray-700 hover:bg-gray-300'
                 }`}
             >
               {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
@@ -287,7 +287,7 @@ const ProductCard = ({ product = {} }) => {
             <button
               onClick={handleBuyNowClick}
               disabled={isOutOfStock}
-              className={`flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 ${isOutOfStock
+              className={`font-heading flex-1 py-2 text-xs font-semibold rounded-full transition-all duration-200 ease-in-out hover:scale-105 ${isOutOfStock
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-[#93A87E] text-white hover:bg-green-700'
                 }`}

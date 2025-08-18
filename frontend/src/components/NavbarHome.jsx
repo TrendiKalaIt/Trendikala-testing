@@ -114,7 +114,7 @@ export default function Navbar({ links }) {
       className={`px-4 lg:fixed top-0 left-0 right-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
         }`}
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center py-3">
+      <div className="max-w-7xl mx-auto flex justify-between items-center py-2 ">
         {/* Logo */}
         <div
           className="flex items-center space-x-2 cursor-pointer"
@@ -124,29 +124,29 @@ export default function Navbar({ links }) {
             <img
               src="/trendikala_logo_bg.png"
               alt="Trendi Kala Logo"
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain "
             />
           </div>
           <div className="hidden md:block border-l-2 border-green-700 h-12 mx-3" />
           <div className="hidden md:block">
-            <span className="block text-green-400 font-bold text-sm tracking-[.6rem]">
+            <span className="font-heading block text-green-400 font-bold text-sm tracking-[.6rem]">
               TRENDI <br /> KALA
             </span>
-            <span className="block text-[10px] text-green-400 mt-1">
+            <span className=" font-body block text-[10px] text-green-400 mt-1">
               TRENDS & KALA IN <br /> EVERY STICH
             </span>
           </div>
         </div>
 
-        <div className="lg:flex lg:space-x-10 md:space-y-3 lg:space-y-0">
+        <div className="font-home lg:flex lg:space-x-10 md:space-y-3 lg:space-y-0">
           {/* Desktop Links */}
-          <ul className="hidden md:ps-20 md:flex space-x-10 lg:space-x-5 text-base font-medium">
+          <ul className="hidden  md:ps-20 md:flex space-x-10 lg:space-x-5 text-base font-medium">
             {links.map((link) => (
               <li key={link.name}>
                 <NavLink
                   to={link.path}
                   className={({ isActive }) =>
-                    `transition-colors border-b-2 ${getNavLinkClass(isActive)}`
+                    `font-home transition-colors border-b-2  ${getNavLinkClass(isActive)}`
                   }
                 >
                   {link.name.charAt(0).toUpperCase() + link.name.slice(1)}

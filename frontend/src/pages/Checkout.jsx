@@ -78,7 +78,7 @@ const AddressSection = ({
 
   return (
     <div className="mb-8">
-      <h2 className="text-2xl text-green-600 font-semibold mb-4">Delivery Address</h2>
+      <h2 className=" font-heading text-2xl text-green-600 font-semibold mb-4">Delivery Address</h2>
       {loading ? (
         <p>Loading addresses...</p>
       ) : (
@@ -151,10 +151,10 @@ const CheckoutSection = ({
   selectedAddress,
 }) => (
   <div>
-    <h2 className="text-2xl text-green-600 font-semibold mb-4">Order Summary</h2>
+    <h2 className=" font-heading text-2xl text-green-600 font-semibold mb-4">Order Summary</h2>
     <div className="space-y-6">
       {cart.length === 0 ? (
-        <p className="text-gray-500 text-center py-4">No items to display.</p>
+        <p className="font-body text-gray-500 text-center py-4">No items to display.</p>
       ) : (
         cart.map((item, index) => (
           <div
@@ -167,7 +167,7 @@ const CheckoutSection = ({
                 alt={item.productName}
                 className="w-10 h-10 rounded-full mr-4"
               />
-              <span className="text-gray-800">{item.productName}</span>
+              <span className="font-home text-gray-800">{item.productName}</span>
             </div>
             <span className="text-gray-800 font-medium">
               ₹{(item.quantity || 1) * item.discountPrice}
@@ -184,13 +184,13 @@ const CheckoutSection = ({
         <span className="text-sm text-green-600">₹{shipping.toFixed(2)}</span>
       </div>
       <div className="flex justify-between text-lg font-bold text-gray-900 border-t-2 border-gray-200 pt-4">
-        <span>Total:</span>
+        <span className='font-home'>Total:</span>
         <span>₹{total.toFixed(2)}</span>
       </div>
     </div>
 
     <div className="mt-8 space-y-4">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">Payment Method</h3>
+      <h3 className="font-home text-lg font-semibold text-gray-800 mb-4">Payment Method</h3>
       {[
         { id: 'bank', label: 'Bank / UPI / Wallets', icons: [IoWalletOutline] },
         { id: 'cashOnDelivery', label: 'Cash on Delivery' },
@@ -227,7 +227,7 @@ const CheckoutSection = ({
     <button
       onClick={handlePlaceOrder}
       disabled={loadingSubmit || !selectedAddress}
-      className={`mt-8 w-full bg-green-600 text-white py-2 rounded-lg font-semibold text-lg shadow-md transition duration-300 ease-in-out ${loadingSubmit || !selectedAddress ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-700'
+      className={` font-home mt-8 w-full bg-green-600 text-white py-2 rounded-lg font-semibold text-lg shadow-md transition duration-300 ease-in-out ${loadingSubmit || !selectedAddress ? 'opacity-50 cursor-not-allowed' : 'hover:bg-green-700'
         }`}
     >
       {loadingSubmit ? 'Placing Order...' : 'Place Order'}

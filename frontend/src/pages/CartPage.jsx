@@ -108,7 +108,7 @@ function CartPage() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
 
-      <div className="flex justify-center items-center mb-12 space-x-8">
+      <div className="flex justify-center items-center mb-12 space-x-8 ">
         {['Shopping cart', 'Checkout details', 'Order complete'].map((step, i) => (
           <div key={step} className="flex flex-col items-center">
             <div
@@ -118,8 +118,8 @@ function CartPage() {
               {i + 1}
             </div>
             <span
-              className={`mt-2  ${i === 0 ? 'text-green-700  font-medium border-b-2 border-green-700 pb-1 ' : 'text-gray-400'
-                } lg:text-3xl`}
+              className={`mt-2  ${i === 0 ? ' text-green-700  font-medium border-b-2 border-green-700 pb-1 ' : 'text-gray-400'
+                } font-home lg:text-3xl`}
             >
               {step}
             </span>
@@ -130,13 +130,13 @@ function CartPage() {
       <div className="flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
         <div className="flex-1 bg-white p-4 sm:p-6 rounded-lg shadow-sm">
           {products.length === 0 ? (
-            <p className="text-gray-500 text-center text-lg">Your cart is empty.</p>
+            <p className="font-home text-gray-500 text-center text-3xl">Your cart is empty.</p>
           ) : (
             <>
-              <div className="hidden md:grid grid-cols-4 gap-4 pb-4 border-b border-gray-200 font-medium text-gray-500 text-lg">
-                <div className="col-span-2">Product</div>
-                <div>Quantity</div>
-                <div>Price</div>
+              <div className="  hidden md:grid grid-cols-4 gap-4 pb-4 border-b border-gray-200 font-medium text-gray-500 text-lg">
+                <div className="font-heading col-span-2">Product</div>
+                <div className='font-heading'>Quantity</div>
+                <div className='font-heading'>Price</div>
 
               </div>
 
@@ -161,9 +161,9 @@ function CartPage() {
                     />
 
                     <div>
-                      <h3 className="font-semibold text-gray-800 text-lg">{product.productName || product.name}</h3>
-                      <p className="text-base text-gray-500">Color: {product.color || 'N/A'}</p>
-                      <p className="text-base text-gray-500">Size: {product.size || 'N/A'}</p>
+                      <h3 className="font-heading font-semibold text-green-600 text-lg">{product.productName || product.name}</h3>
+                      <p className="font-body text-base text-gray-500">Color: {product.color || 'N/A'}</p>
+                      <p className="font-body text-base text-gray-500">Size: {product.size || 'N/A'}</p>
                       <button
                         onClick={() => handleRemove(product._id || product.id)}
                         className="text-red-500 text-base mt-2 hover:underline"
@@ -201,23 +201,23 @@ function CartPage() {
         </div>
 
         <div className="w-full lg:w-96 bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Cart summary</h2>
+          <h2 className="font-heading text-2xl font-semibold text-gray-800 mb-4">Cart summary</h2>
           <div className="space-y-4">
 
-            <span className="text-sm text-gray-600">Delivery Charge  ₹{deliveryCharge.toFixed(2)}</span>
+            <span className="font-body text-sm text-gray-600">Delivery Charge  ₹{deliveryCharge.toFixed(2)}</span>
 
           </div>
           <div className="border-t border-gray-200 mt-6 pt-4 space-y-3">
-            <div className="flex justify-between text-gray-700 text-lg">
+            <div className="font-home flex justify-between text-gray-700 text-lg">
               <span>Subtotal</span>
               <span className="font-medium">₹{subtotal.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-gray-700 text-sm">
+            <div className="font-body flex justify-between text-gray-700 text-sm">
               <span>Delivery Charge</span>
               <span className="font-medium">₹{deliveryCharge.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-xl  text-gray-800">
-              <span>Total</span>
+            <div className=" font-home flex justify-between text-xl  text-gray-800">
+              <span >Total</span>
               <span>₹{total.toFixed(2)}</span>
             </div>
           </div>
@@ -232,7 +232,7 @@ function CartPage() {
               toast.success('Proceeding to checkout...');
               setTimeout(() => navigate('/checkout'), 1000);
             }}
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg mt-6 transition-colors duration-200 text-lg"
+            className=" font-heading w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg mt-6 transition-colors duration-200 text-lg"
           >
             Checkout
           </button>

@@ -22,26 +22,26 @@ function Manufacturing() {
       >
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="relative z-8 text-white max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 font-playfair-display">
+          <h1 className= "font-heading text-4xl md:text-6xl font-bold mb-4 font-playfair-display">
             Where Quality Meets Craftsmanship
           </h1>
-          <p className="text-lg md:text-xl font-light">
+          <p className=" font-body text-lg md:text-xl font-light">
             A transparent look into the meticulous process behind every TRENDI KALA creation..
           </p>
         </div>
       </section>
 
       <section className="container mx-auto py-16 px-4 md:px-8 bg-white rounded-xl shadow-lg mt-[-60px] relative z-20 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair-display text-green-700">
+        <h2 className=" font-home text-3xl md:text-4xl font-bold mb-6 font-playfair-display text-green-700">
           Our Philosophy: Built to Last
         </h2>
-        <p className="text-lg leading-relaxed max-w-3xl mx-auto">
+        <p className=" font-body text-lg leading-relaxed max-w-3xl mx-auto">
           At <span className='font-bold'> ' TRENDI KALA ' </span>, we believe that true quality is woven into every fiber and forged in every process. Our manufacturing journey is driven by a commitment to excellence, sustainability, and the well-being of our artisans. We invite you to explore the steps that bring our products to life.
         </p>
       </section>
 
       <section className="container mx-auto py-16 px-4 md:px-8 mt-16">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center font-playfair-display text-green-700">
+        <h2 className=" font-home text-3xl md:text-4xl font-bold mb-12 text-center font-playfair-display text-green-700">
           The Journey of Creation
         </h2>
         <div className="relative flex flex-col items-center">
@@ -52,8 +52,8 @@ function Manufacturing() {
             <div className="md:w-1/2 flex justify-center md:justify-end md:pr-12 relative">
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:ml-8 mt-4 md:mt-0 md:text-right">
                 <Palette size={40} className="text-green-500 mb-3 mx-auto md:ml-auto md:mr-0 hidden" />
-                <h3 className="text-2xl font-semibold mb-2">Concept & Design</h3>
-                <p className="text-gray-600">
+                <h3 className=" font-home text-2xl font-semibold mb-2">Concept & Design</h3>
+                <p className=" font-body text-gray-600">
                   It all begins with an idea. Our designers meticulously sketch, refine, and plan each product, focusing on aesthetics, functionality, and durability.
                 </p>
               </div>
@@ -74,8 +74,8 @@ function Manufacturing() {
               
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:mr-8 mt-4 md:mt-0 md:text-left">
                 <Package size={40} className="text-green-500 mb-3 mx-auto md:mr-auto md:ml-0" />
-                <h3 className="text-2xl font-semibold mb-2">Material Sourcing</h3>
-                <p className="text-gray-600">
+                <h3 className=" font-home text-2xl font-semibold mb-2">Material Sourcing</h3>
+                <p className=" font-body text-gray-600">
                   We carefully select premium, ethically sourced materials, ensuring both the quality of our products and our commitment to the planet.
                 </p>
               </div>
@@ -96,8 +96,8 @@ function Manufacturing() {
               
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:ml-8 mt-4 md:mt-0 md:text-right">
                 <Settings size={40} className="text-green-500 mb-3 mx-auto md:ml-auto md:mr-0" />
-                <h3 className="text-2xl font-semibold mb-2">Precision Manufacturing</h3>
-                <p className="text-gray-600">
+                <h3 className=" font-home text-2xl font-semibold mb-2">Precision Manufacturing</h3>
+                <p className=" font-body text-gray-600">
                   Our state-of-the-art facilities and skilled artisans transform raw materials into finished products with unparalleled precision.
                 </p>
               </div>
@@ -119,8 +119,8 @@ function Manufacturing() {
              
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:mr-8 mt-4 md:mt-0 md:text-left">
                 <CheckCircle size={40} className="text-green-500 mb-3 mx-auto md:mr-auto md:ml-0" />
-                <h3 className="text-2xl font-semibold mb-2">Rigorous Quality Control</h3>
-                <p className="text-gray-600">
+                <h3 className=" font-home text-2xl font-semibold mb-2">Rigorous Quality Control</h3>
+                <p className=" font-body text-gray-600">
                   Every single item undergoes multiple layers of strict quality checks to ensure it meets our high standards before it reaches you.
                 </p>
               </div>
@@ -141,8 +141,8 @@ function Manufacturing() {
               
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:ml-8 mt-4 md:mt-0 md:text-right">
                <span className='text-white hidden '>RG&PN</span> <Truck size={40} className="text-green-500 mb-3 mx-auto md:ml-auto md:mr-0" />
-                <h3 className="text-2xl font-semibold mb-2">Packaging & Dispatch</h3>
-                <p className="text-gray-600">
+                <h3 className=" font-home text-2xl font-semibold mb-2">Packaging & Dispatch</h3>
+                <p className=" font-body text-gray-600">
                   Products are carefully packaged to ensure safe delivery and dispatched to their new homes.
                 </p>
               </div>
@@ -162,35 +162,35 @@ function Manufacturing() {
 
       <section className="bg-green-50 py-16 px-4 md:px-8 mt-16">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 font-playfair-display text-green-700">
+          <h2 className=" font-home text-3xl md:text-4xl font-bold mb-12 font-playfair-display text-green-700">
             Our Unwavering Commitment
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
               <CheckCircle size={60} className="text-green-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold mb-3">Superior Quality</h3>
-              <p className="text-gray-600">
+              <h3 className=" font-home text-2xl font-semibold mb-3">Superior Quality</h3>
+              <p className=" font-body text-gray-600">
                 We use only the finest materials and employ rigorous quality checks at every stage to ensure durability and excellence.
               </p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
               <Leaf size={60} className="text-green-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold mb-3">Sustainable Practices</h3>
-              <p className="text-gray-600">
+              <h3 className=" font-home text-2xl font-semibold mb-3">Sustainable Practices</h3>
+              <p className=" font-body text-gray-600">
                 From eco-friendly materials to responsible waste management, we strive for a minimal environmental footprint.
               </p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
               <Users size={60} className="text-green-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold mb-3">Ethical Production</h3>
-              <p className="text-gray-600">
+              <h3 className=" font-home text-2xl font-semibold mb-3">Ethical Production</h3>
+              <p className=" font-body text-gray-600">
                 We ensure fair wages, safe working conditions, and respect for all individuals involved in our production process.
               </p>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
               <Sparkles size={60} className="text-green-600 mx-auto mb-4" />
-              <h3 className="text-2xl font-semibold mb-3">Continuous Improvement</h3>
-              <p className="text-gray-600">
+              <h3 className=" font-home text-2xl font-semibold mb-3">Continuous Improvement</h3>
+              <p className=" font-body text-gray-600">
                 We are always seeking new technologies and methods to enhance our products and processes.
               </p>
             </div>
@@ -212,13 +212,13 @@ function Manufacturing() {
             />
           </div>
           <div className="md:w-1/2 text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-playfair-display text-green-700">
+            <h2 className=" font-home text-3xl md:text-4xl font-bold mb-6 font-playfair-display text-green-700">
               Behind the Craft: Our Dedicated Team
             </h2>
-            <p className="text-lg mb-4 leading-relaxed">
+            <p className=" font-body text-lg mb-4 leading-relaxed">
               Our products are brought to life by a team of passionate artisans and skilled professionals. Their expertise, dedication, and attention to detail are the heart of our manufacturing process. We celebrate their craftsmanship and the human touch in every item.
             </p>
-            <p className="text-lg leading-relaxed">
+            <p className=" font-body text-lg leading-relaxed">
               They are not just employees; they are the creators who ensure the quality and integrity of everything we offer.
             </p>
           </div>

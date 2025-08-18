@@ -132,10 +132,10 @@ const Products = () => {
         </video>
 
         <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center px-4 sm:px-6">
-          <h1 className="text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg tracking-wide animate-fade-in-up">
-            <span className="text-[#a2ff00]">Explore</span> Our Categories
+          <h1 className=" font-heading text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg tracking-wide animate-fade-in-up">
+            <span className="text-[#a2ff00] font-home ">Explore</span> Our Categories
           </h1>
-          <p className="mt-4 text-sm sm:text-base md:text-lg lg:text-xl text-[#d3f4b1] max-w-2xl drop-shadow-md animate-fade-in-up delay-200">
+          <p className="font-body mt-4 text-sm sm:text-base md:text-lg lg:text-xl text-[#d3f4b1] max-w-2xl drop-shadow-md animate-fade-in-up delay-200">
             Select a category and subcategory to find your perfect product.
           </p>
         </div>
@@ -143,7 +143,7 @@ const Products = () => {
 
       {/* Category Grid */}
       <div className="px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
-        <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-green-700">
+        <h2 className="font-home text-xl sm:text-2xl font-semibold mb-4 text-green-700">
           Shop by Category
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 mb-6">
@@ -172,7 +172,7 @@ const Products = () => {
                     </div>
                   )}
                 </div>
-                <div className="p-2 sm:p-3 text-center text-sm sm:text-base font-medium">
+                <div className="font-heading p-2 sm:p-3 text-center text-sm sm:text-base font-medium">
                   {cat.name}
                 </div>
               </div>
@@ -186,8 +186,8 @@ const Products = () => {
 
       {/* Products Section */}
       <div className="p-8" ref={productSectionRef}>
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-3xl font-semibold text-green-700">
+        <div className="flex justify-between items-center mb-2">
+          <h1 className="font-home text-3xl font-semibold text-green-700">
             {selectedCategory
               ? categories.find((cat) => cat._id === selectedCategory)?.name || "Filtered Products"
               : "All Products"}
@@ -200,7 +200,7 @@ const Products = () => {
                 setSelectedSubcategory("");
                 fetchProducts();
               }}
-              className="text-sm bg-gray-200 px-4 py-2 rounded hover:bg-gray-300"
+              className="font-body text-sm bg-gray-200 px-4  py-2 rounded hover:bg-gray-300"
             >
               View All Products
             </button>
@@ -208,7 +208,7 @@ const Products = () => {
         </div>
 
 
-        <div className="border w-[150px] m-auto mb-2"></div>
+        <div className="border w-[150px]  mb-5"></div>
         <div className="px-4">
 
 

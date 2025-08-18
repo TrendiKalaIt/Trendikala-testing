@@ -25,14 +25,14 @@ const ReviewCard = ({ review }) => (
       </div>
 
       <div className="mb-1 text-[#35894E] font-semibold text-lg flex items-center">
-        <span>{review.name || 'Anonymous'}</span>
+        <span className='font-heading'>{review.name || 'Anonymous'}</span>
         {(review.verified ?? false) && <CheckCircleIcon />}
       </div>
 
-      <p className="text-[#93A87E] text-sm leading-relaxed mb-3">{review.comment}</p>
+      <p className= "font-body text-[#93A87E] text-sm leading-relaxed mb-3">{review.comment}</p>
     </div>
 
-    <p className="text-[#35894E] text-xs mt-auto">
+    <p className="font-body text-[#35894E] text-xs mt-auto">
       Posted on -{' '}
       {review.date
         ? new Date(review.date).toLocaleDateString('en-GB', {
@@ -69,14 +69,14 @@ const ProductReviews = ({ reviews = [], error = null }) => {
       <div className="font-sans antialiased text-gray-800 flex flex-col items-center">
         <div className="w-full max-w-6xl mx-auto space-y-8">
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#35894E] mb-4 sm:mb-0">
+            <h2 className=" font-home text-2xl sm:text-3xl font-bold text-[#35894E] mb-4 sm:mb-0">
               All Reviews <span className="text-[#35894eb7]">({reviewsCount})</span>
             </h2>
           </div>
 
           <div className="bg-white p-6 rounded-xl shadow-sm border border-[#35894E] mb-4">
-            <h3 className="text-xl font-semibold text-[#35894E] mb-2">Overall Customer Rating</h3>
-            <div className="flex items-center text-xl font-bold text-[#35894E]">
+            <h3 className="font-heading text-xl font-semibold text-[#35894E] mb-2">Overall Customer Rating</h3>
+            <div className="font-body flex items-center text-xl font-bold text-[#35894E]">
               {avgRating} out of 5 stars
               <div className="flex ml-2">
                 {[...Array(5)].map((_, i) => (

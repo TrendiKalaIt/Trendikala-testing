@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import { motion, AnimatePresence } from "framer-motion";
 import { addToCart } from '../../utility/cartSlice';
 import toast from 'react-hot-toast';
-import { Star, Check } from 'lucide-react';
+import { Star, Check, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import TabsNavigation from '../productDetails/ProductTabsNavigation';
 import ProductDetails from './ProductDetails';
 import ProductReviews from './ProductReviews';
@@ -27,6 +28,11 @@ const ProductDetailPage = () => {
   const [tooltipVisible, setTooltipVisible] = useState({});
   const { description = "No description available" } = product || {};
   const [isOpen, setIsOpen] = useState(false);
+
+  const [animateThumbnail, setAnimateThumbnail] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+
 
 
   useEffect(() => {
@@ -64,10 +70,12 @@ const ProductDetailPage = () => {
 
   const handleSizeSelect = (sizeObj) => {
     if (sizeObj.stock <= 0) return;
+    setAnimateThumbnail(true);
     setSelectedSize(sizeObj.size);
     setSelectedPrice(sizeObj.discountPrice || sizeObj.price);
     setSelectedStock(sizeObj.stock);
-    setQuantity(1); // reset quantity
+    setQuantity(1);
+    setTimeout(() => setAnimateThumbnail(false), 300);
   };
 
   const handleQuantity = (type) => {
@@ -142,7 +150,10 @@ const ProductDetailPage = () => {
               {product.media?.map((media, i) => (
                 <div
                   key={i}
-                  onClick={() => setThumbnail(media)}
+                  onClick={() => {
+                    setThumbnail(media);
+                    setCurrentIndex(i); // update currentIndex for modal
+                  }}
                   className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden cursor-pointer border-2 transition ${thumbnail?.url === media.url ? 'border-green-700' : 'border-gray-300'}`}
                 >
                   {media.type === 'image' ? (
@@ -152,25 +163,47 @@ const ProductDetailPage = () => {
                   )}
                 </div>
               ))}
+
             </div>
           </div>
 
-          <div className="w-full lg:w-6/6 md:h-[350px] lg:h-full rounded-lg overflow-hidden border border-green-700/50 order-1 lg:order-2 " onClick={() => setIsOpen(true)}>
-            {thumbnail ? (
-              thumbnail.type === 'image' ? (
-                <img src={thumbnail.url} alt={product.productName} className="w-full  h-full md:object-contain object-fill  object-top" />
-              ) : (
-                <video src={thumbnail.url} controls className="w-full h-full object-cover object-top" />
-              )
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-400">No Media</div>
-            )}
+          <div
+            className="w-full lg:w-6/6 md:h-[350px] lg:h-full rounded-lg overflow-hidden border border-green-700/50 order-1 lg:order-2"
+            onClick={() => setIsOpen(true)}
+          >
+            <AnimatePresence mode="wait">
+              {thumbnail && (
+                <motion.div
+                  key={thumbnail.url + selectedSize} 
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0,  y: -30 }}
+                  transition={{ duration: .6 }}
+                  className="w-full h-full"
+                >
+                  {thumbnail.type === 'image' ? (
+                    <img
+                      src={thumbnail.url}
+                      alt={product.productName}
+                      className="w-full h-full md:object-contain object-fill object-top"
+                    />
+                  ) : (
+                    <video
+                      src={thumbnail.url}
+                      controls
+                      className="w-full h-full object-cover object-top"
+                    />
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
+
         </div>
 
         {/* Right Side: Product Info */}
         <div className="w-full lg:w-2/6 space-y-2">
-          <h1 className="text-2xl font-bold text-[#35894E]">{product.productName}</h1>
+          <h1 className=" font-heading text-2xl font-bold text-[#35894E]">{product.productName}</h1>
 
           {/* Rating */}
           <div className="flex items-center gap-2">
@@ -192,18 +225,18 @@ const ProductDetailPage = () => {
           </div>
 
           {/* description */}
-          <p className="text-sm text-[#93a87eba] ">{description}</p>
+          <p className=" font-body text-sm text-[#93a87eba] ">{description}</p>
 
 
           {/* Colors */}
           <div>
-            <h3 className="text-[#35894E] mb-2">Select Colors</h3>
-            <div className="flex gap-3">
+            <h3 className="font-body text-[#35894E] mb-2">Select Colors</h3>
+            <div className=" flex gap-3">
               {product.colors?.map((color) => (
                 <button
                   key={color.name}
                   onClick={() => setSelectedColor(color.name)}
-                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition ${selectedColor === color.name ? 'border-green-700 scale-110' : 'border-gray-300'}`}
+                  className={` w-5 h-5 rounded-full border-2 flex items-center justify-center transition ${selectedColor === color.name ? 'border-green-700 scale-110' : 'border-gray-300'}`}
                   style={{ backgroundColor: color.hex }}
                 >
                   {selectedColor === color.name && <Check size={18} color="white" />}
@@ -214,7 +247,7 @@ const ProductDetailPage = () => {
 
           {/* Sizes */}
           <div>
-            <h3 className="text-[#35894E] mb-2">Choose Size</h3>
+            <h3 className="font-body text-[#35894E] mb-2">Choose Size</h3>
             <div className="overflow-x-auto sm:overflow-visible">
               <div className="flex gap-3 whitespace-nowrap sm:flex-wrap">
                 {product.sizes?.map((sizeObj) => (
@@ -224,7 +257,7 @@ const ProductDetailPage = () => {
                     <button
                       onClick={() => handleSizeSelect(sizeObj)}
                       disabled={sizeObj.stock <= 0}
-                      className={`relative px-3 rounded-3xl lg:px-4 lg:py-2 lg:rounded-none border text-[12px] font-medium transition
+                      className={` font-heading relative px-3 rounded-3xl lg:px-4 lg:py-2 lg:rounded-none border text-[12px] font-medium transition
     ${selectedSize === sizeObj.size ? 'bg-[#93A87E] text-white border-[#93A87E]' : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'}
     ${sizeObj.stock <= 0 ? 'text-gray-400 cursor-not-allowed' : ''}`}
                     >
@@ -260,7 +293,7 @@ const ProductDetailPage = () => {
             <button
               onClick={handleAddToCart}
               disabled={selectedStock <= 0}
-              className={`w-full font-medium py-1 md:px-6 text-xl rounded-full shadow-lg transition ${selectedStock <= 0 ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-[#93A87E] hover:bg-[#80996D] text-white'}`}
+              className={`font-home w-full font-medium py-1 md:px-6 text-xl rounded-full shadow-lg transition ${selectedStock <= 0 ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-[#93A87E] hover:bg-[#80996D] text-white'}`}
             >
               {selectedStock <= 0 ? 'Out of Stock' : 'Add to Cart'}
             </button>
@@ -269,8 +302,8 @@ const ProductDetailPage = () => {
       </div>
 
       {/* Tabs Section */}
-      <div className="max-w-6xl mx-auto p-4 mt-2">
-        <TabsNavigation
+      <div className="  max-w-6xl mx-auto p-4 mt-2">
+        <TabsNavigation 
           tabs={[
             { id: 'description', name: 'Description & Details' },
             { id: 'reviews', name: 'Reviews' }
@@ -278,7 +311,7 @@ const ProductDetailPage = () => {
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
-        <div className="pt-6">
+        <div className="pt-6  ">
           {activeTab === 'description' ? (
             <ProductDetails productData={product} />
           ) : (
@@ -290,35 +323,68 @@ const ProductDetailPage = () => {
         </div>
       </div>
 
-      {/* image view mnodel  */}
+      {/* image/video modal with carousel */}
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-          <div className="relative max-w-4xl w-full p-4">
+          <div className="relative max-w-4xl w-full p-4 flex flex-col items-center">
+
             {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
-              className="absolute -top-5 lg:-top-1 right-0 text-white text-3xl font-bold z-50"
+              className="absolute -top-7 lg:-top-0 right-2 lg:right-10 text-white text-3xl font-bold z-50"
             >
-              ✕
+              <X />
             </button>
 
-            {thumbnail?.type === "image" ? (
+            {/* Left Navigation */}
+            <button
+              onClick={() =>
+                setCurrentIndex(prev =>
+                  prev === 0 ? product.media.length - 1 : prev - 1
+                )
+              }
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 md:text-white lg:text-white text-3xl z-50  h-full  "
+            >
+              <ChevronLeft />
+
+            </button>
+
+            {/* Right Navigation */}
+            <button
+              onClick={() =>
+                setCurrentIndex(prev =>
+                  prev === product.media.length - 1 ? 0 : prev + 1
+                )
+              }
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 md:text-white lg:text-white text-3xl z-50  h-full "
+            >
+              <ChevronRight />
+            </button>
+
+            {/* Media Display */}
+            {product.media[currentIndex]?.type === "image" ? (
               <img
-                src={thumbnail.url}
-                alt="Full"
+                src={product.media[currentIndex].url}
+                alt={`Media ${currentIndex + 1}`}
                 className="w-full h-auto max-h-[90vh] rounded-lg object-contain"
               />
             ) : (
               <video
-                src={thumbnail.url}
+                src={product.media[currentIndex].url}
                 controls
                 autoPlay
                 className="w-full h-auto max-h-[90vh] rounded-lg object-contain"
               />
             )}
+
+            {/* Optional: Show index */}
+            <div className="text-white mt-2">
+              {currentIndex + 1} / {product.media.length}
+            </div>
           </div>
         </div>
       )}
+
 
     </>
   );

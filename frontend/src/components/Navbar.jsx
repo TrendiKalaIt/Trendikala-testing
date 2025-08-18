@@ -115,7 +115,7 @@ export default function Navbar({ links }) {
       <div className="max-w-7xl mx-auto flex justify-between items-center py-0">
         {/* Logo */}
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
-          <div className="w-[80px]">
+          <div className="w-[100px]">
             <img src="/trendikala_logo_bg.png" alt="Trendi Kala Logo" className="w-full h-full object-contain" />
           </div>
           <div className="hidden md:block border-l-2 border-green-700 h-10 mx-3" />
@@ -133,7 +133,7 @@ export default function Navbar({ links }) {
                 <NavLink
                   to={link.path}
                   className={({ isActive }) =>
-                    `transition-colors border-b-2 ${isActive
+                    `font-home transition-colors border-b-2 ${isActive
                       ? 'text-green-700 border-green-500'
                       : 'text-gray-700 hover:text-green-700 border-transparent hover:border-green-400'}`
                   }
