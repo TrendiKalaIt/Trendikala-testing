@@ -306,18 +306,18 @@ const ProductCard = ({ product = {} }) => {
       >
         <div className="flex items-center justify-center min-h-screen px-4">
           <Dialog.Panel className="bg-white rounded-xl shadow-xl p-6 w-full max-w-md space-y-4">
-            <Dialog.Title className="text-lg font-bold text-[#35894E]">
+            <Dialog.Title className=" font-home text-lg font-bold text-[#35894E]">
               Select Size & Color
             </Dialog.Title>
 
             {/* Colors */}
             <div>
-              <h4 className="text-sm text-gray-600 mb-1">Colors:</h4>
+              <h4 className="font-body text-sm text-gray-600 mb-1">Colors:</h4>
               <div className="flex gap-3">
                 {colors?.map((color) => (
                   <button
                     key={color.name}
-                    className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${selectedColor === color.name
+                    className={`font-heading w-6 h-6 rounded-full border-2 flex items-center justify-center ${selectedColor === color.name
                       ? 'border-green-600 scale-110'
                       : 'border-gray-300'
                       }`}
@@ -339,16 +339,16 @@ const ProductCard = ({ product = {} }) => {
                   <button
                     onClick={() => setSelectedSize(size.size)} 
                     disabled={size.stock <= 0}
-                    className={`px-3 rounded-3xl lg:px-4 lg:py-2 lg:rounded-none border text-sm font-medium transition
+                    className={`font-heading px-3 rounded-3xl lg:px-4 lg:py-2 lg:rounded-none border text-sm font-medium transition
           ${selectedSize === size.size ? 'bg-[#93A87E] text-white border-[#93A87E]' : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'}
-          ${size.stock <= 0 ? ' text-gray-400 cursor-not-allowed' : ''}`}
+          ${size.stock <= 0 ? '  x text-gray-400 cursor-not-allowed' : ''}`}
                   >
                     {size.size}
                   </button>
 
                   {/* Tooltip */}
                   {size.stock <= 0 && (
-                    <div className="absolute left-1/2 -top-8 transform -translate-x-1/2 bg-red-500 w-20 text-white text-xs rounded text-centre px-1 py-1 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
+                    <div className="font-body absolute left-1/2 -top-8 transform -translate-x-1/2 bg-red-500 w-20 text-white text-xs rounded text-centre px-1 py-1 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
                       Out of Stock
                       <div className="absolute bottom-[-4px] left-1/2 transform -translate-x-1/2 w-2 h-2 bg-red-500 rotate-45"></div>
                     </div>
@@ -360,7 +360,7 @@ const ProductCard = ({ product = {} }) => {
 
             {/* Quantity */}
             <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600">Qty:</span>
+              <span className=" font-body text-sm text-gray-600">Qty:</span>
               <div className="flex items-center border rounded-full overflow-hidden">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -383,7 +383,7 @@ const ProductCard = ({ product = {} }) => {
             {/* Modal Footer */}
             <div className="flex justify-end gap-3 pt-4">
               <button
-                className="px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-full"
+                className=" font-heading px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-full"
                 onClick={() => setIsModalOpen(false)}
               >
                 Cancel
@@ -391,7 +391,7 @@ const ProductCard = ({ product = {} }) => {
 
               {modalType === 'cart' ? (
                 <button
-                  className="px-4 py-2 text-sm bg-[#93A87E] text-white rounded-full disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className=" font-heading px-4 py-2 text-sm bg-[#93A87E] text-white rounded-full disabled:bg-gray-400 disabled:cursor-not-allowed"
                   onClick={handleAddToCart}
                   disabled={
                     !selectedColor ||
