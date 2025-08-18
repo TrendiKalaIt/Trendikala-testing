@@ -122,8 +122,8 @@ const ContactUs = () => {
                 <div>
                   <h3 className="text-lg font-medium text-gray-900">Call Us</h3>
                   <p className="text-gray-600">
-                    <a href="tel:+911234567890" className="hover:text-green-600">
-                      +91 123 456 7890
+                    <a href="tel:9220440585" className="hover:text-green-600">
+                      +91 9220440585
                     </a>
                   </p>
                 </div>

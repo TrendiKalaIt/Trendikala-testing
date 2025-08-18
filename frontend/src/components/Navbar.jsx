@@ -1,4 +1,4 @@
-import { useState, useEffect,useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { selectWishlistCount, fetchWishlist } from '../utility/wishlistSlice';
 import { Heart, ShoppingCart, Search, User, Menu, X } from 'lucide-react';
 import { useNavigate, NavLink } from 'react-router-dom';
@@ -6,9 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../utility/auth/authSlice';
 import { selectCartCount } from '../utility/cartSlice';
 import { persistor } from '../utility/store';
-
-
-
 
 
 
@@ -49,26 +46,31 @@ export default function Navbar({ links }) {
   }, [showDropdown]);
 
   useEffect(() => {
-  if (!isSearchInputOpen) return;
-
-  const handleClickOutside = (e) => {
-    if (searchRef.current && !searchRef.current.contains(e.target)) {
-      setIsSearchInputOpen(false);
+    if (!isSearchInputOpen) {
+      // Clear search text when search input is closed
+      setSearchText('');
+      return;
     }
-  };
 
-  document.addEventListener('mousedown', handleClickOutside);
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-  };
-}, [isSearchInputOpen]);
+    const handleClickOutside = (e) => {
+      if (searchRef.current && !searchRef.current.contains(e.target)) {
+        setIsSearchInputOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSearchInputOpen]);
+
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (searchText.trim()) {
         navigate(`/search?query=${encodeURIComponent(searchText.trim())}`);
       }
-    }, 100); 
+    }, 100);
 
     return () => clearTimeout(delayDebounce);
   }, [searchText, navigate]);
@@ -92,7 +94,7 @@ export default function Navbar({ links }) {
   };
 
 
-  
+
   const getProfileImageUrl = () => {
     if (!user?.profileImage) return null;
 
