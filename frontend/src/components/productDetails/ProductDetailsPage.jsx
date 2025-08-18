@@ -26,6 +26,8 @@ const ProductDetailPage = () => {
   const [activeTab, setActiveTab] = useState('description');
   const [tooltipVisible, setTooltipVisible] = useState({});
   const { description = "No description available" } = product || {};
+  const [isOpen, setIsOpen] = useState(false);
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -135,7 +137,7 @@ const ProductDetailPage = () => {
       <div className="bg-white flex flex-col lg:flex-row gap-8 p-4 lg:px-16 w-full mt-8">
         {/* Left Side: Media Thumbnails */}
         <div className="flex flex-col lg:flex-row w-full lg:w-5/12 gap-4 lg:items-start h-full">
-          <div className="w-full lg:w-4/12 overflow-x-auto lg:overflow-y-auto pr-2 order-2 lg:order-1 lg:h-[350px]">
+          <div className="w-full lg:w-4/12 overflow-x-auto lg:overflow-y-auto pr-2 order-2 lg:order-1 lg:h-[430px]">
             <div className="flex gap-4 lg:flex-col">
               {product.media?.map((media, i) => (
                 <div
@@ -153,10 +155,10 @@ const ProductDetailPage = () => {
             </div>
           </div>
 
-          <div className="w-full lg:w-6/6 h-[350px] rounded-lg overflow-hidden border border-green-700/50 order-1 lg:order-2">
+          <div className="w-full lg:w-6/6 md:h-[350px] lg:h-full rounded-lg overflow-hidden border border-green-700/50 order-1 lg:order-2 " onClick={() => setIsOpen(true)}>
             {thumbnail ? (
               thumbnail.type === 'image' ? (
-                <img src={thumbnail.url} alt={product.productName} className="w-full h-full object-cover object-top" />
+                <img src={thumbnail.url} alt={product.productName} className="w-full  h-full md:object-contain object-fill  object-top" />
               ) : (
                 <video src={thumbnail.url} controls className="w-full h-full object-cover object-top" />
               )
@@ -190,7 +192,7 @@ const ProductDetailPage = () => {
           </div>
 
           {/* description */}
-          <p className="text-sm text-[#93a87eba] truncate">{description}</p>
+          <p className="text-sm text-[#93a87eba] ">{description}</p>
 
 
           {/* Colors */}
@@ -287,6 +289,37 @@ const ProductDetailPage = () => {
           )}
         </div>
       </div>
+
+      {/* image view mnodel  */}
+      {isOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div className="relative max-w-4xl w-full p-4">
+            {/* Close Button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute -top-5 lg:-top-1 right-0 text-white text-3xl font-bold z-50"
+            >
+              ✕
+            </button>
+
+            {thumbnail?.type === "image" ? (
+              <img
+                src={thumbnail.url}
+                alt="Full"
+                className="w-full h-auto max-h-[90vh] rounded-lg object-contain"
+              />
+            ) : (
+              <video
+                src={thumbnail.url}
+                controls
+                autoPlay
+                className="w-full h-auto max-h-[90vh] rounded-lg object-contain"
+              />
+            )}
+          </div>
+        </div>
+      )}
+
     </>
   );
 };

@@ -43,7 +43,7 @@ const ProductDetails = ({ productData }) => {
   // Product specs
   const productSpecs = [
     ['Brand', brand],
-    ['Available Sizes', sizes ? sizes.join(', ') : 'N/A'],
+    // ['Available Sizes', sizes ? sizes.join(', ') : 'N/A'],
     ['Fabric', fabric],
     ['Fit Type', fitType],
     ['Length', length],

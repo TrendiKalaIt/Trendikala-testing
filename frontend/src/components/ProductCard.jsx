@@ -204,7 +204,7 @@ const ProductCard = ({ product = {} }) => {
       >
         {/* Image */}
         <div
-          className="relative w-full h-3/5 overflow-hidden rounded-t-2xl cursor-pointer"
+          className="relative w-full h-3/5 overflow-hidden  rounded-t-2xl cursor-pointer"
           onClick={handleNavigate}
         >
           <img
@@ -213,7 +213,7 @@ const ProductCard = ({ product = {} }) => {
               'https://placehold.co/300x320/FFD368/333?text=Product+Image'
             }
             alt={productName}
-            className="w-full h-full object-cover object-top transition-transform duration-300 ease-in-out hover:scale-110"
+            className="w-full h-full object-contain object-top transition-transform duration-300 ease-in-out hover:scale-110"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src =
