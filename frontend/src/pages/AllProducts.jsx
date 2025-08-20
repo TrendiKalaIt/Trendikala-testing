@@ -80,7 +80,7 @@ const Products = () => {
       const productsData = Array.isArray(res.data?.data) ? res.data.data : [];
 
       if (category && productsData.length === 0) {
-        // If a category is selected but no products exist, redirect
+        
         navigate("/coming-soon");
       } else {
         setProducts(productsData);
@@ -89,7 +89,7 @@ const Products = () => {
       setError("Failed to load products");
       setProducts([]);
       if (category) {
-        navigate("/coming-soon"); // Redirect if error occurs for a specific category
+        navigate("/coming-soon"); 
       }
     } finally {
       setLoading(false);
@@ -146,7 +146,7 @@ const Products = () => {
         <h2 className="font-home text-xl sm:text-2xl font-semibold mb-4 text-green-700">
           Shop by Category
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-3 mb-6">
           {categories.map((cat) => {
             const hasImage = cat.icon && typeof cat.icon === "string";
             return (

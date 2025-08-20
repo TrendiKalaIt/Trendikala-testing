@@ -1,41 +1,38 @@
-
-
 export const carouselSlides = [
   {
-    image: 'https://res.cloudinary.com/dq70cmqwb/image/upload/v1752701781/image4_tzobs9.jpg',
+    image: "/AADA.webp",
     title: "Summer Styles",
     description: "Bright and breezy looks for sun-soaked days.",
   },
   {
-    image: 'https://res.cloudinary.com/dq70cmqwb/image/upload/v1752701781/image3_khe9bm.jpg',
+    image: "/saiyara1.webp",
     title: "Rooted in Heritage, Styled for Today.",
     description: "Stay dry and stylish with seasonal wear.",
   },
   {
-    image: 'https://res.cloudinary.com/dq70cmqwb/image/upload/v1752701290/image1_dceyix.jpg',
+    image: "/mehak.jpg",
     title: "Festive Ready",
     description: "Celebrate traditions in modern fashion.",
   },
 ];
 
-
 // newArrivalsData.js
 
 export const newArrivalsItems = [
   {
-    imageUrl: 'https://res.cloudinary.com/dq70cmqwb/image/upload/v1752700360/imageC5_r9rjwk.jpg',
+    imageUrl: '/cro1.jpg',
     discount: 'UP TO 50% OFF',
     description: 'on your favorite styles – elegant dresses to comfy casuals!',
     bgColor: '#E8E0D7',
   },
   {
-    imageUrl: 'https://res.cloudinary.com/dq70cmqwb/image/upload/v1752700360/imageC6_wrecqk.jpg',
+    imageUrl: '/cro2.jpg',
     discount: 'SAVE 25%',
     description: 'Explore our latest collection of chic outfits!',
     bgColor: '#D7E0E8',
   },
   {
-    imageUrl: 'https://res.cloudinary.com/dq70cmqwb/image/upload/v1752700361/imageC7_eiojno.jpg',
+    imageUrl: 'cro3.jpg',
     discount: 'FLASH SALE!',
     description: "Grab your summer essentials before they're gone!",
     bgColor: '#E0D7E8',

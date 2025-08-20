@@ -1,5 +1,5 @@
 import React from 'react';
-import Poster from '../../public/Poster.png'
+// import Poster from '../../public/Poster.png'
 const PosterComponent = () => {
   return (
     <div className="relative flex justify-center items-centern  bg-white py-4">
@@ -8,7 +8,7 @@ const PosterComponent = () => {
         {/* Image positioned to overlap the top */}
         <div className="absolute bottom-0  right-0 w-1/2  max-w-lg md:w-1/2 lg:w-2/5 xl:w-1/3  ">
           <img
-            src={Poster}
+            src='/Poster.png'
             alt="Woman shopping with bags and phone"
             className="w-full h-[400px] object-cover "
           />

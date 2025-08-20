@@ -57,8 +57,8 @@ export default function Navbar({ links }) {
         : 'text-gray-700 hover:text-green-700 border-transparent hover:border-green-400';
     } else {
       return isActive
-        ? 'Lg:text-white text-green-500 border-green-200'
-        : 'lg:text-green-100 text-green-500 hover:text-white border-transparent hover:border-green-200';
+        ? ' text-green-500 border-green-200'
+        : 'lg:text-white text-green-500 hover:text-white border-transparent hover:border-green-200';
     }
   };
 
@@ -111,7 +111,7 @@ export default function Navbar({ links }) {
 
   return (
     <nav
-      className={`px-4 lg:fixed top-0 left-0 right-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md' : 'bg-transparent'
+      className={`px-4 lg:fixed top-0 left-0 right-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md transition-transform transform-12' : 'bg-transparent'
         }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center py-2 ">

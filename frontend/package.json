@@ -25,6 +25,7 @@
     "react-router-dom": "^7.6.2",
     "redux-persist": "^6.0.0",
     "simple-icons": "^15.6.0",
+    "swiper": "^11.2.10",
     "three": "^0.178.0",
     "vanta": "^0.5.24"
   },
