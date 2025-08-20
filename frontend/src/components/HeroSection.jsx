@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { carouselSlides } from '../assets/assets';
-import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState, useEffect } from "react";
+import { carouselSlides } from "../assets/assets";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    navigate('/allproducts');
+    navigate("/allproducts");
   };
 
   useEffect(() => {
@@ -22,41 +21,32 @@ const HeroSection = () => {
   const { image, title, description } = carouselSlides[currentImageIndex];
 
   return (
-    <section
-      className="bg-white text-gray-800"
-
-      style={{
-        backgroundImage: "url('/OutfitImg1.webp')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="bg-black/10 "> {/* backdrop blur hataya, sirf light overlay */}
+    <section className="relative  text-gray-800 overflow-hidden">
+      {/* Background image as <img> with lazy loading */}
+      <img
+        src="/OutfitImg1.webp"
+        alt="Outfit Background"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover -z-10"
+      />
+      <div className="bg-black/10 ">
         <div className="flex flex-col md:flex-row overflow-hidden">
           {/* Left */}
           <div className="w-full md:w-1/2 flex flex-col h-full lg:ms-7">
             <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
-              <img src="/madubala.webp" alt="madubala"
-                className="rounded-b-full object-cover md:h-[350px] w-[250px] sm:w-[300px] hidden md:block"
-                loading="lazy" />
-            </div>
-            {/* <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
-              <video
-                src="/dress5.mp4"   
-                className="rounded-b-full object-cover md:h-[350px] w-[250px] sm:w-[300px] hidden md:block"
-                autoPlay
-                muted
-                loop
-                playsInline
+              <img
+                src="/madubala.webp"
+                alt="madubala"
+                className="rounded-b-full object-cover md:h-[340px] w-[250px] sm:w-[300px] hidden md:block"
                 loading="lazy"
               />
-            </div> */}
-
+            </div>
 
             <div className="hidden md:flex h-full w-3/4 p-4 md:p-8 flex-col text-right ml-auto">
-              <p className="font-home leading-relaxed text-lg font-bold text-[#a5e665c8] mb-6 text-justify tracking-[.1rem]">
-                Trendi Kala brings you elegant ethnic fashion that blends tradition with trend,
-                offering timeless pieces designed for the bold, modern Indian.
+              <p className="font-home leading-relaxed text-lg font-bold text-[#a5e665c8] mb-6 text-justify tracking-[1px]">
+                Trendi Kala brings you elegant ethnic fashion that blends
+                tradition with trend, offering timeless pieces designed for the
+                bold, modern Indian.
               </p>
 
               <button
@@ -69,36 +59,35 @@ const HeroSection = () => {
           </div>
 
           {/* Right */}
-          <div className="w-full md:w-1/2 flex flex-col">
-            <div className="hidden md:flex h-[250px] w-full justify-center items-center text-center mb-5">
-              <h1 className="font-heading text-2xl w-2/3 md:text-2xl font-semibold leading-tight mt-10 md:mt-20 text-[#a5e665c8]">
+          <div className="w-full  md:w-1/2 flex flex-col">
+            <div className="hidden md:flex h-[250px] w-full justify-center items-center text-center mb-2">
+              <h1 className="font-heading text-2xl w-2/3 md:text-2xl font-semibold leading-tight mt-20 md:mt-5 text-[#a5e665c8]">
                 "{title.toUpperCase()}"
               </h1>
             </div>
 
-            <div className="w-full h-auto md:h-[350px] flex justify-center items-center lg:p-4 pb-2 md:p-8">
+            <div className="w-full h-auto md:h-[340px] flex justify-center items-center lg:p-4 pb-2 md:p-8">
               <div className="relative w-screen md:max-w-[300px] mx-auto min-h-[400px] overflow-hidden">
                 {/* Simple fade without AnimatePresence */}
-                <motion.img
+                <img
                   key={image}
                   src={image}
                   alt={`Slide ${currentImageIndex + 1}`}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6 }}
-                  className="relative w-full h-auto object-fill rounded-b-full md:rounded-b-none md:rounded-t-full"
-                  style={{ aspectRatio: '3/4' }}
+                  className="relative w-full h-auto object-fill rounded-b-full md:rounded-b-none md:rounded-t-full 
+    opacity-0 animate-fadeIn"
+                  style={{ aspectRatio: "3/4" }}
                   loading="lazy"
                 />
 
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-1">
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-1">
                   {carouselSlides.map((_, index) => (
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
                       aria-label={`Go to slide ${index + 1}`}
-                      className={`w-3 h-3 rounded-full ${currentImageIndex === index ? 'bg-white' : 'bg-gray-400'
-                        } transition-colors duration-300`}
+                      className={`w-3 h-3 rounded-full ${
+                        currentImageIndex === index ? "bg-white" : "bg-gray-400"
+                      } transition-colors duration-300`}
                     />
                   ))}
                 </div>
@@ -124,4 +113,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-
