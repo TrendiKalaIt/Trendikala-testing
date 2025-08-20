@@ -112,7 +112,7 @@ export default function Showcase() {
         {/* Main Poster */}
         <div className="col-span-2 h-[250px] md:h-[350px] rounded-2xl overflow-hidden relative mb-3">
           <img
-            src="/cro1.jpg"
+            src="/cro1.webp"
             alt="Main Poster"
             className="w-full h-full object-cover"
           />
