@@ -7,7 +7,7 @@ import { addToCart } from '../utility/cartSlice';
 import { addToWishlist, removeFromWishlist } from '../utility/wishlistSlice';
 import { setOrderDetails } from '../utility/checkoutSlice';
 import { Dialog } from '@headlessui/react';
-
+ 
 const ProductCard = ({ product = {} }) => {
   const {
     media = [],
@@ -18,22 +18,22 @@ const ProductCard = ({ product = {} }) => {
     sizes = [],
     _id,
   } = product;
-
+ 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const wishlist = useSelector((state) => state.wishlist.items);
-
+ 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState('cart');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [quantity, setQuantity] = useState(1);
-  
-
+ 
+ 
   // Sizes with stock > 0
   const availableSizes = sizes.filter((s) => s.stock > 0);
-
+ 
   // Cheapest size
   const cheapestSize = availableSizes.length
     ? availableSizes.reduce((min, s) => {
@@ -42,21 +42,21 @@ const ProductCard = ({ product = {} }) => {
       return currentPrice < minPrice ? s : min;
     })
     : null;
-
+ 
   // Dynamic price & stock
   const productPrice = cheapestSize ? cheapestSize.price : 0;
   const productDiscountPrice = cheapestSize
     ? cheapestSize.discountPrice || cheapestSize.price
     : 0;
   const productStock = cheapestSize ? cheapestSize.stock : 0;
-
+ 
   const isOutOfStock = (Math.floor(Number(productStock)) || 0) <= 0;
-
+ 
   // Navigation
   const handleNavigate = () => {
     if (_id) navigate(`/productdetails/${_id}`);
   };
-
+ 
   // Button click handlers
   const handleAddToCartClick = () => {
     if (isOutOfStock) {
@@ -66,7 +66,7 @@ const ProductCard = ({ product = {} }) => {
     setModalType('cart');
     setIsModalOpen(true);
   };
-
+ 
   const handleBuyNowClick = () => {
     if (isOutOfStock) {
       toast.error('Product is out of stock');
@@ -75,14 +75,14 @@ const ProductCard = ({ product = {} }) => {
     setModalType('buy');
     setIsModalOpen(true);
   };
-
+ 
   // Add to Cart - MODIFIED
   const handleAddToCart = async () => {
     if (!selectedColor || !selectedSize) {
       toast.error('Please select size and color');
       return;
     }
-
+ 
     // Find the selected size object to get its stock and prices
     // FIX: Use 's.size' to find the size object
     const selectedSizeObj = sizes.find(s => s.size === selectedSize);
@@ -90,13 +90,13 @@ const ProductCard = ({ product = {} }) => {
       toast.error('Invalid size selected');
       return;
     }
-
+ 
     // Validate quantity against the selected size's stock
     if (quantity > selectedSizeObj.stock) {
       toast.error(`Sorry, there are only ${selectedSizeObj.stock} items of this size available.`);
       return;
     }
-
+ 
     const cartItem = {
       product: _id,
       productName,
@@ -108,7 +108,7 @@ const ProductCard = ({ product = {} }) => {
       quantity,
       image: media?.[0]?.url || '',
     };
-
+ 
     try {
       await dispatch(addToCart([cartItem])).unwrap();
       toast.success('Added to cart');
@@ -120,14 +120,14 @@ const ProductCard = ({ product = {} }) => {
       toast.error('Please login first to continue.');
     }
   };
-
+ 
   // Checkout - MODIFIED
   const handleCheckout = () => {
     if (!selectedColor || !selectedSize) {
       toast.error('Please select size and color before checkout');
       return;
     }
-
+ 
     // Find the selected size object to get its stock and prices
     // FIX: Use 's.size' to find the size object
     const selectedSizeObj = sizes.find(s => s.size === selectedSize);
@@ -135,13 +135,13 @@ const ProductCard = ({ product = {} }) => {
       toast.error('Invalid size selected');
       return;
     }
-
+ 
     // Validate quantity against the selected size's stock
     if (quantity > selectedSizeObj.stock) {
       toast.error(`Sorry, there are only ${selectedSizeObj.stock} items of this size available.`);
       return;
     }
-
+ 
     const productToBuy = {
       product: _id,
       productName,
@@ -153,7 +153,7 @@ const ProductCard = ({ product = {} }) => {
       quantity,
       image: media?.[0]?.url || '',
     };
-
+ 
     localStorage.setItem(
       'checkoutState',
       JSON.stringify({
@@ -161,17 +161,17 @@ const ProductCard = ({ product = {} }) => {
         cartFromCheckout: [],
       })
     );
-
+ 
     setIsModalOpen(false);
-
+ 
     if (!user) {
       navigate('/signup?redirect=/checkout');
     }
-
+ 
     dispatch(setOrderDetails(productToBuy));
     navigate('/checkout');
   };
-
+ 
   // Wishlist toggle
   const isWishlisted = wishlist.some((item) => item._id === _id);
   const toggleWishlist = async (e) => {
@@ -188,19 +188,19 @@ const ProductCard = ({ product = {} }) => {
       toast.error(error || 'Wishlist update failed');
     }
   };
-
+ 
   // Helper function to find the stock for the selected size
   const getSelectedSizeStock = () => {
     // FIX: Use 's.size' to match the schema
     const sizeObj = sizes.find(s => s.size === selectedSize);
     return sizeObj ? sizeObj.stock : 0;
   };
-
+ 
   return (
     <>
       <div
         className={`relative w-full max-w-xs mx-auto bg-white border-2 rounded-3xl  overflow-hidden  h-96 flex flex-col
-  transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105`}
+  transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105`}
       >
         {/* Image */}
         <div
@@ -220,7 +220,7 @@ const ProductCard = ({ product = {} }) => {
                 'https://placehold.co/300x320/FFD368/333?text=Image+Not+Found';
             }}
           />
-
+ 
           {/* Wishlist Button */}
           {user && (
             <button
@@ -235,7 +235,7 @@ const ProductCard = ({ product = {} }) => {
               />
             </button>
           )}
-
+ 
           {/* Out of Stock Label */}
           {isOutOfStock && (
             <div className="absolute top-2 left-3 bg-red-400 text-white text-xs font-bold px-2 py-1 rounded-xl">
@@ -243,21 +243,21 @@ const ProductCard = ({ product = {} }) => {
             </div>
           )}
         </div>
-
+ 
         {/* Content */}
-        <div className="h-2/5 p-3 flex flex-col justify-between bg-green-50 rounded-b-3xl">
+        <div className="bg-gradient-to-br from-[#E6F4EA] via-[#FDF1F6] to-[#FFFFFF] h-2/5 p-3 flex flex-col justify-between  rounded-b-3xl">
           <div>
             <p className="font-home uppercase text-sm text-[#93a87eb7]">
               {category?.name || 'Category'}
             </p>
             <h3
               onClick={handleNavigate}
-              className=" font-heading text-lg font-bold text-[#7e8f6cfd] truncate cursor-pointer hover:underline"
+              className=" font-heading text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#7A9D54] via-[#F472B6] to-[#3ABAB4] truncate cursor-pointer hover:underline"
             >
               {productName}
             </h3>
             <p className="font-body text-sm text-[#93a87eba] truncate">{description}</p>
-
+ 
             {/* Price */}
             <div className="flex gap-3 pt-1">
               <p className="text-md text-[#93A87E]">
@@ -270,7 +270,7 @@ const ProductCard = ({ product = {} }) => {
               )}
             </div>
           </div>
-
+ 
           {/* Buttons */}
           <div className="flex gap-2 pt-2 ">
             <button
@@ -283,7 +283,7 @@ const ProductCard = ({ product = {} }) => {
             >
               {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
             </button>
-
+ 
             <button
               onClick={handleBuyNowClick}
               disabled={isOutOfStock}
@@ -297,7 +297,7 @@ const ProductCard = ({ product = {} }) => {
           </div>
         </div>
       </div>
-
+ 
       {/* Modal */}
       <Dialog
         open={isModalOpen}
@@ -309,7 +309,7 @@ const ProductCard = ({ product = {} }) => {
             <Dialog.Title className=" font-home text-lg font-bold text-[#35894E]">
               Select Size & Color
             </Dialog.Title>
-
+ 
             {/* Colors */}
             <div>
               <h4 className="font-body text-sm text-gray-600 mb-1">Colors:</h4>
@@ -331,13 +331,13 @@ const ProductCard = ({ product = {} }) => {
                 ))}
               </div>
             </div>
-
+ 
             {/* Sizes */}
             <div className="flex flex-wrap gap-2">
               {sizes?.map((size) => (
                 <div key={size.size} className="relative inline-block group">
                   <button
-                    onClick={() => setSelectedSize(size.size)} 
+                    onClick={() => setSelectedSize(size.size)}
                     disabled={size.stock <= 0}
                     className={`font-heading px-3 rounded-3xl lg:px-4 lg:py-2 lg:rounded-none border text-sm font-medium transition
           ${selectedSize === size.size ? 'bg-[#93A87E] text-white border-[#93A87E]' : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200'}
@@ -345,7 +345,7 @@ const ProductCard = ({ product = {} }) => {
                   >
                     {size.size}
                   </button>
-
+ 
                   {/* Tooltip */}
                   {size.stock <= 0 && (
                     <div className="font-body absolute left-1/2 -top-8 transform -translate-x-1/2 bg-red-500 w-20 text-white text-xs rounded text-centre px-1 py-1 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
@@ -356,8 +356,8 @@ const ProductCard = ({ product = {} }) => {
                 </div>
               ))}
             </div>
-
-
+ 
+ 
             {/* Quantity */}
             <div className="flex items-center gap-3">
               <span className=" font-body text-sm text-gray-600">Qty:</span>
@@ -379,7 +379,7 @@ const ProductCard = ({ product = {} }) => {
                 </button>
               </div>
             </div>
-
+ 
             {/* Modal Footer */}
             <div className="flex justify-end gap-3 pt-4">
               <button
@@ -388,7 +388,7 @@ const ProductCard = ({ product = {} }) => {
               >
                 Cancel
               </button>
-
+ 
               {modalType === 'cart' ? (
                 <button
                   className=" font-heading px-4 py-2 text-sm bg-[#93A87E] text-white rounded-full disabled:bg-gray-400 disabled:cursor-not-allowed"
@@ -420,9 +420,10 @@ const ProductCard = ({ product = {} }) => {
           </Dialog.Panel>
         </div>
       </Dialog>
-
+ 
     </>
   );
 };
-
+ 
 export default ProductCard;
+ 

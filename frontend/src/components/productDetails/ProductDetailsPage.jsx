@@ -10,14 +10,14 @@ import TabsNavigation from '../productDetails/ProductTabsNavigation';
 import ProductDetails from './ProductDetails';
 import ProductReviews from './ProductReviews';
 import ProductReviewForm from './ProductReviewForm';
-
+ 
 const ProductDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+ 
   const [thumbnail, setThumbnail] = useState(null);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedSize, setSelectedSize] = useState(null);
@@ -28,13 +28,13 @@ const ProductDetailPage = () => {
   const [tooltipVisible, setTooltipVisible] = useState({});
   const { description = "No description available" } = product || {};
   const [isOpen, setIsOpen] = useState(false);
-
+ 
   const [animateThumbnail, setAnimateThumbnail] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-
-
-
+ 
+ 
+ 
+ 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -42,16 +42,16 @@ const ProductDetailPage = () => {
         setError(null);
         const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
         const data = res.data?.data;
-
+ 
         if (!data) throw new Error('Product not found');
-
+ 
         setProduct(data);
-
+ 
         // Select first media and color
         const firstMedia = data.media?.[0] || null;
         setThumbnail(firstMedia);
         setSelectedColor(data.colors?.[0]?.name || '');
-
+ 
         // Select first available size automatically
         const firstAvailableSize = data.sizes?.find(s => s.stock > 0);
         if (firstAvailableSize) {
@@ -67,7 +67,7 @@ const ProductDetailPage = () => {
     };
     fetchProduct();
   }, [id]);
-
+ 
   const handleSizeSelect = (sizeObj) => {
     if (sizeObj.stock <= 0) return;
     setAnimateThumbnail(true);
@@ -77,31 +77,31 @@ const ProductDetailPage = () => {
     setQuantity(1);
     setTimeout(() => setAnimateThumbnail(false), 300);
   };
-
+ 
   const handleQuantity = (type) => {
     setQuantity(prev =>
       type === 'increase' ? Math.min(prev + 1, selectedStock) : Math.max(1, prev - 1)
     );
   };
-
+ 
   const handleAddToCart = () => {
     if (!product) {
       toast.error('Product not found');
       return;
     }
-
+ 
     if (selectedStock <= 0) {
       toast.error('Selected size is out of stock');
       return;
     }
-
+ 
     // Find selected size object
     const currentSizeObj = product.sizes?.find(s => s.size === selectedSize);
     if (!currentSizeObj) {
       toast.error('Invalid size selected');
       return;
     }
-
+ 
     // Prepare cart item matching backend schema
     const cartItem = {
       product: product._id,
@@ -112,7 +112,7 @@ const ProductDetailPage = () => {
       productName: product.productName,
       image: thumbnail?.url || product.media?.[0]?.url || '',
     };
-
+ 
     // Dispatch to Redux
     dispatch(addToCart([cartItem]))
       .unwrap()
@@ -122,24 +122,24 @@ const ProductDetailPage = () => {
         toast.error(`Please login first`);
       });
   };
-
-
+ 
+ 
   const getAvgRating = (reviews) => {
     if (!reviews?.length) return 0;
     return (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
   };
-
+ 
   if (loading) return <div className="text-center mt-10">Loading product...</div>;
   if (error) return <div className="text-center text-red-500 mt-10">{error}</div>;
   if (!product) return <div className="text-center text-red-500 mt-10">Product not found.</div>;
-
+ 
   const avgRating = getAvgRating(product.reviews);
   const currentSizeObj = product.sizes?.find(s => s.size === selectedSize) || {};
-
+ 
   const discountPercent = currentSizeObj.discountPrice
     ? Math.round(((currentSizeObj.price - currentSizeObj.discountPrice) / currentSizeObj.price) * 100)
     : 0;
-
+ 
   return (
     <>
       <div className="bg-white flex flex-col lg:flex-row gap-8 p-4 lg:px-16 w-full mt-8">
@@ -163,10 +163,10 @@ const ProductDetailPage = () => {
                   )}
                 </div>
               ))}
-
+ 
             </div>
           </div>
-
+ 
           <div
             className="w-full lg:w-6/6 md:h-[350px] lg:h-full rounded-lg overflow-hidden border border-green-700/50 order-1 lg:order-2"
             onClick={() => setIsOpen(true)}
@@ -174,7 +174,7 @@ const ProductDetailPage = () => {
             <AnimatePresence mode="wait">
               {thumbnail && (
                 <motion.div
-                  key={thumbnail.url + selectedSize} 
+                  key={thumbnail.url + selectedSize}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0,  y: -30 }}
@@ -198,13 +198,13 @@ const ProductDetailPage = () => {
               )}
             </AnimatePresence>
           </div>
-
+ 
         </div>
-
+ 
         {/* Right Side: Product Info */}
         <div className="w-full lg:w-2/6 space-y-2">
-          <h1 className=" font-heading text-2xl font-bold text-[#35894E]">{product.productName}</h1>
-
+          <h1 className=" font-heading text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#7A9D54] via-[#F472B6] to-[#3ABAB4]">{product.productName}</h1>
+ 
           {/* Rating */}
           <div className="flex items-center gap-2">
             {[...Array(5)].map((_, i) => (
@@ -212,7 +212,7 @@ const ProductDetailPage = () => {
             ))}
             <span className="text-gray-600 font-semibold">{avgRating}/5</span>
           </div>
-
+ 
           {/* Price */}
           <div className="flex items-baseline gap-4">
             <span className="text-lg font-semibold text-[#35894E]">₹{selectedPrice}</span>
@@ -223,11 +223,11 @@ const ProductDetailPage = () => {
               </>
             )}
           </div>
-
+ 
           {/* description */}
-          <p className=" font-body text-sm text-[#93a87eba] ">{description}</p>
-
-
+          <p className=" font-body text-sm text-[#00000098] ">{description}</p>
+ 
+ 
           {/* Colors */}
           <div>
             <h3 className="font-body text-[#35894E] mb-2">Select Colors</h3>
@@ -244,15 +244,15 @@ const ProductDetailPage = () => {
               ))}
             </div>
           </div>
-
+ 
           {/* Sizes */}
           <div>
             <h3 className="font-body text-[#35894E] mb-2">Choose Size</h3>
             <div className="overflow-x-auto sm:overflow-visible">
               <div className="flex gap-3 whitespace-nowrap sm:flex-wrap">
                 {product.sizes?.map((sizeObj) => (
-
-
+ 
+ 
                   <div key={sizeObj.size} className="relative inline-block group">
                     <button
                       onClick={() => handleSizeSelect(sizeObj)}
@@ -270,7 +270,7 @@ const ProductDetailPage = () => {
                       )}
                     </button>
                     {/* Tooltip */}
-
+ 
                     {sizeObj.stock <= 0 && (
                       <div className="absolute left-1/2 -top-10 transform -translate-x-1/2 bg-red-500 w-20 text-white text-xs rounded text-centre px-1 py-1 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 z-20">
                         Out of Stock
@@ -282,7 +282,7 @@ const ProductDetailPage = () => {
               </div>
             </div>
           </div>
-
+ 
           {/* Quantity & Add to Cart */}
           <div className="flex flex-row sm:flex-row items-center gap-4 pt-1">
             <div className="flex items-center p-0 border border-gray-300 rounded-full lg:w-32 justify-between">
@@ -293,17 +293,17 @@ const ProductDetailPage = () => {
             <button
               onClick={handleAddToCart}
               disabled={selectedStock <= 0}
-              className={`font-home w-full font-medium py-1 md:px-6 text-xl rounded-full shadow-lg transition ${selectedStock <= 0 ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-[#93A87E] hover:bg-[#80996D] text-white'}`}
+              className={`font-home w-full font-medium py-1 md:px-6 text-xl rounded-full shadow-lg transition ${selectedStock <= 0 ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-gradient-to-r from-[#35894E] to-[#80996D] text-white font-semibold py-2 px-6 rounded-full shadow-md hover:brightness-105 transition'}`}
             >
               {selectedStock <= 0 ? 'Out of Stock' : 'Add to Cart'}
             </button>
           </div>
         </div>
       </div>
-
+ 
       {/* Tabs Section */}
       <div className="  max-w-6xl mx-auto p-4 mt-2">
-        <TabsNavigation 
+        <TabsNavigation
           tabs={[
             { id: 'description', name: 'Description & Details' },
             { id: 'reviews', name: 'Reviews' }
@@ -322,12 +322,12 @@ const ProductDetailPage = () => {
           )}
         </div>
       </div>
-
+ 
       {/* image/video modal with carousel */}
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
           <div className="relative max-w-4xl w-full p-4 flex flex-col items-center">
-
+ 
             {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
@@ -335,7 +335,7 @@ const ProductDetailPage = () => {
             >
               <X />
             </button>
-
+ 
             {/* Left Navigation */}
             <button
               onClick={() =>
@@ -346,9 +346,9 @@ const ProductDetailPage = () => {
               className="absolute left-2 top-1/2 transform -translate-y-1/2 md:text-white lg:text-white text-3xl z-50  h-full  "
             >
               <ChevronLeft />
-
+ 
             </button>
-
+ 
             {/* Right Navigation */}
             <button
               onClick={() =>
@@ -360,7 +360,7 @@ const ProductDetailPage = () => {
             >
               <ChevronRight />
             </button>
-
+ 
             {/* Media Display */}
             {product.media[currentIndex]?.type === "image" ? (
               <img
@@ -376,7 +376,7 @@ const ProductDetailPage = () => {
                 className="w-full h-auto max-h-[90vh] rounded-lg object-contain"
               />
             )}
-
+ 
             {/* Optional: Show index */}
             <div className="text-white mt-2">
               {currentIndex + 1} / {product.media.length}
@@ -384,10 +384,12 @@ const ProductDetailPage = () => {
           </div>
         </div>
       )}
-
-
+ 
+ 
     </>
   );
 };
-
+ 
 export default ProductDetailPage;
+ 
+ 

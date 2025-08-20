@@ -6,11 +6,11 @@ import { useDispatch } from "react-redux";
 import { showLoader, hideLoader } from "../utility/loaderSlice";
 import Spinner from "../components/Spinner";
 import Bannerv from "../assets/bannerM.mp4";
-
+ 
 const Products = () => {
   const dispatch = useDispatch();
   const productSectionRef = useRef(null);
-
+ 
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
@@ -20,13 +20,13 @@ const Products = () => {
   const [visibleCount, setVisibleCount] = useState(8);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
+ 
   const API_URL = import.meta.env.VITE_API_URL;
-
+ 
   const handleSeeMore = () => {
     setVisibleCount((prevCount) => prevCount + 8);
   };
-
+ 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -35,17 +35,17 @@ const Products = () => {
         if (data.length > 0) {
           setCategories(data);
         } else {
-          navigate("/coming-soon"); 
+          navigate("/coming-soon");
         }
       } catch (err) {
         setError("Failed to fetch categories");
-        navigate("/coming-soon"); 
+        navigate("/coming-soon");
       }
     };
     fetchCategories();
   }, [navigate]);
-
-
+ 
+ 
   useEffect(() => {
     const fetchSubcategories = async () => {
       if (!selectedCategory) {
@@ -63,7 +63,7 @@ const Products = () => {
     };
     fetchSubcategories();
   }, [selectedCategory]);
-
+ 
   // Fetch products
   const fetchProducts = async (category = "", subcategory = "") => {
     setLoading(true);
@@ -75,12 +75,12 @@ const Products = () => {
       if (category) queryParams.push(`category=${category}`);
       if (subcategory) queryParams.push(`subcategory=${subcategory}`);
       if (queryParams.length) url += `?${queryParams.join("&")}`;
-
+ 
       const res = await axios.get(url);
       const productsData = Array.isArray(res.data?.data) ? res.data.data : [];
-
+ 
       if (category && productsData.length === 0) {
-        
+        // If a category is selected but no products exist, redirect
         navigate("/coming-soon");
       } else {
         setProducts(productsData);
@@ -89,25 +89,25 @@ const Products = () => {
       setError("Failed to load products");
       setProducts([]);
       if (category) {
-        navigate("/coming-soon"); 
+        navigate("/coming-soon"); // Redirect if error occurs for a specific category
       }
     } finally {
       setLoading(false);
       dispatch(hideLoader());
     }
   };
-
-
+ 
+ 
   // Load all products initially
   useEffect(() => {
     fetchProducts();
   }, []);
-
+ 
   // Refetch when filters change
   useEffect(() => {
     if (selectedCategory || selectedSubcategory) {
       fetchProducts(selectedCategory, selectedSubcategory);
-
+ 
       setTimeout(() => {
         if (productSectionRef.current) {
           productSectionRef.current.scrollIntoView({ behavior: "smooth" });
@@ -115,7 +115,7 @@ const Products = () => {
       }, 100);
     }
   }, [selectedCategory, selectedSubcategory]);
-
+ 
   return (
     <div>
       {/* Hero Section */}
@@ -130,7 +130,7 @@ const Products = () => {
           <source src={Bannerv} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-
+ 
         <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center px-4 sm:px-6">
           <h1 className=" font-heading text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg tracking-wide animate-fade-in-up">
             <span className="text-[#a2ff00] font-home ">Explore</span> Our Categories
@@ -140,13 +140,13 @@ const Products = () => {
           </p>
         </div>
       </div>
-
+ 
       {/* Category Grid */}
       <div className="px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
-        <h2 className="font-home text-xl sm:text-2xl font-semibold mb-4 text-green-700">
+        <h2 className="font-home underline decoration-green-700 text-xl sm:text-2xl font-semibold mb-4 text-green-700">
           Shop by Category
         </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-3 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-2 mb-6">
           {categories.map((cat) => {
             const hasImage = cat.icon && typeof cat.icon === "string";
             return (
@@ -172,27 +172,27 @@ const Products = () => {
                     </div>
                   )}
                 </div>
-                <div className="font-heading p-2 sm:p-3 text-center text-sm sm:text-base font-medium">
+                <div className="font-home p-2 sm:p-3 text-center text-gray-500 text-sm sm:text-base font-medium">
                   {cat.name}
                 </div>
               </div>
             );
           })}
         </div>
-
-
+ 
+ 
       </div>
-
-
+ 
+ 
       {/* Products Section */}
       <div className="p-8" ref={productSectionRef}>
         <div className="flex justify-between items-center mb-2">
-          <h1 className="font-home text-3xl font-semibold text-green-700">
+          <h1 className="font-home underline decoration-green-700 text-xl sm:text-2xl font-semibold text-green-700 py-2">
             {selectedCategory
               ? categories.find((cat) => cat._id === selectedCategory)?.name || "Filtered Products"
               : "All Products"}
           </h1>
-
+ 
           {(selectedCategory || selectedSubcategory) && (
             <button
               onClick={() => {
@@ -206,12 +206,12 @@ const Products = () => {
             </button>
           )}
         </div>
-
-
-        <div className="border w-[150px]  mb-5"></div>
+ 
+ 
+        {/* <div className="border w-[180px] color-green-700 mb-5"></div> */}
         <div className="px-4">
-
-
+ 
+ 
           {loading ? (
             <div className="flex justify-center py-10">
               <Spinner />
@@ -227,7 +227,7 @@ const Products = () => {
                   <ProductCard key={product._id} product={product} />
                 ))}
               </div>
-
+ 
               {visibleCount < products.length && (
                 <div className="text-center my-8">
                   <button
@@ -245,5 +245,6 @@ const Products = () => {
     </div>
   );
 };
-
+ 
 export default Products;
+ 

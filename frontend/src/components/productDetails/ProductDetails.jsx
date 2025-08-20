@@ -1,5 +1,5 @@
 import React from 'react';
-
+ 
 const ProductDetails = ({ productData }) => {
   // Fallback to empty object
   const data = productData || {};
@@ -12,7 +12,7 @@ const ProductDetails = ({ productData }) => {
     materialWashing = [],
     details = {},
   } = data;
-
+ 
   // Extract details or use empty strings
   const {
     fabric,
@@ -25,25 +25,24 @@ const ProductDetails = ({ productData }) => {
     countryOfOrigin,
     deliveryReturns,
   } = details;
-
+ 
   // Helper to render a two-column grid of label-value pairs
   const renderLabelValueGrid = (items, labelWidth = "w-36 min-w-[140px]") => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
       {items.map(([label, value], i) => (
         <div key={i} className="flex flex-col sm:flex-row sm:items-baseline sm:gap-2">
-          <span className={`font-body font-medium text-[#93A87E] ${labelWidth} flex-shrink-0`}>
+          <span className={`font-body font-medium text-[#6c8454] ${labelWidth} flex-shrink-0`}>
             {label}:
           </span>
-          <span className="text-[#93A87E] flex-1">{value || 'N/A'}</span>
+          <span className="text-[#00000098] flex-1">{value || 'N/A'}</span>
         </div>
       ))}
     </div>
   );
-
+ 
   // Product specs
   const productSpecs = [
     ['Brand', brand],
-    // ['Available Sizes', sizes ? sizes.join(', ') : 'N/A'],
     ['Fabric', fabric],
     ['Fit Type', fitType],
     ['Length', length],
@@ -54,7 +53,7 @@ const ProductDetails = ({ productData }) => {
     ['Country of Origin', countryOfOrigin],
     ['Delivery & Returns', deliveryReturns],
   ];
-
+ 
   // Render section with title and grid
   const renderSection = (title, items) => (
     <div className="pt-4 border-t border-gray-200">
@@ -62,13 +61,13 @@ const ProductDetails = ({ productData }) => {
       {renderLabelValueGrid(items)}
     </div>
   );
-
+ 
   return (
-    <div className="font-sans antialiased text-gray-700 flex flex-col items-center min-h-screen">
-      <div className="w-full mx-auto bg-red rounded-xl p-5 sm:p-8 border border-[#35894E]">
-        
+    <div className="font-sans antialiased text-gray-700 flex flex-col items-center ">
+      <div className="w-full mx-auto bg-red rounded-xl p-5 sm:p-8  border border-[#35894E]">
+       
         <div className="space-y-4">
-          <h3 className="font-heading text-2xl font-bold text-[#35894E] mb-2">{productName}</h3>
+          <h3 className="font-heading text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#7A9D54] via-[#F472B6] to-[#3ABAB4] mb-2">{productName}</h3>
           {description.paragraph1 && (
             <p className="text-[#93A87E] leading-relaxed">{description.paragraph1}</p>
           )}
@@ -76,26 +75,28 @@ const ProductDetails = ({ productData }) => {
             <p className="text-[#93A87E] leading-relaxed">{description.paragraph2}</p>
           )}
         </div>
-
+ 
         {/* Product Specifications */}
         {renderSection('Product Specifications', productSpecs)}
-
+ 
         {/* Size and Fit Information */}
-        {sizeShape.length > 0 &&
+        {/* {sizeShape.length > 0 &&
           renderSection(
             'Size and Fit Information',
             sizeShape.map(({ label, value }) => [label, value])
-          )}
-
+          )} */}
+ 
         {/* Material Details */}
-        {materialWashing.length > 0 &&
+        {/* {materialWashing.length > 0 &&
           renderSection(
             'Material Details',
             materialWashing.map(({ label, value }) => [label, value])
-          )}
+          )} */}
       </div>
     </div>
   );
 };
-
+ 
 export default ProductDetails;
+ 
+ 

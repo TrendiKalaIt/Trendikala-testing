@@ -15,7 +15,7 @@ const HeroSection = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % carouselSlides.length);
-    }, 3000); 
+    }, 3000);
     return () => clearInterval(interval);
   }, []);
 
@@ -35,11 +35,23 @@ const HeroSection = () => {
         <div className="flex flex-col md:flex-row overflow-hidden">
           {/* Left */}
           <div className="w-full md:w-1/2 flex flex-col h-full lg:ms-7">
-            <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
+            {/* <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
               <img src="/mehak.jpg" alt="Saiyara"
                 className="rounded-b-full object-cover md:h-[350px] w-[250px] sm:w-[300px] hidden md:block"
                 loading="lazy" />
+            </div> */}
+            <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
+              <video
+                src="/dress5.mp4"   
+                className="rounded-b-full object-cover md:h-[350px] w-[250px] sm:w-[300px] hidden md:block"
+                autoPlay
+                muted
+                loop
+                playsInline
+                loading="lazy"
+              />
             </div>
+
 
             <div className="hidden md:flex h-full w-3/4 p-4 md:p-8 flex-col text-right ml-auto">
               <p className="font-home leading-relaxed text-lg font-bold text-[#a5e665c8] mb-6 text-justify tracking-[.1rem]">
@@ -58,7 +70,7 @@ const HeroSection = () => {
 
           {/* Right */}
           <div className="w-full md:w-1/2 flex flex-col">
-            <div className="hidden md:flex h-[250px] w-full justify-center items-center text-center p-4">
+            <div className="hidden md:flex h-[250px] w-full justify-center items-center text-center mb-5">
               <h1 className="font-heading text-2xl w-2/3 md:text-2xl font-semibold leading-tight mt-10 md:mt-20 text-[#a5e665c8]">
                 "{title.toUpperCase()}"
               </h1>
