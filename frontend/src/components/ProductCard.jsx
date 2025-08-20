@@ -247,19 +247,19 @@ const ProductCard = ({ product = {} }) => {
         {/* Content */}
         <div className="bg-gradient-to-br from-[#E6F4EA] via-[#FDF1F6] to-[#FFFFFF] h-2/5 p-3 flex flex-col justify-between  rounded-b-3xl">
           <div>
-            <p className="font-home uppercase text-sm text-[#93a87eb7]">
+            <p className="font-home uppercase text-[12px] text-[#93a87eb7]">
               {category?.name || 'Category'}
             </p>
             <h3
               onClick={handleNavigate}
-              className=" font-heading text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#7A9D54] via-[#F472B6] to-[#3ABAB4] truncate cursor-pointer hover:underline"
+              className=" font-heading text-[24px] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#7A9D54] via-[#F472B6] to-[#3ABAB4] truncate cursor-pointer hover:underline"
             >
               {productName}
             </h3>
             <p className="font-body text-sm text-[#93a87eba] truncate">{description}</p>
  
             {/* Price */}
-            <div className="flex gap-3 pt-1">
+            <div className="flex gap-3 pt-0">
               <p className="text-md text-[#93A87E]">
                 ₹{productDiscountPrice}
               </p>
@@ -272,7 +272,7 @@ const ProductCard = ({ product = {} }) => {
           </div>
  
           {/* Buttons */}
-          <div className="flex gap-2 pt-2 ">
+          <div className="flex gap-2 pt-0 ">
             <button
               onClick={handleAddToCartClick}
               disabled={isOutOfStock}

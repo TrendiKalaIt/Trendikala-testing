@@ -82,9 +82,9 @@ export default function Showcase() {
   const [selectedReel, setSelectedReel] = useState(null);
 
   const sideImages = [
-    { id: 1, url: "/cro1.jpg", },
-    { id: 2, url: "/cro2.jpg", },
-    { id: 3, url: "/cro3.jpg", },
+    { id: 1, url: "/cro1.webp", },
+    { id: 2, url: "/cro2.webp", },
+    { id: 3, url: "/cro3.webp", },
   ];
 
   const reels = [

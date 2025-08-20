@@ -26,7 +26,7 @@ const HeroSection = () => {
       className="bg-white text-gray-800"
 
       style={{
-        backgroundImage: "url('/OutfitImg1.jpg')",
+        backgroundImage: "url('/OutfitImg1.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -35,12 +35,12 @@ const HeroSection = () => {
         <div className="flex flex-col md:flex-row overflow-hidden">
           {/* Left */}
           <div className="w-full md:w-1/2 flex flex-col h-full lg:ms-7">
-            {/* <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
-              <img src="/mehak.jpg" alt="Saiyara"
+            <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
+              <img src="/madubala.webp" alt="madubala"
                 className="rounded-b-full object-cover md:h-[350px] w-[250px] sm:w-[300px] hidden md:block"
                 loading="lazy" />
-            </div> */}
-            <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
+            </div>
+            {/* <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
               <video
                 src="/dress5.mp4"   
                 className="rounded-b-full object-cover md:h-[350px] w-[250px] sm:w-[300px] hidden md:block"
@@ -50,7 +50,7 @@ const HeroSection = () => {
                 playsInline
                 loading="lazy"
               />
-            </div>
+            </div> */}
 
 
             <div className="hidden md:flex h-full w-3/4 p-4 md:p-8 flex-col text-right ml-auto">
