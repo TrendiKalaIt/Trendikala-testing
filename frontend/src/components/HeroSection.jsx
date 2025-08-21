@@ -78,7 +78,7 @@ const HeroSection = () => {
     opacity-0 animate-fadeIn"
                   style={{ aspectRatio: "3/4" }}
                   loading={currentImageIndex === 0 ? "eager" : "lazy"}
-                  fetchpriority={currentImageIndex === 0 ? "high" : "auto"}
+                  fetchPriority={currentImageIndex === 0 ? "high" : "auto"}
                 />
 
                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-1">
