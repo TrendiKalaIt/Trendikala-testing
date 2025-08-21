@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
@@ -25,6 +26,9 @@ const app = express();
 
 // Enable CORS
 app.use(cors());
+
+// **Enable compression**
+app.use(compression());
 
 // Middleware to parse JSON
 app.use(express.json());
