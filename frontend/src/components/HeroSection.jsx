@@ -26,7 +26,8 @@ const HeroSection = () => {
       <img
         src="/OutfitImg1.webp"
         alt="Outfit Background"
-        loading="lazy"
+        loading="eager"
+        fetchPriority="high"
         className="absolute inset-0 w-full h-full object-cover -z-10"
       />
       <div className="bg-black/10 ">
@@ -73,10 +74,11 @@ const HeroSection = () => {
                   key={image}
                   src={image}
                   alt={`Slide ${currentImageIndex + 1}`}
-                  className="relative w-full h-auto object-fill rounded-b-full md:rounded-b-none md:rounded-t-full 
+                  className="relative w-full h-auto object-cover rounded-b-full md:rounded-b-none md:rounded-t-full 
     opacity-0 animate-fadeIn"
                   style={{ aspectRatio: "3/4" }}
-                  loading="lazy"
+                  loading={currentImageIndex === 0 ? "eager" : "lazy"}
+                  fetchpriority={currentImageIndex === 0 ? "high" : "auto"}
                 />
 
                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-2 z-1">
