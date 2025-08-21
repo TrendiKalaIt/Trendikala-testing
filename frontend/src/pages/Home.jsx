@@ -147,10 +147,10 @@ const Home = () => {
     // Sequentially show components
     const timers = [];
     timers.push(setTimeout(() => setShowHero(true), 0));        // immediately
-    timers.push(setTimeout(() => setShowNewArrivals(true), 1500)); // 0.5s later
-    timers.push(setTimeout(() => setShowOutfit(true), 3000));     // 1s later
-    timers.push(setTimeout(() => setShowPoster(true), 3500));     // 1.5s later
-    timers.push(setTimeout(() => setShowFeatured(true), 4000));  // 2s later
+    timers.push(setTimeout(() => setShowNewArrivals(true), 2000)); // 2s later
+    timers.push(setTimeout(() => setShowOutfit(true), 4000));     // 4s later
+    timers.push(setTimeout(() => setShowPoster(true), 6000));     // 6s later
+    timers.push(setTimeout(() => setShowFeatured(true), 8000));  // 8s later
 
     return () => timers.forEach((t) => clearTimeout(t)); // cleanup
   }, [dispatch]);
