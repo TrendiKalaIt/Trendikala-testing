@@ -1,15 +1,37 @@
+// import React, { useState, useEffect } from "react";
+// import { carouselSlides } from "../assets/assets";
+// import { motion } from "framer-motion";
+// import { useNavigate } from "react-router-dom";
+
+// const HeroSection = () => {
+//   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//   const navigate = useNavigate();
+
+//   const handleViewDetails = () => {
+//     navigate("/allproducts");
+//   };
+
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       setCurrentImageIndex((prev) => (prev + 1) % carouselSlides.length);
+//     }, 3000);
+//     return () => clearInterval(interval);
+//   }, []);
+
+//   const { image, title, description } = carouselSlides[currentImageIndex];
+
 import React, { useState, useEffect } from "react";
 import { carouselSlides } from "../assets/assets";
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-const HeroSection = () => {
+const HeroSection = ({ onLoad }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const navigate = useNavigate();
 
-  const handleViewDetails = () => {
-    navigate("/allproducts");
-  };
+  useEffect(() => {
+    // Notify parent that HeroSection has loaded
+    onLoad?.();
+  }, [onLoad]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,10 +40,15 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, []);
 
+    const handleViewDetails = () => {
+    // navigate to products page (change path if needed)
+    navigate("/products");
+  };
+
   const { image, title, description } = carouselSlides[currentImageIndex];
 
   return (
-    <section className="relative  text-gray-800 overflow-hidden">
+     <section className="relative text-gray-800 overflow-hidden">
       {/* Background image as <img> with lazy loading */}
       <img
         src="/OutfitImg1.webp"

@@ -103,21 +103,21 @@
 
 
 
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import HeroSection from '../components/HeroSection';
+import NewArrivals from '../components/NewArrivals';
+import Outfit from '../components/Outfit';
+import ProductCard from '../components/ProductCard';
+import PosterComponent from '../components/PosterComponent';
+import ProductCardSkeleton from '../components/ProductCardSkeleton';
+import { useSelector } from 'react-redux';
 
-import HeroSection from "../components/HeroSection";
-import NewArrivals from "../components/NewArrivals";
-import Outfit from "../components/Outfit";
-import PosterComponent from "../components/PosterComponent";
-import ProductCard from "../components/ProductCard";
-import ProductCardSkeleton from "../components/ProductCardSkeleton";
-import ReelsSection from "../components/ReelsSection"; // 👈 tumhara reels wala component
+import { useDispatch } from 'react-redux';
+import { showLoader, hideLoader } from '../utility/loaderSlice';
 
-import { useSelector, useDispatch } from "react-redux";
-import { showLoader, hideLoader } from "../utility/loaderSlice";
 
 const Home = () => {
   const loading = useSelector((state) => state.loader.loading);
@@ -126,9 +126,10 @@ const Home = () => {
   const [visibleCount, setVisibleCount] = useState(4);
   const [error, setError] = useState(null);
 
-  // states for delayed rendering
-  const [showFeatured, setShowFeatured] = useState(false);
-  const [showReels, setShowReels] = useState(false);
+  // NEW STATE FOR SEQUENTIAL RENDERING
+  const [heroLoaded, setHeroLoaded] = useState(false);
+  const [newArrivalsLoaded, setNewArrivalsLoaded] = useState(false);
+  const [outfitLoaded, setOutfitLoaded] = useState(false);
 
   const handleSeeMore = () => {
     setVisibleCount((prevCount) => prevCount + 4);
@@ -143,34 +144,35 @@ const Home = () => {
         setProducts(data);
         dispatch(hideLoader());
       } catch (err) {
-        setError("Failed to load products");
+        setError('Failed to load products');
         dispatch(hideLoader());
       }
     };
 
     fetchProducts();
   }, [dispatch]);
-
-  // stepwise delays
-  useEffect(() => {
-    const timer1 = setTimeout(() => setShowFeatured(true), 2000); // Featured Products after 2s
-    const timer2 = setTimeout(() => setShowReels(true), 4000);    // Reels Section after 4s
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
-  }, []);
+  
 
   return (
     <>
-      {/* These always load immediately */}
-      <HeroSection />
-      <NewArrivals />
-      <Outfit />
-      <PosterComponent />
+      {/* Step 1: Hero Section */}
+      <HeroSection onLoad={() => setHeroLoaded(true)} />
 
-      {/* Featured Products after delay */}
-      {showFeatured && (
+      {/* Step 2: New Arrivals (after Hero loaded) */}
+      {heroLoaded && (
+        <NewArrivals onLoad={() => setNewArrivalsLoaded(true)} />
+      )}
+
+      {/* Step 3: Outfit (after NewArrivals loaded) */}
+      {newArrivalsLoaded && (
+        <Outfit onLoad={() => setOutfitLoaded(true)} />
+      )}
+
+      {/* Step 4: PosterComponent (after Outfit loaded) */}
+      {outfitLoaded && <PosterComponent />}
+      
+      {/* Products Section (after everything above) */}
+     
         <div className="px-10 py-2 mb-3">
           <h2 className="text-2xl font-bold text-[#93A87E] mb-6">Featured Products</h2>
 
@@ -186,9 +188,10 @@ const Home = () => {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14">
-                  {products.slice(0, visibleCount).map((product) => (
-                    <ProductCard key={product._id} product={product} />
-                  ))}
+                  {Array.isArray(products) &&
+                    products.slice(0, visibleCount).map((product) => (
+                      <ProductCard key={product._id} product={product} />
+                    ))}
                 </div>
               )}
 
@@ -205,11 +208,9 @@ const Home = () => {
             </>
           )}
         </div>
-      )}
-
-    
-    </>
+      </>
   );
 };
 
-export default Home;
+
+export default Home
