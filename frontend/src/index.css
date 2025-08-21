@@ -107,3 +107,10 @@ bg-button
 .animate-fadeIn {
   animation: fadeIn 1s ease-in-out forwards;
 }
+
+
+
+.text-outline {
+  color: white;
+  text-shadow: 0px 0px 2px black, 0px 0px 2px black;
+}

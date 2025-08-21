@@ -130,7 +130,7 @@ const Products = () => {
           Your browser does not support the video tag.
         </video>
  
-        <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-center px-4 sm:px-6">
+        <div className="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-center px-4 sm:px-6">
           <h1 className=" font-heading text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg tracking-wide animate-fade-in-up">
             <span className="text-[#a2ff00] font-home ">Explore</span> Our Categories
           </h1>
