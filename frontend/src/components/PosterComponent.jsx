@@ -1,5 +1,4 @@
 import React from 'react';
-import Poster from '../../public/Poster.png'
 import Lottie from "lottie-react";
 import runningGirl from "../assets/animations/running-girl.json";
  
@@ -11,7 +10,7 @@ const PosterComponent = () => {
         {/* Image */}
         <div className="absolute bottom-0 right-0 w-1/2 max-w-lg md:w-1/2 lg:w-2/5 xl:w-1/3">
           <img
-            src={Poster}
+            src='/Poster.png'
             alt="Woman shopping with bags and phone"
             className="w-full h-[400px] object-cover"
           />
