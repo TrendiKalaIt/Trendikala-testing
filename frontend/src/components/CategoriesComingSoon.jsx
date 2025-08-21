@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import ReactDOM from 'react-dom/client';
-import { Twitter, Instagram, Facebook, Youtube } from 'lucide-react';
-import commingSoonvideo from '../assets/comming soon.mp4';
+import {  SiFacebook, SiInstagram, SiYoutube} from 'react-icons/si';
+
 
 
 const ComingSoon = () => {
   const [timeLeft, setTimeLeft] = useState({});
 
   // Set the launch date to August 22, 2025, at midnight
-  const launchDate = new Date("2025-08-22T00:00:00");
+  const launchDate = new Date("2025-09-01T00:00:00");
 
   useEffect(() => {
 
@@ -56,16 +55,16 @@ const ComingSoon = () => {
           </div>
         </div>
 
-        <div className="flex space-x-6  md:mt-0 text-[#749d63]">
-          <a href="#" className="hover:text-gray-700 transition">
-            <Facebook size={24} />
+        <div className="flex space-x-6  md:mt-0 ">
+          <a href="https://www.facebook.com/people/Trendi-Kala/61576774982351/?mibextid=wwXIfr&rdid=6ghBVh03c1h4Yrsp&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F14JLn8svZCB%2F%3Fmibextid%3DwwXIfr" className="hover:text-gray-700 text-blue-700 transition">
+            <SiFacebook size={24} />
           </a>
 
-          <a href="#" className="hover:text-gray-700 transition">
-            <Instagram size={24} />
+          <a href="https://www.instagram.com/trendikalaofficial/?igsh=MXdidTA0YmY2Ymd3YQ%3D%3D&utm_source=qr#" className="hover:text-gray-700 text-red-300 transition">
+            <SiInstagram size={24} />
           </a>
-          <a href="#" className="hover:text-gray-700 transition">
-            <Youtube size={24} />
+          <a href="https://www.youtube.com/@trendikala" className="hover:text-gray-700 text-red-700 transition">
+            <SiYoutube size={24} />
           </a>
         </div>
       </div>
@@ -73,12 +72,12 @@ const ComingSoon = () => {
       
       <div className="flex-1 md:w-1/2 h-screen overflow-hidden flex items-center justify-center">
         <video
-          src={commingSoonvideo} // ← replace with your own video URL
+          src=''
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover border"
         >
           Your browser does not support the video tag.
         </video>

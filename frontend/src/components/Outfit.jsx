@@ -1,76 +1,3 @@
-// // src/components/Outfit.jsx
-// import React from 'react';
-// import { ChevronRight } from 'lucide-react';
-// import { outfitGridItems } from '../assets/assets';
-// import { Link } from 'react-router-dom';
-// import OutfitImg from '../../public/OutfitImg.webp'
-
-// function Outfit() {
-//   const { mainItem, otherItems } = outfitGridItems;
-
-//   return (
-//     <>
-//       {/* Desktop Grid */}
-//       <div className="md:grid grid-cols-3 grid-rows-3 gap-4 p-4">
-//         {/* Main block */}
-//         <div className="col-span-2 row-span-2 bg-blue-200 h-20 min-h-[300px] w-full p-4 rounded-2xl relative overflow-hidden">
-//           <img
-//             src={OutfitImg}
-//             alt={mainItem.title}
-//             className="absolute inset-0 w-full h-full object-cover object-center rounded-2xl"
-//           />
-//           <div className="absolute bottom-4 left-4 text-white z-">
-//             <h2 className="text-3xl font-bold mb-2">{mainItem.title}</h2>
-//             <Link to="/allproducts">
-//               <button className="bg-white text-gray-800 px-4 py-2 rounded-full text-sm font-semibold flex items-center">
-//                 {mainItem.buttonText} <ChevronRight size={16} className="ml-1" />
-//               </button>
-//             </Link>
-//           </div>
-//         </div>
-
-//         {/* Other blocks - Desktop */}
-//         {otherItems.slice(0, 5).map((item) => (
-//           <div key={item.id} className="hidden md:block relative bg-green-200 rounded-2xl overflow-hidden ">
-//             <img
-//               src={item.imageUrl}
-//               alt={item.title}
-//               className="absolute inset-0 w-full h-full object-cover object-center"
-//             />
-//             <div className="relative z- p-4 text-white font-semibold text-lg">
-//               {item.title}
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* Mobile Horizontal Scroll */}
-//       <div className="block md:hidden w-full p-4">
-//         <div className="flex overflow-x-auto gap-4 pb-2">
-//           {otherItems.map((item) => (
-//             <div
-//               key={item.id}
-//               className="relative min-w-[150px] h-40 bg-green-200 rounded-2xl overflow-hidden shrink-0"
-//             >
-//               <img
-//                 src={item.imageUrl}
-//                 alt={item.title}
-//                 className="absolute inset-0 w-full h-full object-cover object-center"
-//               />
-//               <div className="relative z-10 p-2 text-white font-semibold text-sm">
-//                 {item.title}
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
-// export default Outfit;
-
-
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
@@ -92,8 +19,11 @@ export default function Showcase() {
     { id: 2, url: '/dress2.mp4' },
     { id: 3, url: '/dress3.mp4' },
     { id: 4, url: '/dress4.mp4' },
+    { id: 7, url: '/dress1.mp4' },
     { id: 5, url: '/dress5.mp4' },
     { id: 6, url: '/dress6.mp4' },
+
+
   ];
 
   const openModal = (reel) => {
@@ -112,9 +42,9 @@ export default function Showcase() {
         {/* Main Poster */}
         <div className="col-span-2 h-[250px] md:h-[350px] rounded-2xl overflow-hidden relative mb-3">
           <img
-            src="/cro1.webp"
+            src="/cro-main.webp"
             alt="Main Poster"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain bg-red-50"
           />
 
         </div>
@@ -135,7 +65,7 @@ export default function Showcase() {
                   <img
                     src={img.url}
                     alt={img.title}
-                    className="w-full h-full object-cover rounded-2xl"
+                    className="w-full h-full object-contain bg-blue-50 rounded-2xl"
                   />
 
                 </div>
@@ -159,7 +89,7 @@ export default function Showcase() {
           {reels.map((reel) => (
             <SwiperSlide
               key={reel.id}
-              className="!w-[328px] md:!w-[180px] h-[240px] rounded-2xl overflow-hidden shadow relative bg-gradient-to-tr from-blue-800 to-gray-500 cursor-pointer m-auto"
+              className="!w-[328px] md:!w-[180px] h-[240px] rounded-2xl overflow-hidden shadow relative bg-gradient-to-tr from-blue-800 to-gray-500 cursor-pointer"
               onClick={() => openModal(reel)}
             >
               <video
@@ -167,12 +97,13 @@ export default function Showcase() {
                 className="w-full h-full object-cover"
                 autoPlay
                 muted
-                loop
                 playsInline
+                loop
               />
             </SwiperSlide>
           ))}
         </Swiper>
+
       </div>
 
       {/* Modal */}

@@ -18,7 +18,7 @@ function Manufacturing() {
     <div className="min-h-screen bg-gray-50 font-inter text-gray-800">
       <section
         className="relative h-96 md:h-[500px] bg-cover bg-center flex items-center justify-center text-center p-4"
-        style={{ backgroundImage: 'url(https://res.cloudinary.com/dq70cmqwb/image/upload/v1752703254/Manufacturingbg_yrfope.jpg)' }}
+        style={{ backgroundImage: 'url()' }}
       >
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="relative z-8 text-white max-w-3xl mx-auto">
@@ -40,15 +40,15 @@ function Manufacturing() {
         </p>
       </section>
 
-      <section className="container mx-auto py-16 px-4 md:px-8 mt-16">
+      {/* <section className="container mx-auto py-16 px-4 md:px-8 mt-16">
         <h2 className=" font-home text-3xl md:text-4xl font-bold mb-12 text-center font-playfair-display text-green-700">
           The Journey of Creation
         </h2>
         <div className="relative flex flex-col items-center">
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-green-200 h-full hidden md:block"></div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-green-200 h-full hidden md:block"></div> */}
 
           {/* Process Step 1 */}
-          <div className="flex flex-col md:flex-row items-center w-full mb-12 md:mb-16">
+          {/* <div className="flex flex-col md:flex-row items-center w-full mb-12 md:mb-16">
             <div className="md:w-1/2 flex justify-center md:justify-end md:pr-12 relative">
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:ml-8 mt-4 md:mt-0 md:text-right">
                 <Palette size={40} className="text-green-500 mb-3 mx-auto md:ml-auto md:mr-0 hidden" />
@@ -66,10 +66,10 @@ function Manufacturing() {
                 onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/400x250/E5E7EB/6B7280?text=Image+Not+Found`; }}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Process Step 2 */}
-          <div className="flex flex-col md:flex-row-reverse items-center w-full mb-12 md:mb-16">
+          {/* <div className="flex flex-col md:flex-row-reverse items-center w-full mb-12 md:mb-16">
             <div className="md:w-1/2 flex justify-center md:justify-end md:pl-12 relative">
               
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:mr-8 mt-4 md:mt-0 md:text-left">
@@ -88,10 +88,10 @@ function Manufacturing() {
                 onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/400x250/E5E7EB/6B7280?text=Image+Not+Found`; }}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Process Step 3 */}
-          <div className="flex flex-col md:flex-row items-center w-full mb-12 md:mb-16">
+          {/* <div className="flex flex-col md:flex-row items-center w-full mb-12 md:mb-16">
             <div className="md:w-1/2 flex justify-center md:justify-end md:pr-12 relative">
               
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:ml-8 mt-4 md:mt-0 md:text-right">
@@ -111,10 +111,10 @@ function Manufacturing() {
 
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Process Step 4 */}
-          <div className="flex flex-col md:flex-row-reverse items-center w-full mb-12 md:mb-16">
+          {/* <div className="flex flex-col md:flex-row-reverse items-center w-full mb-12 md:mb-16">
             <div className="md:w-1/2 flex justify-center md:justify-end md:pl-12 relative">
              
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:mr-8 mt-4 md:mt-0 md:text-left">
@@ -127,16 +127,16 @@ function Manufacturing() {
             </div>
             <div className="md:w-1/2 flex justify-center md:justify-start md:pr-12">
               <img
-                src='https://res.cloudinary.com/dq70cmqwb/image/upload/v1752703267/Quality_trvm0l.jpg'
+                src=''
                 alt="Quality Control"
                 className="rounded-lg shadow-md w-full max-w-xs md:max-w-md h-auto object-cover mt-4 md:mt-0"
                 onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/400x250/E5E7EB/6B7280?text=Image+Not+Found`; }}
               />
             </div>
-          </div>
+          </div> */}
 
           {/* Process Step 5 */}
-          <div className="flex flex-col md:flex-row items-center w-full">
+          {/* <div className="flex flex-col md:flex-row items-center w-full">
             <div className="md:w-1/2 flex justify-center md:justify-end md:pr-12 relative">
               
               <div className="md:w-3/4 bg-white p-6 rounded-lg shadow-md md:ml-8 mt-4 md:mt-0 md:text-right">
@@ -155,10 +155,10 @@ function Manufacturing() {
                 onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/400x250/E5E7EB/6B7280?text=Image+Not+Found`; }}
               />
             </div>
-          </div>
+          </div> */}
 
-        </div>
-      </section>
+        {/* </div>
+      </section> */}
 
       <section className="bg-green-50 py-16 px-4 md:px-8 mt-16">
         <div className="container mx-auto text-center">
@@ -198,7 +198,7 @@ function Manufacturing() {
         </div>
       </section>
 
-      <section className="container mx-auto py-16 px-4 md:px-8 mt-16">
+      {/* <section className="container mx-auto py-16 px-4 md:px-8 mt-16">
         <div className="flex flex-col md:flex-row-reverse items-center gap-12">
           <div className="md:w-1/2">
             <img
@@ -223,7 +223,7 @@ function Manufacturing() {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
 
 

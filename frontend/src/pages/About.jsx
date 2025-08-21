@@ -18,7 +18,7 @@ function AboutUs() {
       
       <section
         className="relative h-96 md:h-[500px] bg-cover bg-center flex items-center justify-center text-center p-4"
-        style={{ backgroundImage: 'url(https://res.cloudinary.com/dq70cmqwb/image/upload/v1752703075/aboutbg_hpmkai.jpg)' }} >
+        style={{ backgroundImage: 'url()' }} >
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="relative z-8 text-white max-w-3xl mx-auto">
           <h1 className=" font-home text-4xl md:text-6xl font-bold mb-4 font-playfair-display">
@@ -43,9 +43,9 @@ function AboutUs() {
           </div>
           <div className="md:w-1/2">
             <img
-              src='https://res.cloudinary.com/dq70cmqwb/image/upload/v1752703097/Packaging_owkvqt.jpg'
+              src=''
               alt="Our Brand Story"
-              className="rounded-lg shadow-xl w-full h-auto object-cover"
+              className="rounded-lg shadow-xl w-full h-auto lg:h-[400px] object-cover"
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = `https://placehold.co/600x400/E5E7EB/6B7280?text=Image+Not+Found`;

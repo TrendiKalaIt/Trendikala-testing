@@ -5,7 +5,6 @@ import ProductCard from "../components/ProductCard";
 import { useDispatch } from "react-redux";
 import { showLoader, hideLoader } from "../utility/loaderSlice";
 import Spinner from "../components/Spinner";
-import Bannerv from "../assets/bannerM.mp4";
  
 const Products = () => {
   const dispatch = useDispatch();
@@ -127,7 +126,7 @@ const Products = () => {
           playsInline
           className="w-full h-full object-cover object-center"
         >
-          <source src={Bannerv} type="video/mp4" />
+          <source src='' type="video/mp4" />
           Your browser does not support the video tag.
         </video>
  

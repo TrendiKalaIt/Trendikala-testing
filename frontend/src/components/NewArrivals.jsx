@@ -28,7 +28,7 @@ const NewArrivals = () => {
         <img
           src={current.imageUrl}
           alt={`Collection ${idx + 1}`}
-          className="absolute  w-full h-[385px] object-cover object-center lg:object-[top_10px_center]"
+          className="absolute  w-full h-[385px] object-contain object-center lg:object-[top_10px_center]"
           loading="lazy"
         />
 
