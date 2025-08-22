@@ -6,6 +6,7 @@ import Footer from '../Footer';
 // import Spinner from '../Spinner';
 import { useSelector } from 'react-redux';
 import Badge from '../TestingBadge';
+import NewUpdatesMsg from '../NewUpdatesMsg';
 
 const navLinks = [
   { name: 'home', path: '/' },
@@ -19,12 +20,14 @@ const Layout = () => {
 
   return (
     <div className="flex flex-col min-h-screen relative">
-     
+      <NewUpdatesMsg className="absolute bottom-0 left-0 w-full" />
+
+
       <NavbarHome links={navLinks} />
-       {/* {loading && <Spinner />} */}
+      {/* {loading && <Spinner />} */}
       <main className="flex-grow">
         <Outlet />
-        <Badge/>
+        <Badge />
       </main>
       <Footer />
     </div>

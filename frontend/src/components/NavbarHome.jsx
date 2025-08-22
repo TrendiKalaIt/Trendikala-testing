@@ -111,9 +111,10 @@ export default function Navbar({ links }) {
 
   return (
     <nav
-      className={`px-4 lg:fixed top-0 left-0 right-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md transition-transform transform-12' : 'bg-transparent'
-        }`}
+      className={`px-4 lg:fixed left-0 right-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md top-0' : 'bg-transparent mt-8'}
+  `}
     >
+
       <div className="max-w-7xl mx-auto flex justify-between items-center py-2 ">
         {/* Logo */}
         <div

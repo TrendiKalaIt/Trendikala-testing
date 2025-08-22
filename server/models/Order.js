@@ -55,9 +55,8 @@ const orderSchema = new mongoose.Schema({
   isGuest: { type: Boolean, default: false }
 });
 
-// Pre-save hook for generating unique orderId
 orderSchema.pre('save', async function (next) {
-  if (!this.isNew) return next();
+  if (!this.isNew) return next();  // Only generate orderId for new orders
 
   if (!this.items.length) {
     return next(new Error("Order must have at least one item"));
@@ -68,26 +67,28 @@ orderSchema.pre('save', async function (next) {
     return next(new Error("Product not found for order"));
   }
 
-  const dateStr = moment().format('YYYYMMDD');
-  const categoryCode = firstProduct.category.categoryCode;
-  const productCode = firstProduct.productCode;
+  const dateStr = moment().format('MMDD');  // Get the current date in MMDD format
+  const productCode = firstProduct.productCode;  // Fetch the product code dynamically
 
-  //date based counter
-  const counterId = `${dateStr}`;
-
+  // Fetch and update the global counter
   let counter = await Counter.findOneAndUpdate(
-    { id: counterId },
-    { $inc: { seq: 1 } },
-    { new: true, upsert: true }
+    { id: 'globalOrderSeq' },  // Use a global counter id
+    { $inc: { seq: 1 } },  // Increment the sequence number by 1
+    { new: true, upsert: true }  // Create the counter if it doesn't exist
   );
 
-  const seqNumber = String(counter.seq).padStart(4, '0');
+  if (!counter) {
+    return next(new Error("Failed to update counter sequence."));
+  }
 
-  // orderId  category/product  code  show ,sequence global   
-  this.orderId = `${dateStr}-${categoryCode}-${productCode}-${seqNumber}`;
+  const seqNumber = String(counter.seq).padStart(4, '0');  // Ensure sequence is 4 digits
+
+  // Construct the final orderId: MMDD-productCode-sequence
+  this.orderId = `${dateStr}-${productCode}-${seqNumber}`;
 
   next();
 });
+
 
 const Order = mongoose.model('Order', orderSchema);
 

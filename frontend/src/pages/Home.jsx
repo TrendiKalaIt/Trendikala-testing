@@ -11,6 +11,7 @@ import Spinner from '../components/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import { showLoader, hideLoader } from '../utility/loaderSlice';
 
+
 const Home = () => {
   const loading = useSelector((state) => state.loader.loading);
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ const Home = () => {
 
   return (
     <>
+    
       {/* Hero Section */}
       {showHero ? <HeroSection /> : <Spinner />}
 

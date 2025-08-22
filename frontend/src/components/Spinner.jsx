@@ -2,7 +2,7 @@ import React from 'react';
 
 const Spinner = () => {
   return (
-    <div className="flex flex-col justify-center items-center h-screen ">
+    <div className="flex flex-col justify-center items-center">
        <div>
          <img src="/trendikala_logo_bg.png" className='h-24 animate-pulse' alt="" />
        </div>
