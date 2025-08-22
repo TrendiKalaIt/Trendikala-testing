@@ -59,7 +59,7 @@ const SignUp = () => {
       console.error('Signup Error:', msg);
       toast.error(msg);
 
-      // Agar OTP already sent hai to waha redirect bhi karo:
+      
       if (msg.includes('OTP already sent')) {
         const params = new URLSearchParams(location.search);
         const redirectPath = params.get('redirect') || '/';
@@ -84,17 +84,17 @@ const SignUp = () => {
             </div>
             <div className="hidden md:block border-l-2 border-green-700 h-20 px-2" />
             <div className="hidden md:block">
-              <span className="block text-green-700 tracking-[1.2rem] text-xl md:text-2xl">TRENDI<br />KALA</span>
-              <span className="block text-sm md:text-base text-gray-500 mt-1">TRENDS & KALA BY EVERY DESIGN</span>
+              <span className="font-heading block text-green-700 tracking-[1.2rem] text-xl md:text-2xl">TRENDI<br />KALA</span>
+              <span className="font-heading block text-sm md:text-base text-gray-500 mt-1">TRENDS & KALA BY EVERY DESIGN</span>
             </div>
           </div>
         </div>
         <div className="flex flex-wrap justify-center md:justify-start space-x-4 text-gray-700 text-sm sm:text-base pt-5 ">
-          <span className="hover:text-green-700">Women</span>
-          <span className="hover:text-green-700">New In</span>
-          <span className="hover:text-green-700">Clothing</span>
-          <span className="hover:text-green-700">Custom Request</span>
-          <span className="hover:text-green-700">Personal Shopper</span>
+          <span className="font-body hover:text-green-700">Women</span>
+          <span className="font-body hover:text-green-700">New In</span>
+          <span className="font-body hover:text-green-700">Clothing</span>
+          <span className="font-body hover:text-green-700">Custom Request</span>
+          <span className="font-body hover:text-green-700">Personal Shopper</span>
         </div>
       </header>
 
@@ -102,17 +102,17 @@ const SignUp = () => {
 
       {/* Form */}
       <div className="w-full max-w-xl bg-white p-4 md:p-10 rounded-lg shadow-sm">
-        <h2 className="text-2xl font-semibold text-[#93A87E] mb-6 border-b-2 border-[#93A87E] pb-2 inline-block">
+        <h2 className="font-home text-xl font-semibold text-[#93A87E] mb-6 border-b-2 border-[#93A87E] pb-2 inline-block">
           CREATE ACCOUNT
         </h2>
 
         <form onSubmit={handleSignUp}>
           <div className="mb-4">
-            <label htmlFor="fullName" className="block text-[#35894E] text-sm font-medium mb-2">Full Name</label>
+            <label htmlFor="fullName" className="font-home block text-[#35894E] text-sm font-medium mb-2">Full Name</label>
             <input
               type="text"
               id="fullName"
-              className="border-2 border-[#35894e75] rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#35894E]"
+              className="font-body border-2 border-[#35894e75] rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#35894E]"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               required
@@ -120,22 +120,22 @@ const SignUp = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="email" className="block text-[#35894E] text-sm font-medium mb-2">Email</label>
+            <label htmlFor="email" className="font-home block text-[#35894E] text-sm font-medium mb-2">Email</label>
             <input
               type="email"
               id="email"
-              className="border-2 border-[#35894e75] rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#35894E]"
+              className="font-body border-2 border-[#35894e75] rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#35894E]"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="mobile" className="block text-[#35894E] text-sm font-medium mb-2">Mobile Number</label>
+            <label htmlFor="mobile" className="font-home block text-[#35894E] text-sm font-medium mb-2">Mobile Number</label>
             <input
               type="tel"
               id="mobile"
-              className="border-2 border-[#35894e75] rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#35894E]"
+              className="font-body border-2 border-[#35894e75] rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#35894E]"
               value={mobile}
               onChange={(e) => setMobile(e.target.value)}
               required
@@ -146,12 +146,12 @@ const SignUp = () => {
 
 
           <div className="mb-4">
-            <label htmlFor="password" className="block text-[#35894E] text-sm font-medium mb-2">Password</label>
+            <label htmlFor="password" className="font-home block text-[#35894E] text-sm font-medium mb-2">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                className="border-2 border-[#35894e75] rounded w-full py-2 px-3 pr-10 text-gray-700 focus:outline-none focus:border-[#35894E]"
+                className="font-body border-2 border-[#35894e75] rounded w-full py-2 px-3 pr-10 text-gray-700 focus:outline-none focus:border-[#35894E]"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -168,12 +168,12 @@ const SignUp = () => {
           </div>
 
           <div className="mb-6">
-            <label htmlFor="confirmPassword" className="block text-[#35894E] text-sm font-medium mb-2">Confirm Password</label>
+            <label htmlFor="confirmPassword" className="font-home block text-[#35894E] text-sm font-medium mb-2">Confirm Password</label>
             <div className="relative">
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 id="confirmPassword"
-                className="border-2 border-[#35894e75] rounded w-full py-2 px-3 pr-10 text-gray-700 focus:outline-none focus:border-[#35894E]"
+                className="font-body border-2 border-[#35894e75] rounded w-full py-2 px-3 pr-10 text-gray-700 focus:outline-none focus:border-[#35894E]"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -181,7 +181,7 @@ const SignUp = () => {
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500"
+                className=" absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500"
                 aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
               >
                 {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -191,7 +191,7 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="bg-[#93A87E] w-full hover:bg-[#93a87eae] text-white font-bold py-2 px-8 rounded-full transition duration-200"
+            className="font-home bg-[#93A87E] w-full hover:bg-[#93a87eae] text-white font-bold py-2 px-8 rounded-full transition duration-200"
           >
             SIGN UP
           </button>
@@ -200,10 +200,10 @@ const SignUp = () => {
         <div className="border mt-8"></div>
 
         <div className="mt-8 text-center">
-          <p className="text-[#35894E] mb-4">Already have an account?</p>
+          <p className="font-home text-[#35894E] mb-4">Already have an account?</p>
           <button
             type="button"
-            className="border w-full border-[#35894E] text-[#35894E] font-bold py-2 px-6 rounded-full hover:bg-green-50 transition duration-200"
+            className="font-home border w-full border-[#35894E] text-[#35894E] font-bold py-2 px-6 rounded-full hover:bg-green-50 transition duration-200"
             onClick={() => navigate(`/signin?redirect=${encodeURIComponent(redirectPath)}`)}
           >
             SIGN IN

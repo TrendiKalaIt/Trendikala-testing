@@ -46,52 +46,52 @@ const EnquiryForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white p-6 rounded-xl m-4 shadow-md">
-      <h2 className="text-2xl font-bold text-green-700 mb-4 text-center">Enquiry Form</h2>
+      <h2 className="font-heading text-2xl font-bold text-green-700 mb-4 text-center">Enquiry Form</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div>
-          <label className="text-sm text-gray-700 font-medium">Full Name *</label>
+          <label className="font-home text-sm text-gray-700 font-medium">Full Name *</label>
           <input
             type="text"
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded"
+            className="font-body w-full p-2 border border-gray-300 rounded"
           />
         </div>
 
         <div>
-          <label className="text-sm text-gray-700 font-medium">Email *</label>
+          <label className="font-home text-sm text-gray-700 font-medium">Email *</label>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded"
+            className="font-body w-full p-2 border border-gray-300 rounded"
           />
         </div>
 
         <div>
-          <label className="text-sm text-gray-700 font-medium">Phone</label>
+          <label className="font-home text-sm text-gray-700 font-medium">Phone</label>
           <input
             type="tel"
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="fonr-body w-full p-2 border border-gray-300 rounded"
           />
         </div>
 
         <div>
-          <label className="text-sm text-gray-700 font-medium">Enquiry Type *</label>
+          <label className="font-home text-sm text-gray-700 font-medium">Enquiry Type *</label>
           <select
             name="enquiryType"
             value={formData.enquiryType}
             onChange={handleChange}
             required
-            className="w-full p-2 border border-gray-300 rounded"
+            className="font-body w-full p-2 border border-gray-300 rounded"
           >
              <option value="" disabled  hidden>Select Type</option>
             <option value="Product">Product Related</option>
@@ -103,22 +103,22 @@ const EnquiryForm = () => {
       </div>
 
       <div className="mt-4">
-        <label className="text-sm text-gray-700 font-medium">Message *</label>
+        <label className="font-home text-sm text-gray-700 font-medium">Message *</label>
         <textarea
           name="message"
           value={formData.message}
           onChange={handleChange}
           required
           rows="5"
-          className="w-full h-11 p-2 border border-gray-300 rounded"
+          className="font-body w-full h-11 p-2 border border-gray-300 rounded"
           placeholder="Type your message here..."
         />
       </div>
 
       <div className="mt-4">
-        <label className="text-sm text-gray-700 font-medium">Preferred Contact Method</label>
+        <label className="font-home text-sm text-gray-700 font-medium">Preferred Contact Method</label>
         <div className="flex items-center gap-4 mt-1">
-          <label>
+          <label className='font-body'>
             <input
               type="radio"
               name="preferredContactMethod"
@@ -129,7 +129,7 @@ const EnquiryForm = () => {
             />
             Email
           </label>
-          <label>
+          <label className='font-body'>
             <input
               type="radio"
               name="preferredContactMethod"
@@ -144,13 +144,13 @@ const EnquiryForm = () => {
       </div>
 
       <div className="mt-4">
-        <label className="text-sm text-gray-700 font-medium">Preferred Time to Contact</label>
+        <label className="font-home text-sm text-gray-700 font-medium">Preferred Time to Contact</label>
         <input
           type="text"
           name="preferredTime"
           value={formData.preferredTime}
           onChange={handleChange}
-          className="w-full p-2 border border-gray-300 rounded"
+          className="font-body w-full p-2 border border-gray-300 rounded"
           placeholder="e.g., Weekdays 10AM–4PM"
         />
       </div>
@@ -158,7 +158,7 @@ const EnquiryForm = () => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="mt-6 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+        className="font-home mt-6 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
       >
         {isSubmitting ? 'Submitting...' : 'Send Enquiry'}
       </button>
