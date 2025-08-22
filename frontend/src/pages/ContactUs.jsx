@@ -30,13 +30,13 @@ const ContactUs = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-extrabold text-green-600 text-center mb-12">
+        <h1 className="font-heading text-4xl font-extrabold text-green-600 text-center mb-12">
           Get in Touch
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 bg-white shadow-md rounded-xl">
           <div className=" p-8 ">
-            <h2 className="text-2xl font-bold text-green-600 mb-6">Send Us a Message</h2>
+            <h2 className="font-home text-2xl font-bold text-green-600 mb-6">Send Us a Message</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <div className="relative mt-1 rounded-md shadow-sm">
@@ -50,7 +50,7 @@ const ContactUs = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                    className="font-body block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-green-500 sm:text-sm"
                     placeholder="Your Name"
                   />
                 </div>
@@ -68,8 +68,8 @@ const ContactUs = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-green-500 sm:text-sm"
-                    placeholder="your@example.com"
+                    className="font-body block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                    placeholder="your@gmail.com"
                   />
                 </div>
               </div>
@@ -86,7 +86,7 @@ const ContactUs = () => {
                     value={formData.message}
                     onChange={handleChange}
                     required
-                    className="block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-green-500 sm:text-sm"
+                    className="font-body block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-gray-900 placeholder-gray-400 focus:border-green-500 focus:ring-green-500 sm:text-sm"
                     placeholder="Your message..."
                   ></textarea>
                 </div>
@@ -94,7 +94,7 @@ const ContactUs = () => {
 
               <button
                 type="submit"
-                className="inline-flex justify-center items-center rounded-md border border-transparent bg-[#93A87E] hover:bg-[#93a87ec6] px-6 py-3 text-base font-medium text-white shadow-sm  focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                className="font-home inline-flex justify-center items-center rounded-md border border-transparent bg-[#93A87E] hover:bg-[#93a87ec6] px-6 py-3 text-base font-medium text-white shadow-sm  focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
               >
                 <Send className="mr-2 h-5 w-5" />
                 Send Message
@@ -103,14 +103,14 @@ const ContactUs = () => {
           </div>
 
           <div className=" p-8 ">
-            <h2 className="text-2xl font-bold text-green-600 mb-6">Contact Information</h2>
+            <h2 className="font-home text-2xl font-bold text-green-600 mb-6">Contact Information</h2>
             <div className="space-y-6">
               <div className="flex items-center space-x-3">
                 <Mail className="h-6 w-6 text-green-600" />
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900">Email Us</h3>
+                  <h3 className="font-body text-lg font-medium text-gray-900">Email Us</h3>
                   <p className="text-gray-600">
-                    <a href="mailto:trendikalait@gmail.com" className="hover:text-green-600">
+                    <a href="mailto:trendikalait@gmail.com" className="font-body hover:text-green-600">
                       trendikalait@gmail.com
                     </a>
                   </p>
@@ -118,10 +118,10 @@ const ContactUs = () => {
               </div>
 
               <div className="flex items-center space-x-3">
-                <Phone className="h-6 w-6 text-green-600" />
+                <Phone className="font-body h-6 w-6 text-green-600" />
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900">Call Us</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-body text-lg font-medium text-gray-900">Call Us</h3>
+                  <p className="font-body text-gray-600">
                     <a href="tel:9220440585" className="hover:text-green-600">
                       +91 9220440585
                     </a>
@@ -132,13 +132,13 @@ const ContactUs = () => {
               <div className="flex items-start space-x-3">
                 <MapPin className="h-6 w-6 text-green-600 mt-1" />
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900">Our Location</h3>
-                  <p className="text-gray-600">
+                  <h3 className="font-body text-lg font-medium text-gray-900">Our Location</h3>
+                  <p className="font-body text-gray-600">
                     Shop No. 225, Panchsheel Square Mall,   
                     <br />
                     Crossing Republik, Ghaziabad,
                     <br />
-                    Uttar Pradesh – 201016
+                    Uttar Pradesh - 201016
                   </p>
                 </div>
               </div>
@@ -146,15 +146,14 @@ const ContactUs = () => {
               <div className="flex items-center space-x-3">
                 <Clock className="h-6 w-6 text-green-600" />
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900">Business Hours</h3>
-                  <p className="text-gray-600">9:00 AM - 9:00 PM</p>
-                  {/* <p className="text-gray-600">Sat - Sun: Closed</p> */}
+                  <h3 className="font-body text-lg font-medium text-gray-900">Business Hours</h3>
+                  <p className="font-body text-gray-600">9:00 AM - 9:00 PM</p>
                 </div>
               </div>
             </div>
 
             <div className="mt-8 pt-6 border-t border-gray-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Connect With Us</h3>
+              <h3 className="font-body text-lg font-medium text-gray-900 mb-4">Connect With Us</h3>
               <div className="flex space-x-4">
                 <a href="https://www.facebook.com/share/14JLn8svZCB/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                   <SiFacebook className="h-7 w-7" />

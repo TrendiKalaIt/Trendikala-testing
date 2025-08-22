@@ -83,8 +83,8 @@ const FAQPage = () => {
     <div className="min-h-screen   p-8 font-sans">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
         <div className="w-full lg:w-1/4">
-          <h2 className="text-xl font-bold mb-6 ">Topic Navigation</h2>
-          <nav className="space-y-4 mb-12">
+          <h2 className="font-heading text-xl font-bold mb-6 ">Topic Navigation</h2>
+          <nav className="font-home space-y-4 mb-12">
             {faqData.map((data, index) => (
               <button
                 key={index}
@@ -103,7 +103,7 @@ const FAQPage = () => {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <h1 className="text-4xl font-bold mb-8 ">{selectedTopic}</h1>
+          <h1 className="font-heading text-4xl font-bold mb-8 ">{selectedTopic}</h1>
           <div className="space-y-4">
             {currentTopicFAQs.length > 0 ? (
               currentTopicFAQs.map((faq, index) => (
@@ -115,7 +115,7 @@ const FAQPage = () => {
                   onClick={() => toggleFAQ(index)}
                 >
                   <div className="flex justify-between items-center">
-                    <h3 className="text-xl font-semibold">{faq.question}</h3>
+                    <h3 className="font-body text-xl font-semibold">{faq.question}</h3>
                     {openFAQIndex === index ? (
                       <ChevronUp className="h-6 w-6 text-white" />
                     ) : (
@@ -123,12 +123,12 @@ const FAQPage = () => {
                     )}
                   </div>
                   {openFAQIndex === index && (
-                    <p className="mt-4 ">{faq.answer}</p>
+                    <p className="font-body mt-4 ">{faq.answer}</p>
                   )}
                 </div>
               ))
             ) : (
-              <p className="text-gray-400 text-lg">No FAQs available for this topic yet.</p>
+              <p className="font-body text-gray-400 text-lg">No FAQs available for this topic yet.</p>
             )}
           </div>
         </div>
