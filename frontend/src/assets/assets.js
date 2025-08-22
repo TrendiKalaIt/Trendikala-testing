@@ -1,11 +1,11 @@
 export const carouselSlides = [
   {
-    image: "/AADA.webp",
+    image: "/AFSANA (4).webp",
     title: "Summer Styles",
     description: "Bright and breezy looks for sun-soaked days.",
   },
   {
-    image: "/saiyara1.webp",
+    image: "/madhubala (6).webp",
     title: "Rooted in Heritage, Styled for Today.",
     description: "Stay dry and stylish with seasonal wear.",
   },

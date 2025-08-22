@@ -231,7 +231,7 @@ const Products = () => {
                 <div className="text-center my-8">
                   <button
                     onClick={handleSeeMore}
-                    className="bg-[#93A87E] text-white px-8 py-2 rounded-full hover:bg-[#93a87ea4] transition"
+                    className="bg-[#93A87E] font-home text-white px-8 py-2 rounded-full hover:bg-[#93a87ea4] transition"
                   >
                     See More
                   </button>

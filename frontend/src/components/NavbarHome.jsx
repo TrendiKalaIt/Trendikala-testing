@@ -3,8 +3,8 @@ import { Heart, ShoppingCart, Search, User, Menu, X } from 'lucide-react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../utility/auth/authSlice';
-import { selectCartCount,clearLocalCart  } from '../utility/cartSlice';
-import { selectWishlistCount,fetchWishlist } from '../utility/wishlistSlice';
+import { selectCartCount, clearLocalCart } from '../utility/cartSlice';
+import { selectWishlistCount, fetchWishlist } from '../utility/wishlistSlice';
 import { persistor } from '../utility/store';
 
 
@@ -45,16 +45,16 @@ export default function Navbar({ links }) {
     }
     window.addEventListener('mousedown', handleClick);
     return () => window.removeEventListener('mousedown', handleClick);
-  }, [showUserDropdown]);  
-  
-  
+  }, [showUserDropdown]);
+
+
 
 
   const getNavLinkClass = (isActive) => {
     if (isScrolled) {
       return isActive
         ? 'text-green-700 border-green-500'
-        : 'text-gray-700 hover:text-green-700 border-transparent hover:border-green-400';
+        : 'text-[#9CAF88] hover:text-green-700 border-transparent hover:border-[#9CAF88]';
     } else {
       return isActive
         ? ' text-green-500 border-green-200'
@@ -129,13 +129,18 @@ export default function Navbar({ links }) {
           </div>
           <div className="hidden md:block border-l-2 border-green-700 h-12 mx-3" />
           <div className="hidden md:block">
-            <span className="font-heading block text-green-400 font-bold text-sm tracking-[.6rem]">
+            <span
+              className={`font-heading block font-bold text-sm tracking-[.6rem] ${getNavLinkClass(false)}`}
+            >
               TRENDI <br /> KALA
             </span>
-            <span className=" font-body block text-[10px] text-green-400 mt-1">
+            <span
+              className={`font-body block text-[10px] mt-1 ${getNavLinkClass(false)}`}
+            >
               TRENDS & KALA IN <br /> EVERY STICH
             </span>
           </div>
+
         </div>
 
         <div className="font-home lg:flex lg:space-x-10 md:space-y-3 lg:space-y-0">
@@ -157,14 +162,14 @@ export default function Navbar({ links }) {
 
           {/* Icons */}
           <div
-            className={`flex items-center space-x-4 transition-colors duration-300 md:justify-end ${isScrolled ? 'text-green-700' : 'lg:text-white'
+            className={`flex items-center space-x-4 transition-colors duration-300 md:justify-end ${isScrolled ? 'text-green-700' : 'lg:text-white text-[#9CAF88]'
               }`}
           >
             {user && (
               <NavLink to="/cart" className="relative">
                 <ShoppingCart className="w-6 h-6 hover:text-green-500 transition" />
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-[#9CAF88] text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
@@ -173,7 +178,7 @@ export default function Navbar({ links }) {
             <NavLink to="/wishlist" className="relative">
               <Heart className="w-6 h-6 cursor-pointer hover:text-green-500 transition" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-purple-500 text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-[#9CAF88] text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center">
                   {wishlistCount}
                 </span>
               )}
@@ -185,12 +190,12 @@ export default function Navbar({ links }) {
               {user ? (
                 <button
                   onClick={handleAuth}
-                  className="flex items-center hover:text-green-500 focus:outline-none"
+                  className="flex items-center hover:text-[#9CAF88] focus:outline-none"
                   type="button"
                   aria-haspopup="true"
                   aria-expanded={showUserDropdown}
                 >
-                  <div className="w-8 h-8 rounded-full bg-[#35894E] text-white flex items-center justify-center text-sm font-semibold shadow-md overflow-hidden">
+                  <div className="w-8 h-8 rounded-full bg-[#9CAF88] text-white flex items-center justify-center text-sm font-semibold shadow-md overflow-hidden">
                     {profileImageUrl ? (
                       <img
                         src={profileImageUrl || "https://res.cloudinary.com/dq70cmqwb/image/upload/v1751035700/samples/smile.jpg"}
@@ -205,7 +210,10 @@ export default function Navbar({ links }) {
                         .toUpperCase()
                     )}
                   </div>
-                  <span className="ml-2 text-sm">{user.name}</span>
+                  <span className={`ml-2 text-sm font-home ${getNavLinkClass(false)}`}>
+                    {user.name}
+                  </span>
+
                   <svg
                     className="w-4 h-4 ml-1"
                     viewBox="0 0 20 20"
@@ -225,18 +233,18 @@ export default function Navbar({ links }) {
                   type="button"
                 >
                   <User className="w-6 h-6 cursor-pointer transition" />
-                  <span className="ml-1 text-sm">Login</span>
+                  <span className="ml-1 text-sm font-home">Login</span>
                 </button>
               )}
               {/* Dropdown menu */}
               {user && showUserDropdown && (
-                <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
+                <div className="absolute font-home right-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
                   <button
                     onClick={() => {
                       navigate('/my-orders');
                       setShowUserDropdown(false);
                     }}
-                    className="block text-green-500 w-full px-4 py-2 text-left hover:bg-gray-100"
+                    className="block text-[#9CAF88] w-full px-4 py-2 text-left hover:bg-gray-100"
                     type="button"
                   >
                     My Orders
@@ -246,14 +254,14 @@ export default function Navbar({ links }) {
                       navigate('/profile');
                       setShowUserDropdown(false);
                     }}
-                    className="block text-green-500 w-full px-4 py-2 text-left hover:bg-gray-100"
+                    className="block text-[#9CAF88] w-full px-4 py-2 text-left hover:bg-gray-100"
                     type="button"
                   >
                     Profile
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="block text-green-500 w-full px-4 py-2 text-left hover:bg-gray-100"
+                    className="block text-[#9CAF88] w-full px-4 py-2 text-left hover:bg-gray-100"
                     type="button"
                   >
                     Logout
@@ -285,14 +293,14 @@ export default function Navbar({ links }) {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden mt-2 bg-white border-t border-gray-200 shadow-sm text-gree">
+        <div className="md:hidden mt-2 bg-white border-t text-[#9CAF88] border-gray-200 shadow-sm ">
           <ul className="flex flex-col space-y-2 px-4 py-3">
             {links.map((link) => (
-              <li key={link.name}>
+              <li key={link.name} >
                 <NavLink
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={({ isActive }) => mobileNavItemClass(isActive)}
+                  className={`({ isActive }) => mobileNavItemClass(isActive) font-home`}
                 >
                   {link.name.charAt(0).toUpperCase() + link.name.slice(1)}
                 </NavLink>
@@ -308,12 +316,12 @@ export default function Navbar({ links }) {
                     className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-green-700 cursor-pointer w-full"
                   >
                     {/* Profile Image or Initials */}
-                    <div className="w-8 h-8 rounded-full bg-[#35894E] text-white flex items-center justify-center text-sm font-semibold shadow-md overflow-hidden mr-2">
+                    <div className=" font-home w-8 h-8 rounded-full bg-[#9CAF88] text-white flex items-center justify-center text-sm font-semibold shadow-md overflow-hidden mr-2">
                       {profileImageUrl ? (
                         <img
                           src={profileImageUrl}
                           alt="Profile"
-                          className="h-8 w-8 rounded-full object-cover"
+                          className="h-8 w-8 rounded-full object-cover "
                         />
                       ) : (
                         user.name
@@ -323,7 +331,7 @@ export default function Navbar({ links }) {
                           .toUpperCase()
                       )}
                     </div>
-                    <span>{user.name}</span>
+                    <span className='text-[#9CAF88] font-home'>{user.name}</span>
                     <svg
                       className="w-4 h-4 ml-auto"
                       viewBox="0 0 20 20"
@@ -337,7 +345,7 @@ export default function Navbar({ links }) {
                     </svg>
                   </button>
                   {showUserDropdown && (
-                    <div className="bg-white border rounded shadow-lg mt-1 absolute right-0 left-0 w-full z-50">
+                    <div className="font-home bg-white border rounded shadow-lg mt-1 absolute right-0 left-0 w-full z-50">
                       <button
                         onClick={() => {
                           navigate('/my-orders');
@@ -377,7 +385,7 @@ export default function Navbar({ links }) {
                     setIsMenuOpen(false);
                     navigate('/signin');
                   }}
-                  className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-green-700 cursor-pointer"
+                  className="flex font-home items-center px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-green-700 cursor-pointer"
                 >
                   <User className="w-6 h-6 mr-2" />
                   Login

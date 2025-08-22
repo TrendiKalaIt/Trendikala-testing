@@ -24,7 +24,7 @@ const HeroSection = () => {
     <section className="relative  text-gray-800 overflow-hidden">
       {/* Background image as <img> with lazy loading */}
       <img
-        src="/OutfitImg1.webp"
+        src="/OutfitImg1.jpg"
         alt="Outfit Background"
         loading="eager"
         fetchPriority="high"
@@ -36,15 +36,15 @@ const HeroSection = () => {
           <div className="w-full md:w-1/2 flex flex-col h-full lg:ms-7">
             <div className="relative h-full flex justify-center md:justify-end xl:pe-20">
               <img
-                src="/madubala.webp"
+                src="/madhubala (4).webp"
                 alt="madubala"
-                className="rounded-b-full object-cover md:h-[340px] w-[250px] sm:w-[300px] hidden md:block"
+                className="rounded-b-full object-cover object-bottom md:h-[340px] w-[250px] sm:w-[300px] hidden md:block"
                 loading="lazy"
               />
             </div>
 
             <div className="hidden md:flex h-full w-3/4 p-4 md:p-8 flex-col text-right ml-auto">
-              <p className="font-home leading-relaxed text-lg font-bold text-[#a5e665c8] mb-6 text-justify tracking-[1px]">
+              <p className="font-home  leading-[1.4] text-lg font-bold text-[#ffffffde] mb-6 text-justify tracking-[1px]">
                 Trendi Kala brings you elegant ethnic fashion that blends
                 tradition with trend, offering timeless pieces designed for the
                 bold, modern Indian.
@@ -52,7 +52,7 @@ const HeroSection = () => {
 
               <button
                 onClick={handleViewDetails}
-                className="font-heading bg-[#93A87E] hover:bg-[#93a87ec6] text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 m-auto"
+                className="font-heading bg-[#9CAF88] hover:bg-[#93a87ec6] text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300 m-auto"
               >
                 View Details
               </button>
@@ -62,13 +62,13 @@ const HeroSection = () => {
           {/* Right */}
           <div className="w-full  md:w-1/2 flex flex-col">
             <div className="hidden md:flex h-[250px] w-full justify-center items-center text-center mb-2">
-              <h1 className="font-heading text-2xl w-2/3 md:text-2xl font-semibold leading-tight mt-20 md:mt-5 text-[#a5e665c8]">
+              <h1 className="font-heading text-2xl w-2/3 md:text-2xl font-semibold leading-tight mt-20 md:mt-5 text-[#ffffffde]">
                 "{title.toUpperCase()}"
               </h1>
             </div>
 
             <div className="w-full h-auto md:h-[340px] flex justify-center items-center lg:p-4 pb-2 md:p-8">
-              <div className="relative w-screen md:max-w-[300px] mx-auto min-h-[400px] overflow-hidden">
+              <div className="relative w-screen md:max-w-[300px] mx-auto min-h-[340px] overflow-hidden">
                 {/* Simple fade without AnimatePresence */}
                 <img
                   key={image}
@@ -98,11 +98,11 @@ const HeroSection = () => {
 
             {/* Mobile Text */}
             <div className="flex flex-col items-center text-[#a5e665c8] text-center px-4 pb-6 md:hidden">
-              <h2 className="text-2xl font-bold mb-2">{title}</h2>
-              <p className="text-[#93A87E] text-sm mb-4">{description}</p>
+              <h2 className="text-2xl font-heading font-bold text-[#9CAF88] mb-2">{title}</h2>
+              <p className="font-body text-[#9CAF88] text-sm mb-4">{description}</p>
               <button
                 onClick={handleViewDetails}
-                className="bg-[#93A87E] hover:bg-[#93a87ec6] text-white font-semibold py-2 px-6 rounded-full shadow-lg transition duration-300"
+                className="bg-[#93A87E] hover:bg-[#93a87ec6] font-heading text-white font-semibold py-2 px-6 rounded-full shadow-lg transition duration-300"
               >
                 View Details
               </button>

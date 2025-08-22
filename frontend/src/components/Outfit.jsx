@@ -77,7 +77,7 @@ export default function Showcase() {
 
       {/* Reels Section */}
       <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-3">Reels for you</h3>
+        <h3 className="font-home text-[#9CAF88] uppercase text-lg font-semibold mb-3">Reels for you</h3>
         <Swiper
           slidesPerView={"auto"}
           spaceBetween={16}

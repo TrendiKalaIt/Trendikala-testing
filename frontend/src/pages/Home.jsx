@@ -291,8 +291,8 @@ const Home = () => {
       {showOutfit && <Outfit />}
       {showPoster && <PosterComponent />}
       {showFeatured && (
-        <div className="px-10 py-2 mb-3">
-          <h2 className="text-2xl font-bold text-[#93A87E] mb-6">Featured Products</h2>
+        <div className="px-4 py-2 mb-3">
+          <h2 className=" font-home text-lg font-bold text-[#9CAF88] uppercase mb-6">Featured Products</h2>
 
           {error && <p className="text-red-600">{error}</p>}
 
@@ -316,7 +316,7 @@ const Home = () => {
                 <div className="text-center my-8">
                   <button
                     onClick={handleSeeMore}
-                    className="bg-[#93A87E] text-white px-8 py-2 rounded-full hover:bg-[#93a87ea4] transition"
+                    className="bg-[#9CAF88] font-home text-white px-8 py-2 rounded-full hover:bg-[#93a87ea4] transition"
                   >
                     See More
                   </button>

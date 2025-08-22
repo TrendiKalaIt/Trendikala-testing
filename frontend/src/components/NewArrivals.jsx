@@ -33,15 +33,15 @@ const NewArrivals = () => {
         />
 
 
-        <div className="absolute bottom-2 md:bottom-6 left-6 text-white max-w-md border-5 border-black">
-          <h2 className="text-2xl sm:text-5xl font-bold drop-shadow hidden md:block">
+        <div className="absolute bottom-2 md:bottom-6 left-6 text-white max-w-md border-5 ">
+          <h2 className="font-home text-2xl sm:text-5xl font-bold drop-shadow hidden md:block">
             {current.discount}
           </h2>
-          <p className="text-base sm:text-lg mb-4 drop-shadow hidden md:block">
+          <p className="font-body text-base sm:text-lg mb-4 drop-shadow hidden md:block">
             {current.description}
           </p>
           <Link to="/allproducts">
-            <button className="bg-white text-gray-800 p-3 rounded-full text-sm font-semibold items-center">
+            <button className="font-heading bg-[#9CAF88] text-white p-3 rounded-full text-sm font-semibold items-center">
               VIEW COLLECTIONS
             </button>
           </Link>
