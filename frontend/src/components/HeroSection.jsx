@@ -24,7 +24,7 @@ const HeroSection = () => {
     <section className="relative  text-gray-800 overflow-hidden">
       {/* Background image as <img> with lazy loading */}
       <img
-        src="/OutfitImg1.jpg"
+        src="/OutfitImg1.webp"
         alt="Outfit Background"
         loading="eager"
         fetchPriority="high"

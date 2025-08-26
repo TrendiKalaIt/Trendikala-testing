@@ -43,7 +43,7 @@ const Home = () => {
     const hasLoadedSequentially = sessionStorage.getItem('homeSequentialLoaded');
 
     if (!hasLoadedSequentially) {
-      // Sequential component reveal
+     
       const timers = [];
       timers.push(setTimeout(() => setShowHero(true), 0));
       timers.push(setTimeout(() => setShowNewArrivals(true), 1000));
@@ -54,7 +54,7 @@ const Home = () => {
       sessionStorage.setItem('homeSequentialLoaded', 'true');
       return () => timers.forEach((t) => clearTimeout(t));
     } else {
-      // Already loaded once → show all instantly
+      
       setShowHero(true);
       setShowNewArrivals(true);
       setShowOutfit(true);

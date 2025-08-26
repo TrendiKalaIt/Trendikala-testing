@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
-import { showLoader, hideLoader } from '../utility/loaderSlice'; // adjust the path if needed
+import { showLoader, hideLoader } from '../utility/loaderSlice';
 import { login } from '../utility/auth/authSlice';
 import { setOrderDetails } from '../utility/checkoutSlice';
 
@@ -15,7 +15,7 @@ const OTPVerification = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  // Get redirect path from query, default to '/checkout'
+  
   const params = new URLSearchParams(location.search);
   const redirectPath = params.get('redirect') || '/';
 
@@ -79,7 +79,7 @@ const OTPVerification = () => {
 
       toast.success('Email verified successfully!');
 
-      // DEBUGGING - check localStorage
+      
       const savedCheckoutState = sessionStorage.getItem('checkoutState');
 
       if (savedCheckoutState) {
@@ -87,12 +87,12 @@ const OTPVerification = () => {
         dispatch(setOrderDetails(parsedCheckoutState.orderDetails));
         console.log("Restored checkout details:", parsedCheckoutState.orderDetails);
 
-        // Navigate to checkout after slight delay
+      
         setTimeout(() => {
           navigate('/checkout');
         }, 100);
       } else {
-        // No checkoutState - navigate to redirectPath or home
+     
         console.log('No checkoutState found, redirecting to:', redirectPath);
         navigate(redirectPath);
       }

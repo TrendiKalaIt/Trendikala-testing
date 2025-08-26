@@ -46,7 +46,7 @@ const EnquiryForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white p-6 rounded-xl m-4 shadow-md">
-      <h2 className="font-heading text-2xl font-bold text-green-700 mb-4 text-center">Enquiry Form</h2>
+      <h2 className="font-heading text-2xl font-bold text-green-700 mb-4 text-center">Enquiry & Cancellation Form</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div>
@@ -98,6 +98,7 @@ const EnquiryForm = () => {
             <option value="Bulk">Bulk Order</option>
             <option value="Custom">Custom Design Request</option>
             <option value="General">General Query</option>
+            <option value="General">Order Cancellation Query</option>
           </select>
         </div>
       </div>

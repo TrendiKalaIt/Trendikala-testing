@@ -222,15 +222,15 @@ const UserProfile = () => {
   if (!user || !editedUser) return <div className="p-5">Loading...</div>;
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <h1 className="text-xl md:text-2xl font-bold text-[#35894E] mb-6 text-center">Your Profile</h1>
+      <h1 className="text-xl md:text-2xl font-bold text-[#35894E] mb-6 text-center font-heading">Your Profile</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left: Personal Info */}
         <div className="bg-white p-5 rounded-lg shadow border border-gray-200">
-          <h2 className="text-lg font-semibold text-[#35894E]  mb-4">Personal Information</h2>
+          <h2 className="text-lg font-semibold text-[#35894E]  mb-4 font-home">Personal Information</h2>
 
-          <div className="mb-4 flex space-x-10">
-            <div className="mb-4 flex space-x-10 items-center">
+          <div className="mb-4 flex space-x-10 ">
+            <div className="mb-4 flex space-x-10 items-center ">
               {/* Avatar Circle */}
               <div className="relative">
                 {selectedImage ? (
@@ -240,7 +240,7 @@ const UserProfile = () => {
                     className="w-28 h-28 rounded-full object-cover shadow-md border border-gray-300"
                   />
                 ) : (
-                  <div className="w-28 h-28 rounded-full bg-[#35894E] text-white flex items-center justify-center text-2xl font-semibold shadow-md">
+                  <div className="font-body w-28 h-28 rounded-full bg-[#35894E] text-white flex items-center justify-center text-2xl font-semibold shadow-md">
                     {user.name
                       ?.split(' ')
                       .map((word) => word[0])
@@ -251,7 +251,7 @@ const UserProfile = () => {
                 {editMode && (
                   <label
                     htmlFor="profileImageInput"
-                    className="absolute bottom-0 right-0 bg-gray-700 text-white rounded-full p-1 cursor-pointer hover:bg-gray-800"
+                    className=" font-body absolute bottom-0 right-0 bg-gray-700 text-white rounded-full p-1 cursor-pointer hover:bg-gray-800"
                     title="Change Profile Image"
                   >
                     <svg
@@ -276,7 +276,7 @@ const UserProfile = () => {
               </div>
             </div>
             <div className="flex flex-col items-start text-center align-middle ">
-              <label className="block text-sm font-bold text-gray-700 mb-1">Name</label>
+              <label className="block font-body text-sm font-bold text-gray-700 mb-1">Name</label>
               {editMode ? (
                 <input
                   type="text"
@@ -286,11 +286,11 @@ const UserProfile = () => {
                   className="w-full max-w-xs px-3 py-2 border border-gray-300 rounded text-sm"
                 />
               ) : (
-                <p className="text-gray-700 text-sm">{user.name}</p>
+                <p className=" font-body text-gray-700 text-sm">{user.name}</p>
               )}
               <div className="my-4">
-                <p className="font-medium text-sm text-gray-800 mb-1">Verification Status:</p>
-                <p className={`flex items-center text-sm font-medium ${user.isVerified ? 'text-green-600' : 'text-red-600'}`}>
+                <p className="font-medium font-body text-sm text-gray-800 mb-1">Verification Status:</p>
+                <p className={`flex items-center text-sm font-body font-medium ${user.isVerified ? 'text-green-600' : 'text-red-600'}`}>
                   {user.isVerified ? 'Verified' : 'Not Verified'}
                   <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     {user.isVerified ? (
@@ -305,29 +305,29 @@ const UserProfile = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <p className="text-gray-600 text-sm">{user.email}</p>
+            <label className="block   font-body text-sm font-medium text-gray-700 mb-1">Email</label>
+            <p className=" font-body text-gray-600 text-sm">{user.email}</p>
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Mobile</label>
+            <label className="block text-sm font-body font-medium text-gray-700 mb-1">Mobile</label>
             {editMode ? (
               <input
                 type="text"
                 name="mobile"
                 value={editedUser.mobile}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+                className="w-full px-3 py-2 border font-body border-gray-300 rounded text-sm"
               />
             ) : (
-              <p className="text-gray-700 text-sm">{user.mobile}</p>
+              <p className="font-body text-gray-700 text-sm">{user.mobile}</p>
             )}
           </div>
 
           {/* Join Date */}
           <div>
-            <p className="text-sm text-gray-800 font-medium">Member Since:</p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm font-body text-gray-800 font-medium">Member Since:</p>
+            <p className="font-body text-sm text-gray-600">
               {new Date(user.createdAt).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'short',
@@ -339,13 +339,13 @@ const UserProfile = () => {
 
         {/* Right: Addresses */}
         <div className="bg-[#F8FAF7] border border-[#93A87E] p-5 rounded-lg shadow-sm">
-          <p className="font-semibold text-[#35894E] mb-3 text-sm">Saved Addresses</p>
+          <p className="font-semibold font-home text-[#35894E] mb-3 text-sm">Saved Addresses</p>
 
           {editMode ? (
             <>
               {editedUser.addresses?.length > 0 ? (
                 editedUser.addresses.map((addr, idx) => (
-                  <div key={idx} className="mb-4">
+                  <div key={idx} className="mb-4 ">
                     {[
                       'fullName',
                       'streetAddress',
@@ -362,40 +362,40 @@ const UserProfile = () => {
                         placeholder={field.replace(/([A-Z])/g, ' $1')}
                         value={addr[field]}
                         onChange={(e) => handleAddressChange(idx, field, e.target.value)}
-                        className="w-full mb-1 px-3 py-1 border border-gray-300 rounded text-sm"
+                        className="w-full  mb-1 px-3 py-1 border border-gray-300 rounded text-sm"
                       />
                     ))}
-                    <button onClick={() => removeAddress(idx)} className="text-red-600 text-xs hover:underline">
+                    <button onClick={() => removeAddress(idx)} className="font-body text-red-600 text-xs hover:underline">
                       Remove
                     </button>
                   </div>
                 ))
               ) : (
-                <p className="text-gray-500 text-sm">No addresses yet.</p>
+                <p className="text-gray-500 text-sm font-body">No addresses yet.</p>
               )}
 
               <button
                 onClick={addNewAddress}
-                className="mt-2 bg-[#35894E] text-white text-sm px-4 py-2 rounded hover:bg-[#2f7c46] transition"
+                className="mt-2 bg-[#35894E] font-home text-white text-sm px-4 py-2 rounded hover:bg-[#2f7c46] transition"
               >
                 Add Address
               </button>
             </>
           ) : user.addresses?.length > 0 ? (
             user.addresses.map((addr, idx) => (
-              <div key={idx} className="mb-3 border-b border-gray-200 pb-2">
-                <p className="font-medium text-sm">{addr.fullName}</p>
-                <p className="text-sm text-gray-700">
+              <div key={idx} className="mb-3  border-b border-gray-200 pb-2">
+                <p className=" font-body font-medium text-sm">{addr.fullName}</p>
+                <p className="font-body text-sm text-gray-700">
                   {addr.streetAddress}, {addr.apartment}
                 </p>
-                <p className="text-sm text-gray-700">
+                <p className="font-body text-sm text-gray-700">
                   {addr.townCity}, {addr.state} - {addr.zipcode}
                 </p>
-                <p className="text-sm text-gray-700">Phone: {addr.phoneNumber}</p>
+                <p className=" font-body text-sm text-gray-700">Phone: {addr.phoneNumber}</p>
               </div>
             ))
           ) : (
-            <p className="text-sm text-gray-500">No addresses added.</p>
+            <p className="font-body text-sm text-gray-500">No addresses added.</p>
           )}
         </div>
       </div>
@@ -407,7 +407,7 @@ const UserProfile = () => {
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className={`px-5 py-2 rounded text-sm text-white transition ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#35894E] hover:bg-[#2f7c46]'
+              className={`px-5 py-2 font-home rounded text-sm text-white transition ${isSaving ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#35894E] hover:bg-[#2f7c46]'
                 }`}
             >
               {isSaving ? 'Saving...' : 'Save Changes'}
@@ -417,7 +417,7 @@ const UserProfile = () => {
                 setEditMode(false);
                 setEditedUser(user);
               }}
-              className="bg-gray-300 text-gray-800 px-5 py-2 rounded text-sm hover:bg-gray-400 transition"
+              className="font-home bg-gray-300 text-gray-800 px-5 py-2 rounded text-sm hover:bg-gray-400 transition"
             >
               Cancel
             </button>
@@ -425,7 +425,7 @@ const UserProfile = () => {
         ) : (
           <button
             onClick={() => setEditMode(true)}
-            className="bg-[#35894E] text-white px-5 py-2 rounded text-sm hover:bg-[#2f7c46] transition"
+            className="bg-[#35894E] font-home    text-white px-5 py-2 rounded text-sm hover:bg-[#2f7c46] transition"
           >
             Edit Profile
           </button>

@@ -10,7 +10,7 @@ export const carouselSlides = [
     description: "Stay dry and stylish with seasonal wear.",
   },
   {
-    image: "/mehak.jpg",
+    image: "/mehak.webp",
     title: "Festive Ready",
     description: "Celebrate traditions in modern fashion.",
   },
@@ -20,23 +20,33 @@ export const carouselSlides = [
 
 export const newArrivalsItems = [
   {
-    imageUrl: '/cro1.webp',
-    discount: 'UP TO 50% OFF',
-    description: 'on your favorite styles – elegant dresses to comfy casuals!',
+    imageUrl: '/website banner.webp',
+    discount: '',
+    description: '',
     bgColor: '#E8E0D7',
+    objectPosition: 'center top-[10%]', 
+    objectFit: 'cover'
   },
   {
-    imageUrl: '/cro2.webp',
-    discount: 'SAVE 25%',
-    description: 'Explore our latest collection of chic outfits!',
-    bgColor: '#D7E0E8',
+    imageUrl: '/BANNER WEBSITE 2.webp',
+    discount: '',
+    description: '',
+    bgColor: '#E8E0D7',
+    objectPosition: ' center  ',
+    objectFit: 'cover '
   },
-  {
-    imageUrl: 'cro3.webp',
-    discount: 'FLASH SALE!',
-    description: "Grab your summer essentials before they're gone!",
-    bgColor: '#E0D7E8',
-  },
+  // {
+  //   imageUrl: '/cro2.webp',
+  //   discount: 'SAVE 25%',
+  //   description: 'Explore our latest collection of chic outfits!',
+  //   bgColor: '#D7E0E8',
+  // },
+  // {
+  //   imageUrl: 'cro3.webp',
+  //   discount: 'FLASH SALE!',
+  //   description: "Grab your summer essentials before they're gone!",
+  //   bgColor: '#E0D7E8',
+  // },
 ];
 
 // src/assets/outfitData.js

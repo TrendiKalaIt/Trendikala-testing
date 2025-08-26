@@ -83,24 +83,24 @@ const AddressSection = ({
         <p>Loading addresses...</p>
       ) : (
         <>
-          <ul className="space-y-2">
+          <ul className="space-y-2 font-body">
             {savedAddresses.map((addr) => (
               addr && (
                 <li
                   key={addr._id}
-                  className={`p-3 border rounded-md cursor-pointer flex justify-between items-start ${selectedAddress && selectedAddress._id === addr._id
+                  className={`p-3  border rounded-md cursor-pointer flex justify-between items-start ${selectedAddress && selectedAddress._id === addr._id
                     ? 'border-green-600 bg-green-50'
                     : 'border-gray-300'
                     }`}
                   onClick={() => setSelectedAddress(addr)}
                 >
                   <div>
-                    <div className="font-semibold">{addr.fullName}</div>
-                    <div>
+                    <div className="font-semibold font-body">{addr.fullName}</div>
+                    <div className='font-body'>
                       {addr.streetAddress}
                       {addr.apartment ? `, ${addr.apartment}` : ''}, {addr.townCity},{addr.zipcode}
                     </div>
-                    <div>
+                    <div className='font-body'>
                       {addr.phoneNumber} | {addr.emailAddress}
                     </div>
                   </div>
@@ -119,7 +119,7 @@ const AddressSection = ({
             ))}
           </ul>
           <button
-            className="mt-4 text-green-600 hover:underline"
+            className="mt-4 font-home text-green-600 hover:underline"
             onClick={() => setShowForm((s) => !s)}
             type="button"
           >
@@ -169,23 +169,23 @@ const CheckoutSection = ({
               />
               <span className="font-home text-gray-800">{item.productName}</span>
             </div>
-            <span className="text-gray-800 font-medium">
+            <span className="text-gray-800 font-medium font-body">
               ₹{(item.quantity || 1) * item.discountPrice}
             </span>
           </div>
         ))
       )}
       <div className="flex justify-between text-gray-700 pt-4">
-        <span>Subtotal</span>
-        <span className="font-semibold">₹{subtotal.toFixed(2)}</span>
+        <span className='font-body'>Subtotal</span>
+        <span className="font-semibold font-body">₹{subtotal.toFixed(2)}</span>
       </div>
       <div className="flex justify-between text-gray-700">
-        <span>Delivery Charge</span>
-        <span className="text-sm text-green-600">₹{shipping.toFixed(2)}</span>
+        <span className='font-body'>Delivery Charge</span>
+        <span className="text-sm text-green-600 font-body">₹{shipping.toFixed(2)}</span>
       </div>
       <div className="flex justify-between text-lg font-bold text-gray-900 border-t-2 border-gray-200 pt-4">
         <span className='font-home'>Total:</span>
-        <span>₹{total.toFixed(2)}</span>
+        <span className='font-body'>₹{total.toFixed(2)}</span>
       </div>
     </div>
 
@@ -208,7 +208,6 @@ const CheckoutSection = ({
             value={id}
             checked={paymentMethod === id}
             onChange={() => setPaymentMethod(id)}
-            className="h-5 w-5 text-green-600 focus:ring-green-500 cursor-pointer"
           />
           <label htmlFor={id} className="ml-3 text-gray-700 flex items-center flex-grow">
             {label}
@@ -232,7 +231,7 @@ const CheckoutSection = ({
     >
       {loadingSubmit ? 'Placing Order...' : 'Place Order'}
     </button>
-    {!selectedAddress && <p className="text-red-500 mt-2">Please select a delivery address to continue.</p>}
+    {!selectedAddress && <p className="text-red-500 mt-2 font-body">Please select a delivery address to continue.</p>}
   </div>
 );
 

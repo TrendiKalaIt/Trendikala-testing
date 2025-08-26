@@ -1,12 +1,13 @@
 
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMyOrders } from "../utility/orderSlice"; // adjust path if needed
+import { fetchMyOrders } from "../utility/orderSlice"; 
 import { selectCurrentUser } from "../utility/auth/authSlice";
-import {Shirt } from 'lucide-react' 
+import { Shirt } from 'lucide-react'
 const MyOrdersPage = () => {
   const dispatch = useDispatch();
-  const user = useSelector(selectCurrentUser); // assumes you're storing user with token
+  const user = useSelector(selectCurrentUser); 
   const { myOrders: orders, loading } = useSelector((state) => state.order);
 
 
@@ -18,12 +19,19 @@ const MyOrdersPage = () => {
 
   return (
     <div className="md:p-10 p-4 space-y-6 max-w-5xl mx-auto">
-      <h2 className="text-2xl text-green-500 font-semibold mb-6">My Orders</h2>
+      <div className=" flex justify-between">
+        <div> <h2 className="text-2xl font-heading text-green-500 font-semibold mb-6">My Orders</h2></div>
+        <div><Link to="/enquiry">
+          <div className="font-home bg-red-400 text-white border p-1 px-2 rounded hover:shadow-lg hover:bg-red-600 cursor-pointer">
+            Cancel Order
+          </div>
+        </Link></div>
+      </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <p className="font-body">Loading...</p>
       ) : orders?.length === 0 ? (
-        <p>No orders found.</p>
+        <p className="font-body">No orders found.</p>
       ) : (
         orders.map((order) => (
           <div
@@ -31,28 +39,34 @@ const MyOrdersPage = () => {
             className="flex flex-col md:grid md:grid-cols-[2fr_1fr_1fr_1fr] gap-5 p-6 rounded-md border border-green-300 bg-white text-gray-800 shadow-sm"
           >
             {/* Products */}
-            <div className="flex gap-4">
-             
-              <Shirt className="w-12 h-12 object-contain opacity-70 text-green-500 " />
-              <div className="flex flex-col justify-center">
-                {order.items.map((item, idx) => (
-                  <p key={idx} className="font-medium text-green-500">
-                    {item.productName}{" "}
-                    {item.quantity > 1 && (
-                      <span className="text-indigo-600">x {item.quantity}</span>
-                    )}
-                    <span className="text-sm text-gray-500 ml-2">
+            <div className="flex flex-col gap-2">
+              {order.items.map((item, idx) => (
+                <div key={idx} className="flex gap-4 items-center">
+                  <img
+                    src={item.image}
+                    alt={item.productName}
+                    className="w-16 h-16 object-cover rounded border"
+                  />
+                  <div>
+                    <p className="font-medium font-body text-green-500">
+                      {item.productName}
+                      {item.quantity > 1 && (
+                        <span className="text-gray-400 font-body"> x {item.quantity}</span>
+                      )}
+                    </p>
+                    <p className="text-sm font-body text-gray-500">
                       ({item.color}, {item.size})
-                    </span>
-                  </p>
-                ))}
-              </div>
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
+
 
             {/* Shipping Info */}
             <div className="text-sm">
-              <p className="font-medium mb-1  text-green-500">{order.shippingInfo.fullName}</p>
-              <p>
+              <p className="font-medium mb-1 font-body  text-green-500">{order.shippingInfo.fullName}</p>
+              <p className="font-body">
                 {order.shippingInfo.streetAddress}
                 {order.shippingInfo.apartment && `, ${order.shippingInfo.apartment}`},{" "}
                 {order.shippingInfo.townCity}
@@ -61,30 +75,30 @@ const MyOrdersPage = () => {
             </div>
 
             {/* Total Amount */}
-            <p className="font-semibold text-lg text-green-500">
+            <p className="font-semibold font-body text-lg text-green-500">
               ₹{order.totalAmount}
             </p>
 
             {/* Payment Info */}
             <div className="flex flex-col text-sm">
-              <p>
-                <span className="font-medium text-green-500">Method:</span>{" "}
+              <p className="font-body">
+                <span className="font-medium font-body text-green-500 ">Method:</span>{" "}
                 {order.paymentMethod === "cashOnDelivery"
                   ? "Cash on Delivery"
                   : order.paymentMethod}
               </p>
-              <p>
-                <span className="font-medium text-green-500">Date:</span>{" "}
+              <p className="font-body">
+                <span className="font-medium font-body text-green-500">Date:</span>{" "}
                 {new Date(order.createdAt).toLocaleDateString()}
               </p>
               <p>
-                <span className="font-medium text-green-500">Status:</span>{" "}
-                <span className="text-blue-600 font-semibold">{order.paymentStatus}</span>
+                <span className="font-medium font-body text-green-500">Status:</span>{" "}
+                <span className="text-gray-400 font-body font-semibold">{order.paymentStatus}</span>
 
               </p>
               <p>
-                  <span className="font-medium text-green-500">Deleviry Status:</span>{" "}
-                <span className="text-blue-600 font-semibold">{order.orderStatus}</span>
+                <span className="font-medium font-body text-green-500">Deleviry Status:</span>{" "}
+                <span className="text-gray-400 font-semibold">{order.orderStatus}</span>
               </p>
             </div>
           </div>

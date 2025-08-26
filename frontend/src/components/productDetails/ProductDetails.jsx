@@ -1,7 +1,6 @@
 import React from 'react';
  
 const ProductDetails = ({ productData }) => {
-  // Fallback to empty object
   const data = productData || {};
   const {
     productName,
@@ -13,7 +12,6 @@ const ProductDetails = ({ productData }) => {
     details = {},
   } = data;
  
-  // Extract details or use empty strings
   const {
     fabric,
     fitType,
@@ -26,7 +24,7 @@ const ProductDetails = ({ productData }) => {
     deliveryReturns,
   } = details;
  
-  // Helper to render a two-column grid of label-value pairs
+
   const renderLabelValueGrid = (items, labelWidth = "w-36 min-w-[140px]") => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
       {items.map(([label, value], i) => (
@@ -40,7 +38,6 @@ const ProductDetails = ({ productData }) => {
     </div>
   );
  
-  // Product specs
   const productSpecs = [
     ['Brand', brand],
     ['Fabric', fabric],
@@ -54,7 +51,6 @@ const ProductDetails = ({ productData }) => {
     ['Delivery & Returns', deliveryReturns],
   ];
  
-  // Render section with title and grid
   const renderSection = (title, items) => (
     <div className="pt-4 border-t border-gray-200">
       <h4 className="text-xl font-semibold text-[#35894E] mt-4 mb-4">{title}</h4>

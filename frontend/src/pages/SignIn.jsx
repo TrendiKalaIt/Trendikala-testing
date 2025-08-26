@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -68,9 +68,19 @@ const SignIn = () => {
   return (
     <div className="h-full bg-gray-50 flex flex-col items-center pt-8 px-4 mb-2">
       <div className="w-full max-w-xl bg-white p-4 md:p-10 rounded-lg shadow-sm">
-        <h2 className="font-heading text-2xl pt-2 font-semibold text-[#93A87E] mb-6 border-b-2 border-[#93A87E] pb-2">
-          SIGN IN
-        </h2>
+        <div className='flex justify-between'>
+          <h2 className="font-heading text-2xl pt-2 font-semibold text-[#93A87E] mb-6 border-b-2 border-[#93A87E] pb-2">
+            SIGN IN
+          </h2>
+          <Link to="/">
+            <img
+              src="trendikala_logo_bg.png"
+              className="w-24 object-cover"
+              alt="Trendikala logo"
+            />
+          </Link>
+        </div>
+
 
         <form onSubmit={handleLogin}>
           {/* Email */}

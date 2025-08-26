@@ -111,7 +111,7 @@ export default function Navbar({ links }) {
 
   return (
     <nav
-      className={`px-4 lg:fixed left-0 right-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md top-0' : 'bg-transparent mt-8'}
+      className={`px-4 lg:fixed left-0 right-0 z-10 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md top-0' : 'bg-transparent lg:mt-8'}
   `}
     >
 

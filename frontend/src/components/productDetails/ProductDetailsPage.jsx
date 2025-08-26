@@ -227,24 +227,6 @@ const ProductDetailPage = () => {
           {/* description */}
           <p className=" font-body text-sm text-[#00000098] ">{description}</p>
 
-
-          {/* Colors */}
-          {/* <div>
-            <h3 className="font-body text-[#35894E] mb-2">Select Colors</h3>
-            <div className=" flex gap-3">
-              {product.colors?.map((color) => (
-                <button
-                  key={color.name}
-                  onClick={() => setSelectedColor(color.name)}
-                  className={` w-5 h-5 rounded-full border-2 flex items-center justify-center transition ${selectedColor === color.name ? 'border-green-700 scale-110' : 'border-gray-300'}`}
-                  style={{ backgroundColor: color.hex }}
-                >
-                  {selectedColor === color.name && <Check size={18} color="white" />}
-                </button>
-              ))}
-            </div>
-          </div> */}
-
           {/* Colors */}
           <div>
             <h3 className="font-body text-[#35894E] mb-2">Select Colors</h3>

@@ -25,7 +25,7 @@ const Thankyou = () => {
 
   // Handles the "Back to Shopping" button click
   const handleBackToShopping = () => {
-    dispatch(clearOrder()); // Dispatch Redux action to clear order
+    dispatch(clearOrder());
     navigate('/'); 
   };
 

@@ -57,7 +57,7 @@ const ProductCard = ({ product = {} }) => {
     if (_id) navigate(`/productdetails/${_id}`);
   };
  
-  // Button click handlers
+
   const handleAddToCartClick = () => {
     if (isOutOfStock) {
       toast('Product is out of stock, please add it to wishlist');
@@ -75,23 +75,21 @@ const ProductCard = ({ product = {} }) => {
     setModalType('buy');
     setIsModalOpen(true);
   };
- 
-  // Add to Cart - MODIFIED
+
   const handleAddToCart = async () => {
     if (!selectedColor || !selectedSize) {
       toast.error('Please select size and color');
       return;
     }
  
-    // Find the selected size object to get its stock and prices
-    // FIX: Use 's.size' to find the size object
+  
     const selectedSizeObj = sizes.find(s => s.size === selectedSize);
     if (!selectedSizeObj) {
       toast.error('Invalid size selected');
       return;
     }
  
-    // Validate quantity against the selected size's stock
+
     if (quantity > selectedSizeObj.stock) {
       toast.error(`Sorry, there are only ${selectedSizeObj.stock} items of this size available.`);
       return;
@@ -121,22 +119,19 @@ const ProductCard = ({ product = {} }) => {
     }
   };
  
-  // Checkout - MODIFIED
   const handleCheckout = () => {
     if (!selectedColor || !selectedSize) {
       toast.error('Please select size and color before checkout');
       return;
     }
- 
-    // Find the selected size object to get its stock and prices
-    // FIX: Use 's.size' to find the size object
+
     const selectedSizeObj = sizes.find(s => s.size === selectedSize);
     if (!selectedSizeObj) {
       toast.error('Invalid size selected');
       return;
     }
  
-    // Validate quantity against the selected size's stock
+
     if (quantity > selectedSizeObj.stock) {
       toast.error(`Sorry, there are only ${selectedSizeObj.stock} items of this size available.`);
       return;
@@ -145,7 +140,6 @@ const ProductCard = ({ product = {} }) => {
     const productToBuy = {
       product: _id,
       productName,
-      // Use the specific price and discount price of the selected size
       price: selectedSizeObj.price,
       discountPrice: selectedSizeObj.discountPrice || selectedSizeObj.price,
       color: selectedColor,
@@ -189,9 +183,7 @@ const ProductCard = ({ product = {} }) => {
     }
   };
  
-  // Helper function to find the stock for the selected size
   const getSelectedSizeStock = () => {
-    // FIX: Use 's.size' to match the schema
     const sizeObj = sizes.find(s => s.size === selectedSize);
     return sizeObj ? sizeObj.stock : 0;
   };

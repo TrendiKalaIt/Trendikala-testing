@@ -42,7 +42,7 @@ export default function Showcase() {
         {/* Main Poster */}
         <div className="col-span-2 h-[250px] md:h-[350px] rounded-2xl overflow-hidden relative mb-3">
           <img
-            src="/cro-main.webp"
+            src="/mehak.webp"
             alt="Main Poster"
             className="w-full h-full object-contain bg-red-50"
           />

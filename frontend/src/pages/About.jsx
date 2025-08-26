@@ -33,7 +33,7 @@ function AboutUs() {
       <section className="container mx-auto py-16 px-4 md:px-8 bg-white rounded-xl shadow-lg mt-[-60px] relative z-20">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2 text-center md:text-left">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 font-playfair-display text-green-700">Our Journey</h2>
+            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 font-playfair-display text-[#9CAF88] ">Our Journey</h2>
             <p className="font-body text-lg mb-4 leading-relaxed ">
               We’re two friends who turned our shared dream into reality. ✨
               One of us is a designer with an eye for detail and timeless style, while the other comes from a journalism & marketing background, passionate about storytelling and connecting with people. Together, we decided to create more than just a clothing brand — we wanted to build a space where fashion feels personal, aesthetic, and accessible.
@@ -60,7 +60,7 @@ function AboutUs() {
 
       <section className="bg-green-50 py-16 px-4 md:px-8 mt-16">
         <div className="container mx-auto text-center">
-          <h2 className=" font-heading text-3xl md:text-4xl font-bold mb-12 font-playfair-display text-green-700">Our Core Values</h2>
+          <h2 className=" font-heading text-3xl md:text-4xl font-bold mb-12 font-playfair-display text-[#9CAF88] ">Our Core Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {/* Value Item 1: Quality */}
             <div className="bg-white p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
@@ -111,7 +111,7 @@ function AboutUs() {
 
       <section className="  py-16 px-4 md:px-8 text-center mt-16">
         <div className="container mx-auto">
-          <h2 className=" font-heading text-3xl md:text-4xl font-bold mb-6 font-playfair-display">
+          <h2 className=" font-heading text-3xl md:text-4xl text-[#9CAF88] font-bold mb-6 font-playfair-display">
             Ready to Explore Our Collections?
           </h2>
           <p className="font-body text-lg md:text-xl mb-8 max-w-2xl mx-auto">
@@ -119,7 +119,7 @@ function AboutUs() {
           </p>
           <a
             href="/allproducts"
-            className="font-heading inline-block bg-white text-green-600 px-8 py-3 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg hover:shadow-xl"
+            className="font-heading inline-block bg-[#9CAF88]   text-white px-8 py-2 rounded-full font-semibold text-lg hover:bg-gray-500 transition-colors duration-300 shadow-lg hover:shadow-xl"
           >
             Shop Now
           </a>

@@ -172,7 +172,7 @@ const AddressForm = ({
   };
 
   return (
-    <form className="space-y-4 mt-4" onSubmit={handleSubmit}>
+    <form className="space-y-4 mt-4 " onSubmit={handleSubmit}>
       {[
         ['fullName', 'Full Name*'],
         ['apartment', 'House No., Building Name,Road Name, Area, Colony*'],
@@ -184,7 +184,7 @@ const AddressForm = ({
         ['emailAddress', 'Email Address*'],
       ].map(([id, label]) => (
         <div key={id}>
-          <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
+          <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-1 font-body">{label}</label>
           <input
             type={id === 'emailAddress' ? 'email' : 'text'}
             id={id}
@@ -196,7 +196,7 @@ const AddressForm = ({
         </div>
       ))}
       {!guestMode && (
-        <button className="bg-green-600 text-white px-4 py-2 rounded" type="submit">
+        <button className="bg-green-600 font-home text-white px-4 py-2 rounded" type="submit">
           Save Address
         </button>
       )}

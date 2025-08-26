@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation,Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { showLoader, hideLoader } from '../utility/loaderSlice';
@@ -21,7 +21,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-    // Get redirect query param from URL
   const params = new URLSearchParams(location.search);
   const redirectPath = params.get('redirect') || '/';
 
@@ -80,7 +79,7 @@ const SignUp = () => {
         <div className="flex items-center mb-4 md:mb-0">
           <div className="flex items-center space-x-2">
             <div className="w-[100px] md:w-[120px]">
-              <img src="/trendikala_logo_bg.png" alt="Trendi Kala Logo" className="w-full h-full object-contain" />
+             <Link to="/"> <img src="/trendikala_logo_bg.png" alt="Trendi Kala Logo" className="w-full h-full object-contain" /></Link>
             </div>
             <div className="hidden md:block border-l-2 border-green-700 h-20 px-2" />
             <div className="hidden md:block">
