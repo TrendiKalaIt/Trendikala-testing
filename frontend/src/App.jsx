@@ -29,8 +29,8 @@ import ContactUs from './pages/ContactUs';
 import MyOrdersPage from './pages/MyOrdersPage';
 import Enquiry from './components/EnquiryForm';
 // import CancellationReturn from './pages/CancellationReturn';
-// import PrivacyPolicy from './pages/PrivacyPolicy';
-// import TermsConditions from './pages/TermsConditions';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsConditions from './pages/TermsConditions';
 import ComingSoon from './components/ComingSoon';
 import UserProfilePage from "./pages/UserProfilePage";
 import CategoryProducts from './pages/CategoryProducts';
@@ -59,8 +59,8 @@ function App() {
               <Route path="/faq" element={<FAQPage />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/cancellation-return" element={<ComingSoon title="Cancellation & Return " />} />
-              <Route path="/privacy-policy" element={<ComingSoon title="Privacy Policy" />} />
-              <Route path="/terms-conditions" element={<ComingSoon title=" Terms & Conditions" />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
+              <Route path="/terms-conditions" element={<TermsConditions/>} />
               <Route path="/enquiry" element={<Enquiry />} />
               <Route path="/checkout" element={<CheckoutDetails />} />
               <Route path="/thankyou" element={<Thankyou />} />

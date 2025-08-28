@@ -83,7 +83,6 @@ const FAQPage = () => {
     <div className="min-h-screen   p-8 font-sans">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12">
         <div className="w-full lg:w-1/4">
-          <h2 className="font-heading text-xl font-bold mb-6 ">Topic Navigation</h2>
           <nav className="font-home space-y-4 mb-12">
             {faqData.map((data, index) => (
               <button
@@ -91,8 +90,8 @@ const FAQPage = () => {
                 onClick={() => setSelectedTopic(data.topic)}
                 className={`block w-full text-left py-2 px-4 rounded-md transition-colors duration-200
                   ${selectedTopic === data.topic
-                    ? 'bg-green-500 text-white font-semibold'
-                    : 'hover:text-white hover:bg-green-600'
+                    ? 'bg-[#9CAF88] text-white '
+                    : 'hover:text-white hover:bg-[#9CAF88]'
                   }`}
               >
                 {data.topic}
@@ -103,14 +102,14 @@ const FAQPage = () => {
         </div>
 
         <div className="w-full lg:w-3/4">
-          <h1 className="font-heading text-4xl font-bold mb-8 ">{selectedTopic}</h1>
+          <h1 className="font-heading text-4xl font-bold mb-8 text-[#9CAF88] ">{selectedTopic}</h1>
           <div className="space-y-4">
             {currentTopicFAQs.length > 0 ? (
               currentTopicFAQs.map((faq, index) => (
                 <div
                   key={index}
                   className={`rounded-lg p-6 cursor-pointer transition-all duration-300
-                    ${openFAQIndex === index ? 'bg-green-300' : 'bg-green-100'}
+                    ${openFAQIndex === index ? 'bg-[#9caf88bf]' : 'bg-[#9caf8830]'}
                   `}
                   onClick={() => toggleFAQ(index)}
                 >
@@ -119,7 +118,7 @@ const FAQPage = () => {
                     {openFAQIndex === index ? (
                       <ChevronUp className="h-6 w-6 text-white" />
                     ) : (
-                      <ChevronDown className="h-6 w-6 text-gray-400" />
+                      <ChevronDown className="h-6 w-6 text-[#9CAF88]" />
                     )}
                   </div>
                   {openFAQIndex === index && (
@@ -128,7 +127,7 @@ const FAQPage = () => {
                 </div>
               ))
             ) : (
-              <p className="font-body text-gray-400 text-lg">No FAQs available for this topic yet.</p>
+              <p className="font-body text-[#9CAF88] text-lg">No FAQs available for this topic yet.</p>
             )}
           </div>
         </div>

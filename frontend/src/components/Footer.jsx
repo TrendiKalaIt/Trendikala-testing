@@ -75,14 +75,13 @@ const Footer = () => {
 
     </footer>
     <p className=" bg-[#bedaa4d4] text-center text-xs sm:text-sm text-[#0000006c] py-2 font-body ">
-        © {new Date().getFullYear()}  <a
-      href="https://trendikala.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-gray-900 font-bold hover:text-green-600 transition"
-    >
-      Trendi Kala
-    </a>. All rights reserved.
+        © {new Date().getFullYear()}  
+        <a
+            href="https://www.trendikala.com"
+            className="text-[#9CAF88] underline px-2"
+          >
+             www.trendikala.com 
+          </a> All rights reserved.
       </p></>
 
   );

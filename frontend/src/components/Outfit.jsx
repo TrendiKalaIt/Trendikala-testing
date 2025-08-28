@@ -42,9 +42,9 @@ export default function Showcase() {
         {/* Main Poster */}
         <div className="col-span-2 h-[250px] md:h-[350px] rounded-2xl overflow-hidden relative mb-3">
           <img
-            src="/mehak.webp"
+            src="/new-collection-launched.jpg"
             alt="Main Poster"
-            className="w-full h-full object-contain bg-red-50"
+            className="w-full h-full  bg-red-50 object-cover"
           />
 
         </div>
@@ -77,7 +77,22 @@ export default function Showcase() {
 
       {/* Reels Section */}
       <div className="mt-6">
-        <h3 className="font-home text-[#9CAF88] uppercase text-lg font-semibold mb-3">Reels for you</h3>
+        <h3 className="font-home text-[#9CAF88] uppercase text-lg font-semibold">Reels for you</h3>
+        <div className="overflow-hidden bg-gray-200 mb-2">
+          <div className="animate-marquee flex">
+            <p className="text-lg font-body text-[#9CAF88] mr-8">
+              Not just new outfits — we also customize and recycle your old favourites into Pinterest-worthy looks. DM us on Instagram to create yours 💌
+            </p>
+            <p className="text-lg font-body text-[#9CAF88] mr-8">
+              Not just new outfits — we also customize and recycle your old favourites into Pinterest-worthy looks. DM us on Instagram to create yours 💌
+            </p>
+          </div>
+        </div>
+
+
+
+
+
         <Swiper
           slidesPerView={"auto"}
           spaceBetween={16}

@@ -2,7 +2,6 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 
-// Load saved state from localStorage if available
 const savedState = localStorage.getItem('checkoutState');
 const initialState = savedState
   ? JSON.parse(savedState)

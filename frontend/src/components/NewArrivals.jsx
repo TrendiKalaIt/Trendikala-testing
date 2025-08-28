@@ -22,19 +22,20 @@ const NewArrivals = () => {
   return (
     <section className="relative w-full mx-auto p-4 ">
       <div
-        className="relative w-full md:h-96 h-[285px] rounded-2xl overflow-hidden shadow-lg aspect-[2/1]"
+        className="relative w-full md:h-96 rounded-2xl overflow-hidden shadow-lg aspect-[2/1]"
         style={{ backgroundColor: current.bgColor }}
       >
         <img
           src={current.imageUrl}
           alt={`Collection ${idx + 1}`}
-          className="absolute w-full md:h-[385px] h-[285px]"
-          style={{
-            objectFit: current.objectFit || "cover",
-            objectPosition: current.objectPosition || "center"
-          }}
+          className={`absolute w-full md:h-[385px] h-full 
+    ${current.objectFit ? `object-${current.objectFit}` : "object-cover object-[42%]"} 
+    ${current.objectPosition ? `object-[${current.objectPosition}]` : ""} 
+    md:object-fill
+  `}
           loading="lazy"
         />
+
 
 
         <div className="absolute bottom-2 md:bottom-6 left-6 text-white max-w-md border-5 ">
@@ -45,7 +46,7 @@ const NewArrivals = () => {
             {current.description}
           </p>
           <Link to="/allproducts">
-            <button className="font-heading bg-[#9CAF88] text-white p-3 rounded-full text-sm font-semibold items-center">
+            <button className="font-heading hidden md:block bg-[#9CAF88] text-white p-3 rounded-full text-sm font-semibold items-center">
               VIEW COLLECTIONS
             </button>
           </Link>
@@ -73,6 +74,11 @@ const NewArrivals = () => {
           <ChevronRight className="w-6 h-6 text-gray-700" />
         </button>
       </div>
+      <Link to="/allproducts">
+        <button className="font-heading font-semibold block sm:hidden mt-2  bg-[#9CAF88] text-white px-1 rounded-full font-sm  items-center">
+          VIEW COLLECTIONS
+        </button>
+      </Link>
     </section>
   );
 };

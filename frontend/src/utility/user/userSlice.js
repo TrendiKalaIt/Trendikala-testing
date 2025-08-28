@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Fetch profile from backend
+// Fetch profile  backend
 export const fetchUserProfile = createAsyncThunk(
   'user/fetchProfile',
   async (_, { getState }) => {
@@ -9,7 +9,7 @@ export const fetchUserProfile = createAsyncThunk(
     const res = await axios.get('/api/users/profile', {
       headers: { Authorization: `Bearer ${token}` }
     });
-    return res.data;  // this will be the user object
+    return res.data; 
   }
 );
 
@@ -21,7 +21,7 @@ export const updateUserProfile = createAsyncThunk(
     const res = await axios.put('/api/users/update-profile', updatedData, {
       headers: { Authorization: `Bearer ${token}` }
     });
-    return res.data.user;  // your backend returns { message, user } — take user
+    return res.data.user; 
   }
 );
 

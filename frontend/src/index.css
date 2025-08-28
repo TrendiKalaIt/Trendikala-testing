@@ -114,3 +114,32 @@ bg-button
   color: white;
   text-shadow: 0px 0px 2px black, 0px 0px 2px black;
 }
+
+
+
+
+
+
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;  
+  animation: marquee 18s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 12s; 
+  }
+}
+
+

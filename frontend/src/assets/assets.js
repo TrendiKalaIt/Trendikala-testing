@@ -20,20 +20,20 @@ export const carouselSlides = [
 
 export const newArrivalsItems = [
   {
-    imageUrl: '/website banner.webp',
+    imageUrl: '/trendi-kala-discount-banner.jpg',
     discount: '',
     description: '',
     bgColor: '#E8E0D7',
-    objectPosition: 'center top-[10%]', 
-    objectFit: 'cover'
+        objectPosition: 'center ', 
+    objectFit: 'contain'
+    
   },
   {
-    imageUrl: '/BANNER WEBSITE 2.webp',
+    imageUrl: '/trendi-kala-discount-banner-2.jpg',
     discount: '',
     description: '',
     bgColor: '#E8E0D7',
-    objectPosition: ' center  ',
-    objectFit: 'cover '
+
   },
   // {
   //   imageUrl: '/cro2.webp',

@@ -46,7 +46,7 @@ const EnquiryForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white p-6 rounded-xl m-4 shadow-md">
-      <h2 className="font-heading text-2xl font-bold text-green-700 mb-4 text-center">Enquiry & Cancellation Form</h2>
+      <h2 className="font-heading text-2xl font-bold text-[#9CAF88] mb-4 text-center">Enquiry & Cancellation Form</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div>
@@ -159,7 +159,7 @@ const EnquiryForm = () => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="font-home mt-6 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+        className="font-home mt-6 w-full bg-[#9CAF88] text-white py-2 rounded hover:bg-green-700 transition"
       >
         {isSubmitting ? 'Submitting...' : 'Send Enquiry'}
       </button>

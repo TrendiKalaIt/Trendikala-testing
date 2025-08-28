@@ -30,11 +30,11 @@ function AboutUs() {
         </div>
       </section>
 
-      <section className="container mx-auto py-16 px-4 md:px-8 bg-white rounded-xl shadow-lg mt-[-60px] relative z-20">
+      <section className="container mx-auto py-16 px-4 md:px-8 bg-white rounded-xl shadow-sm mt-[-60px] relative z-20">
         <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="md:w-1/2 text-center md:text-left">
+          <div className="md:w-2/3 text-center md:text-left">
             <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 font-playfair-display text-[#9CAF88] ">Our Journey</h2>
-            <p className="font-body text-lg mb-4 leading-relaxed ">
+            <p className="font-body text-lg mb-4 leading-relaxed text-justify">
               We’re two friends who turned our shared dream into reality. ✨
               One of us is a designer with an eye for detail and timeless style, while the other comes from a journalism & marketing background, passionate about storytelling and connecting with people. Together, we decided to create more than just a clothing brand — we wanted to build a space where fashion feels personal, aesthetic, and accessible.
               At Trendikala, we believe that great style doesn’t have to come with a hefty price tag. Our vision is to bring you Pinterest-inspired vibes with the best quality fabrics, unique designs, and a touch of craftsmanship — all at prices that feel good.
@@ -42,18 +42,37 @@ function AboutUs() {
               From custom pieces to everyday outfits, we are here to make your wardrobe truly you. 💌
               ✨ Two friends. One dream. Your story, in style.
             </p>
-           
+
           </div>
-          <div className="md:w-1/2">
-            <img
-              src=''
-              alt="Our Brand Story"
-              className="rounded-lg shadow-xl w-full h-auto lg:h-[400px] object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = `https://placehold.co/600x400/E5E7EB/6B7280?text=Image+Not+Found`;
-              }}
-            />
+          <div className=' lg:w-1/3 flex justify-center gap-1'>
+            <div className="w-full ">
+              <img
+                src='/Founder.png'
+                alt="Our Brand Story"
+                className=" rounded-2xl w-[170px]  h-[260px] object-cover "
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://placehold.co/600x400/E5E7EB/6B7280?text=Image+Not+Found`;
+                }}
+              />
+              <p className='font-semobold font-home text-[#9CAF88] pt-2 lg:text-left text-center'>Manshi Agrawal</p>
+              <p className='lg:text-left text-center text-sm text-gray-400 font-body'>Founder</p>
+
+            </div>
+            <div className="w-full ">
+              <img
+                src='/Co-Founder.png'
+                alt="Our Brand Story"
+                className=" rounded-2xl w-[170px]  h-[260px] object-cover "
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = `https://placehold.co/600x400/E5E7EB/6B7280?text=Image+Not+Found`;
+                }}
+              />
+              <p className='font-semobold font-home text-[#9CAF88] pt-2 lg:text-left text-center'>Raj Laxmi</p>
+              <p className='lg:text-left text-center text-sm text-gray-400 font-body'>Co-Founder</p>
+
+            </div>
           </div>
         </div>
       </section>

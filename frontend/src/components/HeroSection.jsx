@@ -87,9 +87,8 @@ const HeroSection = () => {
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
                       aria-label={`Go to slide ${index + 1}`}
-                      className={`w-3 h-3 rounded-full ${
-                        currentImageIndex === index ? "bg-white" : "bg-gray-400"
-                      } transition-colors duration-300`}
+                      className={`w-3 h-3 rounded-full ${currentImageIndex === index ? "bg-white" : "bg-gray-400"
+                        } transition-colors duration-300`}
                     />
                   ))}
                 </div>
@@ -98,8 +97,8 @@ const HeroSection = () => {
 
             {/* Mobile Text */}
             <div className="flex flex-col items-center text-[#a5e665c8] text-center px-4 pb-6 md:hidden">
-              <h2 className="text-2xl font-heading font-bold text-[#9CAF88] mb-2">{title}</h2>
-              <p className="font-body text-[#9CAF88] text-sm mb-4">{description}</p>
+              <h2 className="text-2xl font-heading font-bold text-[#ffffffde] mb-2">{title}</h2>
+              <p className="font-body text-[#ffffffde] text-sm mb-4">{description}</p>
               <button
                 onClick={handleViewDetails}
                 className="bg-[#93A87E] hover:bg-[#93a87ec6] font-heading text-white font-semibold py-2 px-6 rounded-full shadow-lg transition duration-300"

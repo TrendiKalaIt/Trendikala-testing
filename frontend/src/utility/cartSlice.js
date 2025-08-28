@@ -9,14 +9,13 @@ const authHeaders = () => ({
   headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
 });
 
-// Ensure items are valid and include discountPrice
 const prepareItemsForBackend = (items) =>
   Array.isArray(items)
     ? items
       .filter(item => item && (item.product || item.productName))
       .map(item => ({
         ...item,
-        discountPrice: item.discountPrice ?? item.price, // always include discountPrice
+        discountPrice: item.discountPrice ?? item.price, 
       }))
     : [];
 

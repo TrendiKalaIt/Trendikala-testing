@@ -70,7 +70,6 @@ const Home = () => {
     
       {/* Hero Section */}
       {showHero ? <HeroSection /> : <Spinner />}
-
       {/* New Arrivals Section */}
       {showNewArrivals ? <NewArrivals /> : showHero && <Spinner />}
 

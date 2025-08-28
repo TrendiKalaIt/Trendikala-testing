@@ -23,7 +23,7 @@ export const fetchWishlist = createAsyncThunk(
       //  Filter only valid products with _id
       const products = res.data.data
         .map((item) => item.product)
-        .filter((p) => p && p._id); // Prevent errors with null/missing products
+        .filter((p) => p && p._id); 
 
       return products;
     } catch (error) {
