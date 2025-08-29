@@ -1,18 +1,53 @@
-// utils/sendEmail.js
-const transporter = require('../config/email');
+// // utils/sendEmail.js
+// const transporter = require('../config/email');
 
-const sendEmail = async (to, subject, html) => {
+// const sendEmail = async (to, subject, html) => {
+//   try {
+//     const info = await transporter.sendMail({
+//       from: `"TrendiKala" <${process.env.OTP_EMAIL}>`,
+//       to,
+//       subject,
+//       html,
+//     });
+//     console.log(`Email sent to ${to}: ${info.messageId}`);
+//   } catch (error) {
+//     console.error(' Failed to send email:', error);
+//   }
+// };
+
+// module.exports = sendEmail;
+
+
+
+// utils/sendEmail.js
+const { otpTransporter, orderTransporter } = require('../config/email');
+
+const sendOtpEmail = async (to, subject, html) => {
   try {
-    const info = await transporter.sendMail({
-      from: `"TrendiKala" <${process.env.EMAIL_USER}>`,
+    const info = await otpTransporter.sendMail({
+      from: `"TrendiKala OTP" <${process.env.OTP_EMAIL}>`,
       to,
       subject,
       html,
     });
-    console.log(`Email sent to ${to}: ${info.messageId}`);
+    console.log(`OTP Email sent to ${to}: ${info.messageId}`);
   } catch (error) {
-    console.error(' Failed to send email:', error);
+    console.error(' Failed to send OTP email:', error);
   }
 };
 
-module.exports = sendEmail;
+const sendOrderEmail = async (to, subject, html) => {
+  try {
+    const info = await orderTransporter.sendMail({
+      from: `"TrendiKala Orders" <${process.env.ORDER_EMAIL}>`,
+      to,
+      subject,
+      html,
+    });
+    console.log(`Order Email sent to ${to}: ${info.messageId}`);
+  } catch (error) {
+    console.error(' Failed to send Order email:', error);
+  }
+};
+
+module.exports = { sendOtpEmail, sendOrderEmail };

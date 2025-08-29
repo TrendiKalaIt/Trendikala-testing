@@ -3,7 +3,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-const sendEmail = require('../utils/sendEmail');
+// const sendEmail = require('../utils/sendEmail');
+const { sendOtpEmail } = require('../utils/sendEmail');
+
 
 // Utility to generate OTP
 const generateOTP = () => {
@@ -292,7 +294,7 @@ exports.forgotPassword = async (req, res) => {
             </div>
         `;
 
-    await sendEmail(user.email, 'Password Reset Request', emailHtml);
+    await sendOtpEmail(user.email, 'Password Reset Request', emailHtml);
 
     res.status(200).json({ message: 'Reset password link sent to email' });
   } catch (error) {

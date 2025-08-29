@@ -5,7 +5,9 @@ const Order = require('../models/Order');
 const Product = require('../models/Product.js');
 const { generateCustomerEmail } = require('../utils/customerEmailTemplate.js');
 const { generateAdminEmail } = require('../utils/adminEmailTemplate.js');
-const sendEmail = require('../utils/sendEmail');
+// const sendEmail = require('../utils/sendEmail');
+const { sendOrderEmail } = require('../utils/sendEmail');
+
 
 const razorpayInstance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -145,14 +147,14 @@ exports.verifyPayment = async (req, res) => {
         );
 
         // Send emails
-        await sendEmail(
+        await sendOrderEmail(
             shippingInfo.emailAddress,
             `Your TrendiKala Order #${newOrder.orderId} Confirmed!`,
             customerEmailHtml
         );
 
         if (process.env.ADMIN_EMAIL) {
-            await sendEmail(
+            await sendOrderEmail(
                 process.env.ADMIN_EMAIL,
                 `NEW RAZORPAY ORDER: ${newOrder.orderId}`,
                 adminEmailHtml

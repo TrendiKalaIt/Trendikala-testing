@@ -3,7 +3,9 @@ const { generateAdminEmail } = require('../utils/adminEmailTemplate.js');
 
 const Order = require('../models/Order.js');
 const Cart = require('../models/Cart.js');
-const sendEmail = require('../utils/sendEmail');
+// const sendEmail = require('../utils/sendEmail');
+const { sendOrderEmail } = require('../utils/sendEmail');
+
 const Counter = require('../models/counterSchema');
 const Product = require('../models/Product.js');
 
@@ -89,9 +91,9 @@ exports.placeOrder = async (req, res) => {
         const adminEmailHtml = generateAdminEmail(newOrder, shippingInfo, orderItems, paymentMethod, totalAmount, shippingCost);
 
         // Send emails
-        await sendEmail(shippingInfo.emailAddress, `Your TrendiKala Order ${newOrder.orderId} Confirmed!`, customerEmailHtml);
+        await sendOrderEmail(shippingInfo.emailAddress, `Your TrendiKala Order ${newOrder.orderId} Confirmed!`, customerEmailHtml);
         if (process.env.ADMIN_EMAIL) {
-            await sendEmail(process.env.ADMIN_EMAIL, `NEW ORDER: ${newOrder.orderId} from ${shippingInfo.fullName}`, adminEmailHtml);
+            await sendOrderEmail(process.env.ADMIN_EMAIL, `NEW ORDER: ${newOrder.orderId} from ${shippingInfo.fullName}`, adminEmailHtml);
         }
 
         res.status(201).json({ message: 'Order placed successfully and emails sent', order: newOrder });
@@ -163,10 +165,10 @@ exports.guestPlaceOrder = async (req, res) => {
 
         const adminEmailHtml = generateAdminEmail(newOrder, shippingInfo, items, paymentMethod, totalAmount, shippingCost);
 
-        await sendEmail(shippingInfo.emailAddress, `Your TrendiKala Order #${newOrder.orderId} Confirmed!`, customerEmailHtml);
+        await sendOrderEmail(shippingInfo.emailAddress, `Your TrendiKala Order #${newOrder.orderId} Confirmed!`, customerEmailHtml);
 
         if (process.env.ADMIN_EMAIL) {
-            await sendEmail(process.env.ADMIN_EMAIL, `NEW GUEST ORDER: #${newOrder.orderId}`, adminEmailHtml);
+            await sendOrderEmail(process.env.ADMIN_EMAIL, `NEW GUEST ORDER: #${newOrder.orderId}`, adminEmailHtml);
         }
 
         res.status(201).json({

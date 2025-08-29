@@ -6,6 +6,8 @@ import Footer from '../Footer';
 // import Spinner from '../Spinner';
 import { useSelector } from 'react-redux';
 import NewUpdatesMsg from '../NewUpdatesMsg';
+import Badge from '../TestingBadge'
+
 
 const navLinks = [
   { name: 'home', path: '/' },
@@ -26,6 +28,7 @@ const Layout = () => {
       {/* {loading && <Spinner />} */}
       <main className="flex-grow">
         <Outlet />
+        <Badge/>
       </main>
       <Footer />
     </div>
