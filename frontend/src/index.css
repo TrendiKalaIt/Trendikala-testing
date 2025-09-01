@@ -1,145 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap');
 
-
-
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&family=Libre+Baskerville&display=swap');
+ 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
+ 
+/* Default font -> font-body (Lato) */
 * {
-  font-family: "Outfit", sans-serif;
+  font-family: "Lato", sans-serif;
 }
-
+ 
 /* color code
 footer  footer #bedaa4,rgba(190,218,164,255)
 bg-button
 #93a87e,rgba(147,168,126,255)
 */
-
+ 
 @theme {
   --color-footer: #bedaa4;
   --color-button-bg: #93a87e;
 }
+ 
+ 
+
+ 
 
 
-/* Keyframes */
-@keyframes runAcrossMobile {
-  0% {
-    transform: translateX(-30%);
-  }
-  100% {
-    transform: translateX(32%);
-  }
-}
-
-@keyframes runAcrossTablet {
-  0% {
-    transform: translateX(-25%);
-  }
-  100% {
-    transform: translateX(150%);
-  }
-}
-
-@keyframes runAcrossDesktop {
-  0% {
-    transform: translateX(-20%);
-  }
-  100% {
-    transform: translateX(180%);
-  }
-}
-
-/* Default: Mobile First */
-.animate-run {
-  animation: runAcrossMobile 12s linear infinite;
-}
-
-.running-girl {
-  width: 18rem;   /* mobile default size */
-  bottom: 0.2rem;
-}
-
-/* Extra small phones (<=350px) */
-@media (max-width: 350px) {
-  .running-girl {
-    width: 16rem;
-    bottom: 0.1rem;
-  }
-  .animate-run {
-    animation: runAcrossMobile 10s linear infinite;
-  }
-}
-
-/* Tablet (>=768px) */
-@media (min-width: 768px) {
-  .running-girl {
-    width: 18rem;  /* thoda bada */
-    bottom: 0.3rem;
-  }
-  .animate-run {
-    animation: runAcrossTablet 16s linear infinite;
-  }
-}
-
-/* Desktop (>=1024px) */
-@media (min-width: 1024px) {
-  .running-girl {
-    width: 22rem;  /* bada */
-    bottom: 0.5rem;
-  }
-  .animate-run {
-    animation: runAcrossDesktop 18s linear infinite;
-  }
-}
-
-
+ 
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
-
+ 
 .animate-fadeIn {
   animation: fadeIn 1s ease-in-out forwards;
 }
-
-
-
+ 
+ 
+ 
 .text-outline {
   color: white;
   text-shadow: 0px 0px 2px black, 0px 0px 2px black;
 }
-
-
-
-
-
-
-
+ 
+ 
+ 
+ 
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
+ 
 .animate-marquee {
   display: flex;
   width: max-content;  
   animation: marquee 18s linear infinite;
 }
-
+ 
 .animate-marquee:hover {
   animation-play-state: paused;
 }
-
+ 
 @media (max-width: 768px) {
   .animate-marquee {
-    animation-duration: 12s; 
+    animation-duration: 12s;
   }
 }
-
-
