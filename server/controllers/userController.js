@@ -3,9 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-// const sendEmail = require('../utils/sendEmail');
 const { sendOtpEmail } = require('../utils/sendEmail');
-
 
 // Utility to generate OTP
 const generateOTP = () => {
@@ -75,19 +73,23 @@ exports.registerUser = async (req, res) => {
       </div>
     `;
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    // const transporter = nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //     user: process.env.EMAIL_USER,
+    //     pass: process.env.EMAIL_PASS
+    //   }
+    // });
 
-    await transporter.sendMail({
-      to: email,
-      subject: 'Verify Your Email for Trendikala',
-      html: emailHtml
-    });
+    // await transporter.sendMail({
+    //   to: email,
+    //   subject: 'Verify Your Email for Trendikala',
+    //   html: emailHtml
+    // });
+
+
+    await sendOtpEmail(email, 'Verify Your Email for Trendikala', emailHtml);
+
 
     res.status(201).json({ message: "OTP sent to email. Please verify your account." });
 
@@ -197,19 +199,23 @@ exports.resendOtp = async (req, res) => {
       </div>
     `;
 
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    // const transporter = nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //     user: process.env.EMAIL_USER,
+    //     pass: process.env.EMAIL_PASS
+    //   }
+    // });
 
-    await transporter.sendMail({
-      to: email,
-      subject: 'Resend OTP - Trendikala',
-      html: emailHtml
-    });
+    // await transporter.sendMail({
+    //   to: email,
+    //   subject: 'Resend OTP - Trendikala',
+    //   html: emailHtml
+    // });
+
+
+    await sendOtpEmail(email, 'Resend OTP - Trendikala', emailHtml);
+
 
     return res.status(200).json({ message: "OTP resent successfully. Please check your email." });
 
@@ -415,8 +421,6 @@ exports.getTotalRegisteredUsers = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
-
 
 
 
