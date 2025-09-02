@@ -131,7 +131,7 @@ exports.searchProducts = async (req, res) => {
                         { productName: { $regex: query, $options: 'i' } },
                         // { brand: { $regex: query, $options: 'i' } },
                         // { description: { $regex: query, $options: 'i' } },
-                       // { category: { $regex: query, $options: 'i' } }
+                       { 'category.name': { $regex: query, $options: 'i' } }
                     ]
                 }
             }

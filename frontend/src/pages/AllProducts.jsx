@@ -18,7 +18,7 @@ const Products = () => {
   const [visibleCount, setVisibleCount] = useState(8);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [categoryHasProducts, setCategoryHasProducts] = useState(true); 
+  const [categoryHasProducts, setCategoryHasProducts] = useState(true);
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -80,8 +80,8 @@ const Products = () => {
 
       if (category && productsData.length === 0) {
         setCategoryHasProducts(false);
-        setProducts([]); 
-        setError(null);  
+        setProducts([]);
+        setError(null);
       } else {
         setProducts(productsData);
       }
@@ -113,33 +113,22 @@ const Products = () => {
   return (
     <div>
       {/* Hero Section */}
-      <div className="relative w-full aspect-[16/9] sm:h-[450px] h-[300px] overflow-hidden mb-6">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+      <div className="relative w-full   overflow-hidden mb-6">
+        <img
+          src="/Trendikala-category.webp"
+          alt="Main Banner"
           className="w-full h-full object-cover object-center"
-        >
-          <source src="" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        />
 
-        <div className="absolute inset-0 bg-black/30 flex flex-col justify-center items-center text-center px-4 sm:px-6">
-          <h1 className="font-heading text-white text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-lg tracking-wide animate-fade-in-up">
-            <span className="text-[#a2ff00] font-home ">Explore</span> Our Categories
-          </h1>
-          <p className="font-body mt-4 text-sm sm:text-base md:text-lg lg:text-xl text-[#d3f4b1] max-w-2xl drop-shadow-md animate-fade-in-up delay-200">
-            Select a category and subcategory to find your perfect product.
-          </p>
-        </div>
+
+      
       </div>
 
       {/* Category Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 p-4 gap-4 sm:gap-2 mb-6">
         {categories.map((cat) => {
           const hasImage = cat.icon && typeof cat.icon === "string";
-          const isComingSoon = !categoryHasProducts && selectedCategory === cat._id; 
+          const isComingSoon = !categoryHasProducts && selectedCategory === cat._id;
 
           return (
             <div
@@ -147,11 +136,11 @@ const Products = () => {
               className={`cursor-pointer overflow-hidden transition relative`}
               onClick={() => {
                 setSelectedCategory(cat._id);
-                setSelectedSubcategory(""); 
+                setSelectedSubcategory("");
                 if (cat.products && cat.products.length > 0) {
-                  setCategoryHasProducts(true); 
+                  setCategoryHasProducts(true);
                 } else {
-                  setCategoryHasProducts(false); 
+                  setCategoryHasProducts(false);
                 }
               }}
             >

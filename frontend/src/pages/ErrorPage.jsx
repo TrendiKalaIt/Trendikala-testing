@@ -10,7 +10,7 @@ const ErrorPage = () => {
             <div className="flex items-center space-x-2">
               <div className="w-[100px] h-[100px] ">
                 <img
-                  src="/trendikala_logo_bg.png"
+                  src="/trendikala_logo_bg.webp"
                   alt="Trendi Kala Logo"
                   className="w-full h-full object-contain"
                   onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/120x40/E5E7EB/4B5563?text=Logo'; }}

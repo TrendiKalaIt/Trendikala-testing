@@ -55,8 +55,43 @@ const orderSchema = new mongoose.Schema({
   isGuest: { type: Boolean, default: false }
 });
 
+// orderSchema.pre('save', async function (next) {
+//   if (!this.isNew) return next();  // Only generate orderId for new orders
+
+//   if (!this.items.length) {
+//     return next(new Error("Order must have at least one item"));
+//   }
+
+//   const firstProduct = await Product.findById(this.items[0].product).populate('category');
+//   if (!firstProduct) {
+//     return next(new Error("Product not found for order"));
+//   }
+
+//   const dateStr = moment().format('MMDD');  
+//   const productCode = firstProduct.productCode;  
+
+//   // Fetch and update the global counter
+//   let counter = await Counter.findOneAndUpdate(
+//     { id: 'globalOrderSeq' },  
+//     { $inc: { seq: 1 } }, 
+//     { new: true, upsert: true }  
+//   );
+
+//   if (!counter) {
+//     return next(new Error("Failed to update counter sequence."));
+//   }
+
+//   const seqNumber = String(counter.seq).padStart(4, '0');  
+
+//   // Construct the final orderId: MMDD-productCode-sequence
+//   this.orderId = `${dateStr}-${productCode}-${seqNumber}`;
+
+//   next();
+// });
+
+
 orderSchema.pre('save', async function (next) {
-  if (!this.isNew) return next();  // Only generate orderId for new orders
+  if (!this.isNew) return next();
 
   if (!this.items.length) {
     return next(new Error("Order must have at least one item"));
@@ -67,23 +102,20 @@ orderSchema.pre('save', async function (next) {
     return next(new Error("Product not found for order"));
   }
 
-  const dateStr = moment().format('MMDD');  // Get the current date in MMDD format
-  const productCode = firstProduct.productCode;  // Fetch the product code dynamically
+  const dateStr = moment().format('MMDD');
+  const productCode = firstProduct.productCode;
 
-  // Fetch and update the global counter
-  let counter = await Counter.findOneAndUpdate(
-    { id: 'globalOrderSeq' },  // Use a global counter id
-    { $inc: { seq: 1 } },  // Increment the sequence number by 1
-    { new: true, upsert: true }  // Create the counter if it doesn't exist
-  );
+  // 🔑 Last order check
+  const lastOrder = await mongoose.model('Order').findOne().sort({ createdAt: -1 }).select('orderId');
 
-  if (!counter) {
-    return next(new Error("Failed to update counter sequence."));
+  let seqNumber = "0001"; // default
+  if (lastOrder && lastOrder.orderId) {
+    // orderId format: MMDD-PRODCODE-####  
+    const lastSeq = lastOrder.orderId.split("-").pop(); // last #### part
+    const nextSeq = (parseInt(lastSeq, 10) + 1).toString().padStart(4, "0");
+    seqNumber = nextSeq;
   }
 
-  const seqNumber = String(counter.seq).padStart(4, '0');  // Ensure sequence is 4 digits
-
-  // Construct the final orderId: MMDD-productCode-sequence
   this.orderId = `${dateStr}-${productCode}-${seqNumber}`;
 
   next();

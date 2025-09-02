@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -47,10 +48,10 @@ const Home = () => {
     if (!hasLoadedSequentially) {
       const timers = [];
       timers.push(setTimeout(() => setShowHero(true), 0));
-      timers.push(setTimeout(() => setShowNewArrivals(true), 1000));
-      timers.push(setTimeout(() => setShowOutfit(true), 2000));
-      timers.push(setTimeout(() => setShowPoster(true), 3000));
-      timers.push(setTimeout(() => setShowFeatured(true), 4000));
+      timers.push(setTimeout(() => setShowNewArrivals(true), 500));
+      timers.push(setTimeout(() => setShowOutfit(true), 700));
+      timers.push(setTimeout(() => setShowPoster(true), 900));
+      timers.push(setTimeout(() => setShowFeatured(true), 1200));
 
       sessionStorage.setItem("homeSequentialLoaded", "true");
       return () => timers.forEach((t) => clearTimeout(t));
@@ -106,7 +107,7 @@ const Home = () => {
       {/* Featured Products */}
       {showFeatured ? (
         <div className="px-4 py-2 mb-3">
-          <h2 className="font-home text-lg font-bold text-[#9CAF88] uppercase mb-6">
+          <h2 className=" font-home text-lg font-bold text-[#9CAF88] uppercase mb-6">
             Featured Products
           </h2>
 
@@ -121,31 +122,10 @@ const Home = () => {
                   ))}
                 </div>
               ) : (
-                <Suspense
-                  fallback={
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14">
-                      {[...Array(4)].map((_, i) => (
-                        <ProductCardSkeleton key={i} />
-                      ))}
-                    </div>
-                  }
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14">
-                    {products.slice(0, visibleCount).map((product) => (
-                      <ProductCard key={product._id} product={product} />
-                    ))}
-                  </div>
-                </Suspense>
-              )}
-
-              {visibleCount < products.length && !loading && (
-                <div className="text-center my-8">
-                  <button
-                    onClick={handleSeeMore}
-                    className="bg-[#9CAF88] font-home text-white px-8 py-2 rounded-full hover:bg-[#93a87ea4] transition"
-                  >
-                    See More
-                  </button>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-14">
+                  {products.slice(0, 4).map((product) => (
+                    <ProductCard key={product._id} product={product} />
+                  ))}
                 </div>
               )}
             </>
@@ -159,3 +139,5 @@ const Home = () => {
 };
 
 export default Home;
+
+

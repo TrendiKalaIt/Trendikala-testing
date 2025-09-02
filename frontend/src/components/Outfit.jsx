@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, memo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay,Navigation  } from "swiper/modules";
 import "swiper/css";
+import ReelsMsg from "./ReelsMsg";
 
 const Outfit = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,11 +67,11 @@ const Outfit = () => {
             {/* Desktop version */}
             <source
               media="(min-width: 768px)"   // md breakpoint
-              srcSet="/new-collection-launched.jpg"
+              srcSet="/Offcer Desctop.png"
             />
             {/* Mobile version */}
             <img
-              src="/new-collection-launched mobile.png"
+              src="/Offcer Desctop.png"
               alt="Main Poster"
               className="w-full h-full object-cover"
               loading="lazy"
@@ -107,6 +108,10 @@ const Outfit = () => {
         <h3 className="font-home text-[#9CAF88] uppercase text-lg font-semibold mb-2">
           Reels for you
         </h3>
+        <div className="mb-2">
+          <ReelsMsg />
+        </div>
+        
 
         {showReels ? (
           <Swiper

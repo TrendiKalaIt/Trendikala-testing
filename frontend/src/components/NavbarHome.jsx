@@ -123,7 +123,7 @@ export default function Navbar({ links }) {
         >
           <div className="w-[120px]">
             <img
-              src="/trendikala_logo_bg.png"
+              src="/trendikala_logo_bg.webp"
               alt="Trendi Kala Logo"
               className="w-full h-full object-contain "
             />

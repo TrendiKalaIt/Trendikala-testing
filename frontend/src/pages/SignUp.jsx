@@ -79,7 +79,7 @@ const SignUp = () => {
         <div className="flex items-center mb-4 md:mb-0">
           <div className="flex items-center space-x-2">
             <div className="w-[100px] md:w-[120px]">
-             <Link to="/"> <img src="/trendikala_logo_bg.png" alt="Trendi Kala Logo" className="w-full h-full object-contain" /></Link>
+             <Link to="/"> <img src="/trendikala_logo_bg.webp" alt="Trendi Kala Logo" className="w-full h-full object-contain" /></Link>
             </div>
             <div className="hidden md:block border-l-2 border-green-700 h-20 px-2" />
             <div className="hidden md:block">

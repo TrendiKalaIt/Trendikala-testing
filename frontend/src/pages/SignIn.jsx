@@ -74,7 +74,7 @@ const SignIn = () => {
           </h2>
           <Link to="/">
             <img
-              src="trendikala_logo_bg.png"
+              src="trendikala_logo_bg.webp"
               className="w-24 object-cover"
               alt="Trendikala logo"
             />

@@ -1,40 +1,74 @@
-import React, { useState, useEffect, memo } from 'react';
+
+import React, { useState, useEffect, memo, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { newArrivalsItems } from '../assets/assets';
 import { Link } from 'react-router-dom';
 
 const NewArrivals = () => {
+
+
+  const newArrivalsItems = [
+    {
+      imageUrl: '/trendi-kala-discount-banner.jpg',
+      discount: '',
+      description: '',
+      bgColor: '#E8E0D7',
+      objectFit: 'contain'
+
+    },
+    {
+      imageUrl: '/trendi-kala-discount-banner-2.jpg',
+      discount: '',
+      description: '',
+      bgColor: '#E8E0D7',
+      objectFit: 'contain',
+
+
+    },
+
+  ];
+
+
   const [idx, setIdx] = useState(0);
+  const intervalRef = useRef(null);
 
-  // Auto-scroll effect
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const startAutoScroll = () => {
+    intervalRef.current = setInterval(() => {
       setIdx((prevIdx) => (prevIdx + 1) % newArrivalsItems.length);
-    }, 5000); // change slide every 5 seconds
+    }, 5000);
+  };
 
-    return () => clearInterval(interval); // Cleanup on unmount
+  useEffect(() => {
+    startAutoScroll();
+    return () => clearInterval(intervalRef.current);
   }, []);
 
-  const next = () => setIdx((i) => (i + 1) % newArrivalsItems.length);
-  const prev = () =>
+  const handleNext = () => {
+    setIdx((i) => (i + 1) % newArrivalsItems.length);
+    resetAutoScroll();
+  };
+
+  const handlePrev = () => {
     setIdx((i) => (i - 1 + newArrivalsItems.length) % newArrivalsItems.length);
+    resetAutoScroll();
+  };
+
+  const resetAutoScroll = () => {
+    clearInterval(intervalRef.current);
+    startAutoScroll();
+  };
 
   const current = newArrivalsItems[idx];
-
-  // Compute object-fit and position only once per render
-  const objectFit = current.objectFit ? `object-${current.objectFit}` : 'object-cover object-[42%]';
-  const objectPosition = current.objectPosition ? `object-[${current.objectPosition}]` : '';
 
   return (
     <section className="relative w-full mx-auto p-4">
       <div
-        className="relative w-full md:h-96 rounded-2xl overflow-hidden shadow-lg aspect-[2/1]"
+        className="relative w-full md:h-96 lg:rounded-2xl rounded-md overflow-hidden shadow-lg lg:aspect-[2/1] aspect-[3/1]"
         style={{ backgroundColor: current.bgColor }}
       >
         <img
           src={current.imageUrl}
           alt={`Collection ${idx + 1}`}
-          className={`absolute w-full md:h-[385px] h-full ${objectFit} ${objectPosition} md:object-fill`}
+          className="absolute w-full h-full "
           loading="lazy"
         />
 
@@ -55,25 +89,24 @@ const NewArrivals = () => {
 
         {/* Navigation Buttons */}
         <button
-          onClick={prev}
-          className="absolute top-1/2 left-4 -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow transition-opacity duration-300 z-10 focus:outline-none opacity-10 md:opacity-100"
+          onClick={handlePrev}
+          className="absolute top-1/2 left-4 -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow transition-opacity duration-300 z-1 focus:outline-none opacity-10 md:opacity-100"
           aria-label="Previous"
         >
           <ChevronLeft className="w-6 h-6 text-gray-700" />
         </button>
         <button
-          onClick={next}
-          className="absolute top-1/2 right-4 -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow transition-opacity duration-300 z-10 focus:outline-none opacity-10 md:opacity-100"
+          onClick={handleNext}
+          className="absolute top-1/2 right-4 -translate-y-1/2 bg-white bg-opacity-70 p-2 rounded-full shadow transition-opacity duration-300 z-1 focus:outline-none opacity-10 md:opacity-100"
           aria-label="Next"
         >
           <ChevronRight className="w-6 h-6 text-gray-700" />
         </button>
       </div>
-
       {/* Mobile Button */}
       <Link to="/allproducts">
-        <button className="font-heading font-semibold block sm:hidden mt-2 bg-[#9CAF88] text-white px-2 py-2 rounded-full text-sm">
-          VIEW COLLECTIONS
+        <button className="font-body  block sm:hidden mt-2 bg-[#9CAF88] text-white px-2  rounded-full text-sm">
+          COLLECTIONS
         </button>
       </Link>
     </section>

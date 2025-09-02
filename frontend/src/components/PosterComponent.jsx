@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-
+ 
 const PosterComponent = () => {
   return (
     <div className="relative flex justify-center items-center bg-white py-4">
@@ -12,7 +12,7 @@ const PosterComponent = () => {
             loading="lazy"
           />
         </div>
-
+ 
         <div className="relative text-gray-800 rounded-3xl md:border-0 p-2 h-full m-1 z-0">
           <h1 className="text-5xl md:text-7xl lg:text-9xl font-serif mt-12 md:m-10">
             KALA{" "}
@@ -35,5 +35,7 @@ const PosterComponent = () => {
     </div>
   );
 };
-
+ 
 export default memo(PosterComponent);
+ 
+ 

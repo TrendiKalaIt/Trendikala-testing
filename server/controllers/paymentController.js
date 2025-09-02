@@ -5,9 +5,7 @@ const Order = require('../models/Order');
 const Product = require('../models/Product.js');
 const { generateCustomerEmail } = require('../utils/customerEmailTemplate.js');
 const { generateAdminEmail } = require('../utils/adminEmailTemplate.js');
-// const sendEmail = require('../utils/sendEmail');
 const { sendOrderEmail } = require('../utils/sendEmail');
-
 
 const razorpayInstance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,

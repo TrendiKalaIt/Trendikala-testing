@@ -17,11 +17,11 @@ function Manufacturing() {
    
     <div className="min-h-screen bg-gray-50 font-inter text-gray-800">
       <section
-        className="relative h-96 md:h-[500px] bg-cover bg-center flex items-center justify-center text-center p-4"
+        className="relative h-96 md:h-[500px] bg-cover bg-[#c9e3bb] bg-center flex items-center justify-center text-center p-4"
         style={{ backgroundImage: 'url()' }}
       >
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div className="relative z-8 text-white max-w-3xl mx-auto">
+        <div className="absolute inset-0 "></div>
+        <div className="relative z-8 text-black max-w-3xl mx-auto">
           <h1 className= "font-heading text-4xl md:text-6xl font-bold mb-4 font-playfair-display">
             Where Quality Meets Craftsmanship
           </h1>

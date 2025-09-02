@@ -1,39 +1,73 @@
-import React from 'react';
+import React from "react";
+import { Gift } from "lucide-react";
 
 const NewUpdatesMsg = () => {
   return (
-    <div className="bg-gray-100 flex items-center justify-center font-sans text-gray-800">
-      <div className="w-full ">
-        <div className="relative text-[#111111] overflow-hidden p-2 flex items-center">
-          <div className="relative flex-grow pl-4 overflow-hidden">
-            <span className="marquee-content text-sm md:text-base tracking-wide">
-              👋✨ Special Offer: Get 10% off all products this week only! &nbsp;&nbsp;&nbsp;
-            </span>
+    <div className="bg-gray-100 flex items-center justify-center font-sans text-gray-800 overflow-hidden">
+      <div className="w-full">
+        <div className="relative text-[#8d9f79] p-2 flex items-center blinking-background">
+          <div className="updates-marquee-container">
+            <div className="updates-marquee-content  md:text-base tracking-wide flex items-center gap-8">
+              <span className="flex items-center gap-2">
+                <Gift className="w-5 h-5 text-[#fcd34d]" />
+                “Exclusive Offer: Complimentary gifts with the first 100 orders.”
+              </span>
+              <span className="flex items-center gap-2">
+                <Gift className="w-5 h-5 text-[#fcd34d]" />
+                “Exclusive Offer: Complimentary gifts with the first 100 orders.”
+              </span>
+               <span className="flex items-center gap-2">
+                <Gift className="w-5 h-5 text-[#fcd34d]" />
+                “Exclusive Offer: Complimentary gifts with the first 100 orders.”
+              </span>
+               <span className="flex items-center gap-2">
+                <Gift className="w-5 h-5 text-[#fcd34d]" />
+                “Exclusive Offer: Complimentary gifts with the first 100 orders.”
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
-      <style jsx="true">
-        {`
-          /* Define the keyframes for the scrolling animation */
-          @keyframes marquee-scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-          }
+      <style jsx="true">{`
+        /* Background blinking animation */
+        @keyframes blink-bg {
+          0% { background-color: #f3f4f6; }
+          50% { background-color: #fcd34d; }
+          100% { background-color: #f3f4f6; }
+        }
 
-          /* Apply the animation to the marquee text container */
-          .marquee-content {
-            white-space: nowrap;
-            animation: marquee-scroll 14s linear infinite;
-            display: inline-block;
-          }
+        .blinking-background {
+          animation: blink-bg 1s infinite;
+        }
 
-          /* Pause animation on hover */
-          .marquee-content:hover {
-            animation-play-state: paused;
+        .updates-marquee-container {
+          display: flex;
+          overflow: hidden;
+          position: relative;
+        }
+
+        .updates-marquee-content {
+          display: flex;
+          white-space: nowrap;
+          animation: marquee-scroll 20s linear infinite; /* SAME as ReelsMsg */
+          will-change: transform;
+        }
+
+        .updates-marquee-container:hover .updates-marquee-content {
+          animation-play-state: paused;
+          cursor: pointer;
+        }
+
+        @keyframes marquee-scroll {
+          0% {
+            transform: translateX(0);
           }
-        `}
-      </style>
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
     </div>
   );
 };

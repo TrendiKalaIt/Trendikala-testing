@@ -1,24 +1,3 @@
-// // utils/sendEmail.js
-// const transporter = require('../config/email');
-
-// const sendEmail = async (to, subject, html) => {
-//   try {
-//     const info = await transporter.sendMail({
-//       from: `"TrendiKala" <${process.env.OTP_EMAIL}>`,
-//       to,
-//       subject,
-//       html,
-//     });
-//     console.log(`Email sent to ${to}: ${info.messageId}`);
-//   } catch (error) {
-//     console.error(' Failed to send email:', error);
-//   }
-// };
-
-// module.exports = sendEmail;
-
-
-
 // utils/sendEmail.js
 const { otpTransporter, orderTransporter } = require('../config/email');
 

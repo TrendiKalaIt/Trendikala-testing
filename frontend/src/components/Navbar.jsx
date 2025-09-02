@@ -116,7 +116,7 @@ export default function Navbar({ links }) {
         {/* Logo */}
         <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
           <div className="w-[100px]">
-            <img src="/trendikala_logo_bg.png" alt="Trendi Kala Logo" className="w-full h-full object-contain" />
+            <img src="/trendikala_logo_bg.webp" alt="Trendi Kala Logo" className="w-full h-full object-contain" />
           </div>
           <div className="hidden md:block border-l-2 border-green-700 h-10 mx-3" />
           <div className="hidden md:block">

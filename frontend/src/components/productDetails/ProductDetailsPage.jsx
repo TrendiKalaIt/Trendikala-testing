@@ -10,6 +10,7 @@ import TabsNavigation from '../productDetails/ProductTabsNavigation';
 import ProductDetails from './ProductDetails';
 import ProductReviews from './ProductReviews';
 import ProductReviewForm from './ProductReviewForm';
+import SizeChartModel from './SizeChartModel.jsx';
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -31,6 +32,7 @@ const ProductDetailPage = () => {
 
   const [animateThumbnail, setAnimateThumbnail] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
 
 
 
@@ -123,7 +125,9 @@ const ProductDetailPage = () => {
       });
   };
 
-
+  const handleSizeChartClick = () => {
+    setIsSizeModalOpen(true);
+  };
   const getAvgRating = (reviews) => {
     if (!reviews?.length) return 0;
     return (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1);
@@ -263,9 +267,17 @@ const ProductDetailPage = () => {
           {/* Sizes */}
           <div>
             <h3 className="font-body text-[#35894E] mb-2">Choose Size</h3>
+
             <div className="overflow-x-auto sm:overflow-visible">
+              <button
+                onClick={handleSizeChartClick}
+                className=" py-1 mb-2 text-sm font-semibold px-3  rounded-3xl lg:px-4 lg:py-2 lg:rounded-none border   text-[#93A87E]  hover:bg-indigo-50 transition-colors duration-300"
+              >
+                Size Chart
+              </button>
               <div className="flex gap-3 whitespace-nowrap sm:flex-wrap">
                 {product.sizes?.map((sizeObj) => (
+
 
 
                   <div key={sizeObj.size} className="relative inline-block group">
@@ -293,7 +305,9 @@ const ProductDetailPage = () => {
                       </div>
                     )}
                   </div>
+
                 ))}
+
               </div>
             </div>
           </div>
@@ -400,7 +414,7 @@ const ProductDetailPage = () => {
         </div>
       )}
 
-
+      <SizeChartModel isOpen={isSizeModalOpen} onClose={() => setIsSizeModalOpen(false)} />
     </>
   );
 };
