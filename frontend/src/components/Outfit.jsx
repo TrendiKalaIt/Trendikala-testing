@@ -1,29 +1,33 @@
 import React, { useState, useEffect, useRef, memo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay,Navigation  } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import ReelsMsg from "./ReelsMsg";
 
 const Outfit = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedReel, setSelectedReel] = useState(null);
-  const [showReels, setShowReels] = useState(false); 
+  const [showReels, setShowReels] = useState(false);
   const reelsRef = useRef(null);
 
-    const sideImages = [
+  const sideImages = [
     { id: 1, url: "/cro1.webp" },
     { id: 2, url: "/cro2.webp" },
     { id: 3, url: "/cro3.webp" },
   ];
 
   const reels = [
+    { id: 7, url: "/dress7.mp4" },
+    { id: 8, url: "/dress8.mp4" },
+    { id: 9, url: "/dress9.mp4" },
+    { id: 10, url: "/dress10.mp4" },
     { id: 1, url: "/dress1.mp4" },
-    { id: 2, url: "/dress2.mp4" },
     { id: 3, url: "/dress3.mp4" },
     { id: 4, url: "/dress4.mp4" },
     { id: 5, url: "/dress5.mp4" },
+    { id: 2, url: "/dress2.mp4" },
     { id: 6, url: "/dress6.mp4" },
-    { id: 7, url: "/dress1.mp4" },
+
   ];
 
 
@@ -32,7 +36,7 @@ const Outfit = () => {
       (entries) => {
         if (entries[0].isIntersecting) {
           setShowReels(true);
-          observer.disconnect(); 
+          observer.disconnect();
         }
       },
       { threshold: 0.2 }
@@ -58,27 +62,28 @@ const Outfit = () => {
   return (
     <div className="w-full mx-auto p-4">
 
-       {/* Top Section */}
+      {/* Top Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 justify-between lg:gap-4 mb-6 gap-y-2 
       ">
         {/* Main Poster */}
-        <div className="col-span-2 h-[250px] md:h-[350px] rounded-2xl overflow-hidden relative">
-          <picture className="w-full h-full">
+        <div className="col-span-2 h-[250px] md:h-[350px] rounded-2xl overflow-hidden relative bg-[#cff1b9]">
+          <picture className="w-full h-full ">
             {/* Desktop version */}
             <source
-              media="(min-width: 768px)"   // md breakpoint
-              srcSet="/Offcer Desctop.png"
+              media="(min-width:768px)"
+              srcSet="/desktop-offer-banner.webp"
             />
-            {/* Mobile version */}
+            {/* Mobile version (fallback) */}
             <img
-              src="/Offcer Desctop.png"
-              alt="Main Poster"
-              className="w-full h-full object-cover"
+              src="/mobile-offer-banner.webp"
+              alt="Offer banner"
+              className="w-full h-full object-contain"
               loading="lazy"
             />
           </picture>
-
         </div>
+
+
 
         {/* Side Carousel */}
         <div className="h-[350px] w-full flex justify-center ">
@@ -111,7 +116,7 @@ const Outfit = () => {
         <div className="mb-2">
           <ReelsMsg />
         </div>
-        
+
 
         {showReels ? (
           <Swiper
@@ -155,11 +160,11 @@ const Outfit = () => {
 
       {/* --- Modal --- */}
       {isModalOpen && selectedReel && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
-          <div className="relative w-full max-w-4xl aspect-video overflow-hidden">
+        <div className="fixed inset-0  flex items-center justify-center z-50 p-4">
+          <div className="relative w-full h-full aspect-video overflow-hidden">
             <video
               src={selectedReel.url}
-              className="w-full h-full object-contain bg-black"
+              className="w-full h-full md:object-contain  bg-black "
               autoPlay
               controls
               loop
@@ -167,7 +172,7 @@ const Outfit = () => {
             />
             <button
               onClick={closeModal}
-              className="absolute top-3 right-3 bg-white rounded-full px-3 py-1 text-black font-bold"
+              className="absolute top-3 right-4 bg-white bg-opacity-35 rounded  px-3 md:py-1 text-white font-bold"
             >
               ✕
             </button>

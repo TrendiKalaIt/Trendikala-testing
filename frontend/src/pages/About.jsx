@@ -47,7 +47,7 @@ function AboutUs() {
           <div className=' lg:w-1/3 flex justify-center gap-1'>
             <div className="w-full ">
               <img
-                src='/Founder.png'
+                src='/Founder.webp'
                 alt="Our Brand Story"
                 className=" rounded-2xl w-[170px]  h-[260px] object-cover "
                 onError={(e) => {
@@ -61,7 +61,7 @@ function AboutUs() {
             </div>
             <div className="w-full ">
               <img
-                src='/Co-Founder.png'
+                src='/Co-Founder.webp'
                 alt="Our Brand Story"
                 className=" rounded-2xl w-[170px]  h-[260px] object-cover "
                 onError={(e) => {

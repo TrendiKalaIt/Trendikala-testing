@@ -51,7 +51,7 @@ app.use('/api/enquiries', enquiryRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/payment', paymentRoutes);
 
-// Test POST route
+// Test POST route 
 app.post('/test', (req, res) => {
   res.send('POST request received');
 });

@@ -203,24 +203,30 @@ function CartPage() {
         <div className="w-full lg:w-96 bg-white p-6 rounded-lg shadow-sm">
           <h2 className="font-heading text-2xl font-semibold text-gray-800 mb-4">Cart summary</h2>
           <div className="space-y-4">
-
-            <span className="font-body text-sm text-gray-600">Delivery Charge  ₹{deliveryCharge.toFixed(2)}</span>
-
           </div>
+        
           <div className="border-t border-gray-200 mt-6 pt-4 space-y-3">
             <div className="font-home flex justify-between text-gray-700 text-lg">
               <span>Subtotal</span>
               <span className="font-medium">₹{subtotal.toFixed(2)}</span>
             </div>
-            <div className="font-body flex justify-between text-gray-700 text-sm">
-              <span>Delivery Charge</span>
-              <span className="font-medium">₹{deliveryCharge.toFixed(2)}</span>
-            </div>
-            <div className=" font-home flex justify-between text-xl  text-gray-800">
-              <span >Total</span>
-              <span>₹{total.toFixed(2)}</span>
+
+            {/* Delivery charge tabhi dikhe jab subtotal > 0 ho */}
+            {subtotal > 0 && (
+              <div className="font-body flex justify-between text-gray-700 text-sm">
+                <span>Delivery Charge</span>
+                <span className="font-medium">₹{deliveryCharge.toFixed(2)}</span>
+              </div>
+            )}
+
+            <div className="font-home flex justify-between text-xl text-gray-800">
+              <span>Total</span>
+              <span>
+                ₹{subtotal > 0 ? total.toFixed(2) : 0}
+              </span>
             </div>
           </div>
+
           <button
             onClick={() => {
               if (products.length === 0) {
