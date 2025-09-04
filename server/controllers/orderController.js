@@ -35,12 +35,18 @@ exports.placeOrder = async (req, res) => {
                 return res.status(400).json({ message: 'Product not found' });
             }
 
-            if (product.stock < item.quantity) {
+            const sizeEntry = product.sizes.find(s => s.size === item.size);
+            if (!sizeEntry) {
+                return res.status(400).json({ message: `Selected size "${item.size}" not available for product "${product.productName}"` });
+            }
+
+            if (sizeEntry.stock < item.quantity) {
                 return res.status(400).json({
-                    message: `Product "${product.productName}" is out of stock or has only ${product.stock} left.`,
+                    message: `Product "${product.productName}" (Size: ${item.size}) has only ${sizeEntry.stock} left.`,
                 });
             }
         }
+
 
         // Create new order
         const newOrder = new Order({
@@ -54,23 +60,23 @@ exports.placeOrder = async (req, res) => {
             paymentStatus: paymentMethod === 'Razorpay' ? 'Paid' : 'Pending',
         });
 
-        // Generate orderId
-        // const lastOrder = await Order.findOne().sort({ orderId: -1 }).select('orderId');
-        // newOrder.orderId = (lastOrder && lastOrder.orderId ? lastOrder.orderId : 0) + 1;
-
         await newOrder.save();
 
         // Update stock for each product in the order
+
+
         for (const item of orderItems) {
-            // Assuming item.product holds the product ID, and item.quantity holds quantity ordered
             const product = await Product.findById(item.product);
             if (!product) continue;
 
-            // Decrease stock but don't go below 0
-            product.stock = Math.max(product.stock - item.quantity, 0);
+            const sizeEntry = product.sizes.find(s => s.size === item.size);
+            if (sizeEntry) {
+                sizeEntry.stock = Math.max(sizeEntry.stock - item.quantity, 0);
+            }
 
             await product.save();
         }
+
 
         // Clear cart if items were taken from cart
         if (!items || items.length === 0) {
