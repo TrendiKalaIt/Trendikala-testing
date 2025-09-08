@@ -307,7 +307,7 @@ const CheckoutDetails = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/signup?redirect=/checkout");
+      navigate("/create-account?redirect=/checkout");
     } else {
       setCheckingAuth(false);
     }

@@ -9,8 +9,8 @@ import NewUpdatesMsg from '../NewUpdatesMsg';
 
 const navLinks = [
   { name: 'home', path: '/' },
-  { name: 'products', path: '/allproducts' },
-  { name: 'about', path: '/about' },
+  { name: 'products', path: '/all-products' },
+  { name: 'about Us', path: '/about-us' },
   { name: 'manufacturing', path: '/manufacturing' },
 ];
 

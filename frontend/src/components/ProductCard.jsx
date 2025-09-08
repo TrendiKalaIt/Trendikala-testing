@@ -171,7 +171,7 @@ const handleNavigate = () => {
     setIsModalOpen(false);
 
     if (!user) {
-      navigate('/signup?redirect=/checkout');
+      navigate('/create-account?redirect=/checkout');
     }
 
     dispatch(setOrderDetails(productToBuy));

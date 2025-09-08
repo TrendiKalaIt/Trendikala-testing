@@ -21,7 +21,7 @@ const MyOrdersPage = () => {
     <div className="md:p-10 p-4 space-y-6 max-w-5xl mx-auto">
       <div className=" flex justify-between">
         <div> <h2 className="text-2xl font-heading text-green-500 font-semibold mb-6">My Orders</h2></div>
-        <div><Link to="/enquiry">
+        <div><Link to="/enquiry-us">
           <div className="font-home bg-red-400 text-white border p-1 px-2 rounded hover:shadow-lg hover:bg-red-600 cursor-pointer">
             Cancel Order
           </div>

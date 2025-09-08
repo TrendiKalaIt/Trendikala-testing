@@ -52,7 +52,7 @@ const CategoryProducts = () => {
 
           <div className="text-center">
             <a
-              href="/allproducts"
+              href="/all-products"
               className="inline-block py-3 px-6 bg-[#93A87E] text-white text-sm sm:text-base font-medium rounded-full 
                      shadow-md hover:bg-green-700 transition-transform transform hover:scale-105 duration-200"
             >

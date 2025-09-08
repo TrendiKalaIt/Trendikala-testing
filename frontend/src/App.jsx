@@ -54,21 +54,21 @@ function App() {
           <Routes>
             <Route element={<Layout />}>
               {/* Public Routes */}
-              <Route path="/allproducts" element={<AllProducts />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/all-products" element={<AllProducts />} />
+              <Route path="/about-us" element={<About />} />
               <Route path="/manufacturing" element={<Manufacturing />} />
               {/* <Route path="/productdetails/:id" element={<ProductDetailsPage />} /> */}
               <Route path="/women-products/:category/:slug" element={<ProductDetailsPage />} />
 
               <Route path="/search" element={<SearchResults />} />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/cancellation-return" element={<CancellationReturn />} />
+              <Route path="/faqs" element={<FAQPage />} />
+              <Route path="/contact-us" element={<ContactUs />} />
+              <Route path="/cancellation-return-policy" element={<CancellationReturn />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
               <Route path="/terms-conditions" element={<TermsConditions/>} />
-              <Route path="/shipping-delivery" element={<ShippingDelivery />} />
+              <Route path="/shipping-delivery-policy" element={<ShippingDelivery />} />
 
-              <Route path="/enquiry" element={<Enquiry />} />
+              <Route path="/enquiry-us" element={<Enquiry />} />
               <Route path="/checkout" element={<CheckoutDetails />} />
               <Route path="/thankyou" element={<Thankyou />} />
               <Route path="/category/:categoryId" element={<CategoryProducts />} />
@@ -90,7 +90,7 @@ function App() {
 
             <Route element={<AuthLayout />}>
               <Route path="/signin" element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/create-account" element={<SignUp />} />
               <Route path="/verify-otp" element={<OTPVerification />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />

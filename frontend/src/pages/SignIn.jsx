@@ -146,7 +146,7 @@ const SignIn = () => {
           <button
             type="button"
             className="font-home w-full border border-[#35894E] text-[#35894E] font-bold py-2 px-6 rounded-full hover:bg-green-50 transition"
-            onClick={() => navigate(`/signup?redirect=${encodeURIComponent(redirectPath)}`)}
+            onClick={() => navigate(`/create-account?redirect=${encodeURIComponent(redirectPath)}`)}
           >
             CREATE ACCOUNT
           </button>

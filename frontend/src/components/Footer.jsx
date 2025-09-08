@@ -16,9 +16,9 @@ const Footer = () => {
           <div className=''>
             <h3 className=" font-home font-bold text-lg mb-4">CUSTOMER CARE</h3>
             <ul className="space-y-2 ">
-              <li><Link to="/contact" className="font-body hover:text-lime-700 transition duration-300">Contact Us</Link></li>
-              <li><Link to="/faq" className="font-body hover:text-lime-700 transition duration-300">FAQs</Link></li>
-              <li><Link to="/enquiry" className="font-body hover:text-lime-700 transition duration-300">Enquiry</Link></li>
+              <li><Link to="/contact-us" className="font-body hover:text-lime-700 transition duration-300">Contact Us</Link></li>
+              <li><Link to="/faqs" className="font-body hover:text-lime-700 transition duration-300">FAQs</Link></li>
+              <li><Link to="/enquiry-us" className="font-body hover:text-lime-700 transition duration-300">Enquiry Us</Link></li>
 
             </ul>
           </div>
@@ -28,8 +28,8 @@ const Footer = () => {
             <h3 className="font-home font-bold text-lg mb-4">SHOP</h3>
             <ul className="space-y-2">
               <li><Link to="/" className="font-body hover:text-lime-700 transition duration-300">Home</Link></li>
-              <li><Link to="/allproducts" className="font-body hover:text-lime-700 transition duration-300">All Products</Link></li>
-              <li><Link to="/about" className="font-body hover:text-lime-700 transition duration-300">About</Link></li>
+              <li><Link to="/all-products" className="font-body hover:text-lime-700 transition duration-300">All Products</Link></li>
+              <li><Link to="/about-us" className="font-body hover:text-lime-700 transition duration-300">About Us</Link></li>
               <li><Link to="/manufacturing" className="font-body hover:text-lime-700 transition duration-300">Manufacturing</Link></li>
             </ul>
           </div>
@@ -38,11 +38,11 @@ const Footer = () => {
           <div>
             <h3 className="font-home font-bold text-lg mb-4">ACCOUNT / POLICIES</h3>
             <ul className="space-y-2">
-              <li><Link to="/signup" className="font-body hover:text-lime-700 transition duration-300">Create Account</Link></li>
-              <li><Link to="/cancellation-return" className="font-body hover:text-lime-700 transition duration-300">Cancellation, Return & Refund Policy</Link></li>
+              <li><Link to="/create-account" className="font-body hover:text-lime-700 transition duration-300">Create Account</Link></li>
+              <li><Link to="/cancellation-return-policy" className="font-body hover:text-lime-700 transition duration-300">Cancellation, Return & Refund Policy</Link></li>
               <li><Link to="/privacy-policy" className="font-body hover:text-lime-700 transition duration-300">Privacy Policy</Link></li>
               <li><Link to="/terms-conditions" className="font-body hover:text-lime-700 transition duration-300">Terms & Conditions</Link></li>
-              <li><Link to="/shipping-delivery" className="font-body hover:text-lime-700 transition duration-300">Shipping & Delivery Policy</Link></li>
+              <li><Link to="/shipping-delivery-policy" className="font-body hover:text-lime-700 transition duration-300">Shipping & Delivery Policy</Link></li>
 
             </ul>
 

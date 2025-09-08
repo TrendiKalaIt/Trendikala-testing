@@ -16,7 +16,7 @@ const AddressForm = ({
   useEffect(() => {
     if (!token) {
 
-      navigate('/signup?redirect=/checkout')
+      navigate('/create-account?redirect=/checkout')
     }
   }, [token, navigate]);
 

@@ -5,7 +5,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   const handleViewDetails = () => {
-    navigate("/allproducts");
+    navigate("/all-products");
   };
 
   return (

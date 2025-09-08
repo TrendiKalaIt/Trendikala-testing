@@ -48,7 +48,7 @@ export default function ForgotPassword() {
 
                 <p className="text-center mt-4">
                     Don’t have an account?{' '}
-                    <Link to="/signup" className="text-[#35894E] hover:underline">
+                    <Link to="/create-account" className="text-[#35894E] hover:underline">
                         Signup Now
                     </Link>
                 </p>
