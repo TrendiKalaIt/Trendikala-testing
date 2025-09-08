@@ -18,7 +18,9 @@ const Products = () => {
   const [visibleCount, setVisibleCount] = useState(8);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [categoryHasProducts, setCategoryHasProducts] = useState(true);
+  //const [categoryHasProducts, setCategoryHasProducts] = useState(true);
+
+  const categoryHasProducts = selectedCategory ? products.length > 0 : true;
 
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -65,7 +67,7 @@ const Products = () => {
   const fetchProducts = async (category = "", subcategory = "") => {
     setLoading(true);
     setError(null);
-    setCategoryHasProducts(true); // Reset before fetching
+    //setCategoryHasProducts(true); // Reset before fetching
 
     try {
       dispatch(showLoader());
@@ -79,7 +81,7 @@ const Products = () => {
       const productsData = Array.isArray(res.data?.data) ? res.data.data : [];
 
       if (category && productsData.length === 0) {
-        setCategoryHasProducts(false);
+        //setCategoryHasProducts(false);
         setProducts([]);
         setError(null);
       } else {
@@ -137,11 +139,11 @@ const Products = () => {
               onClick={() => {
                 setSelectedCategory(cat._id);
                 setSelectedSubcategory("");
-                if (cat.products && cat.products.length > 0) {
-                  setCategoryHasProducts(true);
-                } else {
-                  setCategoryHasProducts(false);
-                }
+                // if (cat.products && cat.products.length > 0) {
+                //   setCategoryHasProducts(true);
+                // } else {
+                //   setCategoryHasProducts(false);
+                // }
               }}
             >
               <div className="w-full aspect-square overflow-hidden py-1 relative">

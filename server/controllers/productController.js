@@ -45,9 +45,40 @@ exports.getAllProducts = async (req, res) => {
 };
 
 // Get single product by ID
-exports.getProduct = async (req, res) => {
+// exports.getProduct = async (req, res) => {
+//     try {
+//         const product = await Product.findById(req.params.id);
+
+//         if (!product) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'Product not found'
+//             });
+//         }
+
+//         res.status(200).json({
+//             success: true,
+//             data: product
+//         });
+//     } catch (error) {
+//         if (error instanceof mongoose.Error.CastError) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: 'Invalid product ID format'
+//             });
+//         }
+//         res.status(500).json({
+//             success: false,
+//             message: 'Failed to fetch product',
+//             error: error.message
+//         });
+//     }
+// };
+
+// Get single product by slug
+exports.getProductBySlug = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
+        const product = await Product.findOne({ slug: req.params.slug });
 
         if (!product) {
             return res.status(404).json({
@@ -61,12 +92,6 @@ exports.getProduct = async (req, res) => {
             data: product
         });
     } catch (error) {
-        if (error instanceof mongoose.Error.CastError) {
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid product ID format'
-            });
-        }
         res.status(500).json({
             success: false,
             message: 'Failed to fetch product',
@@ -74,6 +99,7 @@ exports.getProduct = async (req, res) => {
         });
     }
 };
+
 
 
 exports.addProductReview = async (req, res) => {

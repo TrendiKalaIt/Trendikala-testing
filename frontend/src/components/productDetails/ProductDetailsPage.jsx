@@ -13,7 +13,8 @@ import ProductReviewForm from './ProductReviewForm';
 import SizeChartModel from './SizeChartModel.jsx';
 
 const ProductDetailPage = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
+  const { slug } = useParams();
   const dispatch = useDispatch();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -42,7 +43,8 @@ const ProductDetailPage = () => {
       try {
         setLoading(true);
         setError(null);
-        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
+        // const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/slug/${slug}`);
         const data = res.data?.data;
 
         if (!data) throw new Error('Product not found');
@@ -68,7 +70,7 @@ const ProductDetailPage = () => {
       }
     };
     fetchProduct();
-  }, [id]);
+  }, [slug]);
 
   const handleSizeSelect = (sizeObj) => {
     if (sizeObj.stock <= 0) return;

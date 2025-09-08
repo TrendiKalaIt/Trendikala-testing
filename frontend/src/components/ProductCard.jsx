@@ -53,9 +53,21 @@ const ProductCard = ({ product = {} }) => {
   const isOutOfStock = (Math.floor(Number(productStock)) || 0) <= 0;
 
   // Navigation
-  const handleNavigate = () => {
-    if (_id) navigate(`/productdetails/${_id}`);
-  };
+  // const handleNavigate = () => {
+  //   if (_id) navigate(`/productdetails/${_id}`);
+  // };
+
+
+//   const handleNavigate = () => {
+//   if (product.slug) navigate(`/women-products/${product.slug}`);
+// };
+
+const handleNavigate = () => {
+  if (product.slug && category?.name) {
+    const categorySlug = category.name.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/women-products/${categorySlug}/${product.slug}`);
+  }
+};
 
 
   const handleAddToCartClick = () => {
