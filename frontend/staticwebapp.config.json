@@ -1,28 +1,11 @@
 {
-  "routes": [
-    {
-      "route": "/robots.txt",
-      "serve": "/robots.txt"
-    },
-    {
-      "route": "/sitemap.xml",
-      "serve": "/sitemap.xml"
-    },
-    {
-      "route": "/sitemap.html",
-      "serve": "/sitemap.html"
-    }
-  ],
   "navigationFallback": {
     "rewrite": "/index.html",
     "exclude": [
       "/images/*",
       "/static/*",
       "/favicon.ico",
-      "/assets/*",
-      "/robots.txt",
-      "/sitemap.xml",
-      "/sitemap.html"
+      "/assets/*"
     ]
   }
 }
