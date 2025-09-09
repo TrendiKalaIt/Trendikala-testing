@@ -1,0 +1,26 @@
+const express = require('express');
+const app = express();
+const port = 3000; // apna port rakho (jaise 8080 ya production port)
+ 
+// Robots.txt route
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send(`User-agent: *
+Disallow: /https://orders.trendikala.com/login
+Disallow: /cart
+Disallow: /checkout
+Disallow: /my-account
+Disallow: /create-account
+Disallow: /enquiry-us
+ 
+Allow: /
+ 
+Sitemap: https://trendikala.com/sitemap.xml
+Sitemap: https://trendikala.com/sitemap.html
+`);
+});
+ 
+// Server start
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
