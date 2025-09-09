@@ -19,8 +19,8 @@ const Products = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   //const [categoryHasProducts, setCategoryHasProducts] = useState(true);
-
   const categoryHasProducts = selectedCategory ? products.length > 0 : true;
+
 
   const API_URL = import.meta.env.VITE_API_URL;
 

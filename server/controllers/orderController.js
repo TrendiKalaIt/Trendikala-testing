@@ -48,7 +48,6 @@ dotenv.config();
 //             }
 //         }
 
-
 //         // Create new order
 //         const newOrder = new Order({
 //             user: userId,
@@ -61,11 +60,10 @@ dotenv.config();
 //             paymentStatus: paymentMethod === 'Razorpay' ? 'Paid' : 'Pending',
 //         });
 
+
 //         await newOrder.save();
 
 //         // Update stock for each product in the order
-
-
 //         for (const item of orderItems) {
 //             const product = await Product.findById(item.product);
 //             if (!product) continue;
@@ -77,7 +75,6 @@ dotenv.config();
 
 //             await product.save();
 //         }
-
 
 //         // Clear cart if items were taken from cart
 //         if (!items || items.length === 0) {
@@ -107,7 +104,6 @@ dotenv.config();
 //         res.status(500).json({ message: 'Failed to place order', error: err.message });
 //     }
 // };
-
 
 exports.placeOrder = async (req, res) => {
   try {
@@ -257,7 +253,6 @@ exports.placeOrder = async (req, res) => {
 };
 
 
-
 exports.getMyOrders = async (req, res) => {
     try {
         const userId = req.user._id;
@@ -306,7 +301,3 @@ exports.getTotalCustomers = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
-
-
-
-

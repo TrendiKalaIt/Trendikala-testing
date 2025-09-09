@@ -19,6 +19,7 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const couponRoutes = require("./routes/couponRoutes");
 
+
 // Load environment variables
 
 
@@ -53,7 +54,7 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use("/api/coupons", couponRoutes);
 
-// Test POST route 
+// Test POST route
 app.post('/test', (req, res) => {
   res.send('POST request received');
 });

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,8 +61,7 @@ const AddressSection = ({
   }, [token, setSavedAddresses]);
 
   const handleDelete = async (addressId) => {
-    if (!window.confirm("Are you sure you want to delete this address?"))
-      return;
+    if (!window.confirm("Are you sure you want to delete this address?")) return;
 
     try {
       setLoading(true);
@@ -72,9 +72,7 @@ const AddressSection = ({
         }
       );
       toast.success("Address deleted successfully");
-      const updatedAddresses = savedAddresses.filter(
-        (addr) => addr._id !== addressId
-      );
+      const updatedAddresses = savedAddresses.filter((addr) => addr._id !== addressId);
       setSavedAddresses(updatedAddresses);
       if (selectedAddress?._id === addressId) {
         setSelectedAddress(null);
@@ -102,21 +100,17 @@ const AddressSection = ({
                 addr && (
                   <li
                     key={addr._id}
-                    className={`p-3  border rounded-md cursor-pointer flex justify-between items-start ${
-                      selectedAddress && selectedAddress._id === addr._id
-                        ? "border-green-600 bg-green-50"
-                        : "border-gray-300"
-                    }`}
+                    className={`p-3  border rounded-md cursor-pointer flex justify-between items-start ${selectedAddress && selectedAddress._id === addr._id
+                      ? "border-green-600 bg-green-50"
+                      : "border-gray-300"
+                      }`}
                     onClick={() => setSelectedAddress(addr)}
                   >
                     <div>
-                      <div className="font-semibold font-body">
-                        {addr.fullName}
-                      </div>
+                      <div className="font-semibold font-body">{addr.fullName}</div>
                       <div className="font-body">
                         {addr.streetAddress}
-                        {addr.apartment ? `, ${addr.apartment}` : ""},{" "}
-                        {addr.townCity},{addr.zipcode}
+                        {addr.apartment ? `, ${addr.apartment}` : ""}, {addr.townCity},{addr.zipcode}
                       </div>
                       <div className="font-body">
                         {addr.phoneNumber} | {addr.emailAddress}
@@ -167,6 +161,7 @@ const CheckoutSection = ({
   loadingSubmit,
   handlePlaceOrder,
   selectedAddress,
+  discountAmount,
 }) => (
   <div>
     <h2 className=" font-heading text-2xl text-green-600 font-semibold mb-4">
@@ -174,9 +169,7 @@ const CheckoutSection = ({
     </h2>
     <div className="space-y-6">
       {cart.length === 0 ? (
-        <p className="font-body text-gray-500 text-center py-4">
-          No items to display.
-        </p>
+        <p className="font-body text-gray-500 text-center py-4">No items to display.</p>
       ) : (
         cart.map((item, index) => (
           <div
@@ -189,9 +182,7 @@ const CheckoutSection = ({
                 alt={item.productName}
                 className="w-10 h-10 rounded-full mr-4"
               />
-              <span className="font-home text-gray-800">
-                {item.productName}
-              </span>
+              <span className="font-home text-gray-800">{item.productName}</span>
             </div>
             <span className="text-gray-800 font-medium font-body">
               ₹{(item.quantity || 1) * item.discountPrice}
@@ -199,15 +190,19 @@ const CheckoutSection = ({
           </div>
         ))
       )}
+      {discountAmount > 0 && (
+        <div className="flex justify-between text-red-600 font-semibold font-body pt-2">
+          <span>Discount</span>
+          <span>- ₹{discountAmount.toFixed(2)}</span>
+        </div>
+      )}
       <div className="flex justify-between text-gray-700 pt-4">
         <span className="font-body">Subtotal</span>
-        <span className="font-semibold font-body">₹{subtotal.toFixed(2)}</span>
+        <span className="font-semibold font-body">₹{(subtotal - discountAmount).toFixed(2)}</span>
       </div>
       <div className="flex justify-between text-gray-700">
         <span className="font-body">Delivery Charge</span>
-        <span className="text-sm text-green-600 font-body">
-          ₹{shipping.toFixed(2)}
-        </span>
+        <span className="text-sm text-green-600 font-body">₹{shipping.toFixed(2)}</span>
       </div>
       <div className="flex justify-between text-lg font-bold text-gray-900 border-t-2 border-gray-200 pt-4">
         <span className="font-home">Total:</span>
@@ -225,11 +220,8 @@ const CheckoutSection = ({
       ].map(({ id, label, icons }) => (
         <div
           key={id}
-          className={`flex items-center p-4 rounded-lg border cursor-pointer transition duration-200 ${
-            paymentMethod === id
-              ? "border-green-500 bg-green-50"
-              : "border-gray-300"
-          }`}
+          className={`flex items-center p-4 rounded-lg border cursor-pointer transition duration-200 ${paymentMethod === id ? "border-green-500 bg-green-50" : "border-gray-300"
+            }`}
           onClick={() => setPaymentMethod(id)}
         >
           <input
@@ -260,11 +252,8 @@ const CheckoutSection = ({
     <button
       onClick={handlePlaceOrder}
       disabled={loadingSubmit || !selectedAddress}
-      className={` font-home mt-8 w-full bg-[#9caf88e0] text-white py-2 rounded-lg font-semibold text-lg shadow-md transition duration-300 ease-in-out ${
-        loadingSubmit || !selectedAddress
-          ? "opacity-50 cursor-not-allowed"
-          : "hover:bg-[#9CAF88]"
-      }`}
+      className={` font-home mt-8 w-full bg-[#9caf88e0] text-white py-2 rounded-lg font-semibold text-lg shadow-md transition duration-300 ease-in-out ${loadingSubmit || !selectedAddress ? "opacity-50 cursor-not-allowed" : "hover:bg-[#9CAF88]"
+        }`}
     >
       {loadingSubmit ? "Placing Order..." : "Place Order"}
     </button>
@@ -291,23 +280,17 @@ const CheckoutDetails = () => {
   const navigate = useNavigate();
 
   const [checkingAuth, setCheckingAuth] = useState(true);
-
-  // Addresses states
   const [savedAddresses, setSavedAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
-
-  // Payment and loading states
   const [paymentMethod, setPaymentMethod] = useState("cashOnDelivery");
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-
-  //coupans
   const [couponCode, setCouponCode] = useState("");
-  const [couponData, setCouponData] = useState(null); // Will hold { type, value }
+  const [couponData, setCouponData] = useState(null);
   const [couponMessage, setCouponMessage] = useState("");
 
   useEffect(() => {
     if (!token) {
-      navigate("/create-account?redirect=/checkout");
+      navigate("/signup?redirect=/checkout");
     } else {
       setCheckingAuth(false);
     }
@@ -318,14 +301,6 @@ const CheckoutDetails = () => {
   }
 
   const cart = orderDetails ? [orderDetails] : cartFromCheckout;
-
-  // const subtotal = cart.reduce(
-  //   (sum, p) => sum + (p.quantity || 1) * p.discountPrice,
-  //   0
-  // );
-  // const DELIVERY_CHARGE = 100;
-  // const shipping = DELIVERY_CHARGE;
-  // const total = subtotal + shipping;
 
   const subtotal = cart.reduce(
     (sum, p) => sum + (p.quantity || 1) * p.discountPrice,
@@ -344,9 +319,7 @@ const CheckoutDetails = () => {
 
   const DELIVERY_CHARGE = 100;
   const shipping = DELIVERY_CHARGE;
-
   const total = Math.max(0, subtotal - discountAmount) + shipping;
-
   const finalSelectedAddress = selectedAddress;
 
   const handlePlaceOrder = async () => {
@@ -358,9 +331,7 @@ const CheckoutDetails = () => {
     if (paymentMethod === "bank") {
       const isScriptLoaded = await loadRazorpayScript();
       if (!isScriptLoaded) {
-        toast.error(
-          "Failed to load Razorpay SDK. Please check your connection."
-        );
+        toast.error("Failed to load Razorpay SDK. Please check your connection.");
         return;
       }
 
@@ -486,7 +457,6 @@ const CheckoutDetails = () => {
     }
   };
 
-  //handle coupans
   const handleApplyCoupon = async () => {
     if (!couponCode.trim()) {
       setCouponMessage("Please enter a coupon code.");
@@ -503,15 +473,14 @@ const CheckoutDetails = () => {
       );
 
       if (response.data.success) {
-        setCouponData(response.data.coupon); // { discount_type, discount_value }
+        setCouponData(response.data.coupon);
         setCouponMessage("Coupon applied successfully!");
         toast.success("Coupon applied");
       } else {
         setCouponMessage(response.data.message);
       }
     } catch (err) {
-      const msg =
-        err.response?.data?.message || "Invalid coupon or server error.";
+      const msg = err.response?.data?.message || "Invalid coupon or server error.";
       setCouponMessage(msg);
     }
   };
@@ -528,33 +497,84 @@ const CheckoutDetails = () => {
             setSelectedAddress={setSelectedAddress}
           />
         </div>
-        <div className="mb-8">
-          <h2 className="text-xl font-semibold font-heading mb-2 text-green-600">
-            Apply Coupon
-          </h2>
-          <div className="flex items-center space-x-2">
-            <input
-              type="text"
-              value={couponCode}
-              onChange={(e) => setCouponCode(e.target.value)}
-              placeholder="Enter coupon code"
-              className="border border-gray-300 rounded px-4 py-2 w-full"
-            />
-            <button
-              onClick={handleApplyCoupon}
-              className="bg-green-600 text-white px-4 py-2 rounded font-home hover:bg-green-700"
-            >
-              Apply
-            </button>
-          </div>
-          {couponMessage && (
-            <p className="mt-2 text-sm text-green-600 font-body">
-              {couponMessage}
-            </p>
-          )}
-        </div>
 
-        <div className="flex-1 lg:pl-12">
+        <div className="flex-1 lg:pl-12 ">
+          {/* <div className="mb-8">
+            <h2 className="text-xl font-semibold font-heading mb-2 text-green-600">
+              Apply Coupon
+            </h2>
+            <div className="flex items-center space-x-2">
+              <input
+                type="text"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                placeholder="Enter coupon code"
+                className="border border-gray-300 rounded px-4 py-2 w-full"
+                disabled={!!couponData}
+              />
+              <button
+                onClick={handleApplyCoupon}
+                className="bg-green-600 text-white px-4 py-2 rounded font-home hover:bg-green-700"
+                disabled={!!couponData}
+              >
+                Apply
+              </button>
+              {couponData && (
+                <button
+                  onClick={() => {
+                    setCouponData(null);
+                    setCouponCode("");
+                    setCouponMessage("");
+                  }}
+                  className="bg-red-600 text-white px-4 py-2 rounded font-home hover:bg-red-700"
+                >
+                  Remove 
+                </button>
+              )}
+            </div>
+            {couponMessage && (
+              <p className="mt-2 text-sm text-green-600 font-body">{couponMessage}</p>
+            )}
+          </div> */}
+
+
+          <div className="py-6">
+            <h2 className="text-xl font-semibold font-heading mb-2 text-green-600">
+              Apply Coupon
+            </h2>
+            <div className="flex items-center space-x-2">
+
+              <input
+                type="text"
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
+                placeholder="Enter coupon code"
+                className="border border-gray-300 rounded px-4 py-2 w-full"
+                disabled={!!couponData}  // disables input after coupon applied
+              />
+              {!couponData && (
+                <button
+                  onClick={handleApplyCoupon}
+                  className="bg-green-600 text-white px-4 py-2 rounded font-home hover:bg-green-700"
+                >
+                  Apply
+                </button>
+              )}
+              {couponData && (
+                <button
+                  onClick={() => {
+                    setCouponData(null);
+                    setCouponCode("");
+                    setCouponMessage("");
+                  }}
+                  className="bg-red-600 text-white px-4 py-2 rounded font-home hover:bg-red-700"
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          </div>
+
           <CheckoutSection
             cart={cart}
             subtotal={subtotal}
@@ -565,6 +585,7 @@ const CheckoutDetails = () => {
             loadingSubmit={loadingSubmit}
             handlePlaceOrder={handlePlaceOrder}
             selectedAddress={finalSelectedAddress}
+            discountAmount={discountAmount}
           />
         </div>
       </div>
