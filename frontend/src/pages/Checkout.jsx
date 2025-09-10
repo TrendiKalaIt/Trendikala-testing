@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -61,7 +60,8 @@ const AddressSection = ({
   }, [token, setSavedAddresses]);
 
   const handleDelete = async (addressId) => {
-    if (!window.confirm("Are you sure you want to delete this address?")) return;
+    if (!window.confirm("Are you sure you want to delete this address?"))
+      return;
 
     try {
       setLoading(true);
@@ -72,7 +72,9 @@ const AddressSection = ({
         }
       );
       toast.success("Address deleted successfully");
-      const updatedAddresses = savedAddresses.filter((addr) => addr._id !== addressId);
+      const updatedAddresses = savedAddresses.filter(
+        (addr) => addr._id !== addressId
+      );
       setSavedAddresses(updatedAddresses);
       if (selectedAddress?._id === addressId) {
         setSelectedAddress(null);
@@ -100,17 +102,21 @@ const AddressSection = ({
                 addr && (
                   <li
                     key={addr._id}
-                    className={`p-3  border rounded-md cursor-pointer flex justify-between items-start ${selectedAddress && selectedAddress._id === addr._id
-                      ? "border-green-600 bg-green-50"
-                      : "border-gray-300"
-                      }`}
+                    className={`p-3  border rounded-md cursor-pointer flex justify-between items-start ${
+                      selectedAddress && selectedAddress._id === addr._id
+                        ? "border-green-600 bg-green-50"
+                        : "border-gray-300"
+                    }`}
                     onClick={() => setSelectedAddress(addr)}
                   >
                     <div>
-                      <div className="font-semibold font-body">{addr.fullName}</div>
+                      <div className="font-semibold font-body">
+                        {addr.fullName}
+                      </div>
                       <div className="font-body">
                         {addr.streetAddress}
-                        {addr.apartment ? `, ${addr.apartment}` : ""}, {addr.townCity},{addr.zipcode}
+                        {addr.apartment ? `, ${addr.apartment}` : ""},{" "}
+                        {addr.townCity},{addr.zipcode}
                       </div>
                       <div className="font-body">
                         {addr.phoneNumber} | {addr.emailAddress}
@@ -169,7 +175,9 @@ const CheckoutSection = ({
     </h2>
     <div className="space-y-6">
       {cart.length === 0 ? (
-        <p className="font-body text-gray-500 text-center py-4">No items to display.</p>
+        <p className="font-body text-gray-500 text-center py-4">
+          No items to display.
+        </p>
       ) : (
         cart.map((item, index) => (
           <div
@@ -182,7 +190,9 @@ const CheckoutSection = ({
                 alt={item.productName}
                 className="w-10 h-10 rounded-full mr-4"
               />
-              <span className="font-home text-gray-800">{item.productName}</span>
+              <span className="font-home text-gray-800">
+                {item.productName}
+              </span>
             </div>
             <span className="text-gray-800 font-medium font-body">
               ₹{(item.quantity || 1) * item.discountPrice}
@@ -198,11 +208,15 @@ const CheckoutSection = ({
       )}
       <div className="flex justify-between text-gray-700 pt-4">
         <span className="font-body">Subtotal</span>
-        <span className="font-semibold font-body">₹{(subtotal - discountAmount).toFixed(2)}</span>
+        <span className="font-semibold font-body">
+          ₹{(subtotal - discountAmount).toFixed(2)}
+        </span>
       </div>
       <div className="flex justify-between text-gray-700">
         <span className="font-body">Delivery Charge</span>
-        <span className="text-sm text-green-600 font-body">₹{shipping.toFixed(2)}</span>
+        <span className="text-sm text-green-600 font-body">
+          ₹{shipping.toFixed(2)}
+        </span>
       </div>
       <div className="flex justify-between text-lg font-bold text-gray-900 border-t-2 border-gray-200 pt-4">
         <span className="font-home">Total:</span>
@@ -220,8 +234,11 @@ const CheckoutSection = ({
       ].map(({ id, label, icons }) => (
         <div
           key={id}
-          className={`flex items-center p-4 rounded-lg border cursor-pointer transition duration-200 ${paymentMethod === id ? "border-green-500 bg-green-50" : "border-gray-300"
-            }`}
+          className={`flex items-center p-4 rounded-lg border cursor-pointer transition duration-200 ${
+            paymentMethod === id
+              ? "border-green-500 bg-green-50"
+              : "border-gray-300"
+          }`}
           onClick={() => setPaymentMethod(id)}
         >
           <input
@@ -252,8 +269,11 @@ const CheckoutSection = ({
     <button
       onClick={handlePlaceOrder}
       disabled={loadingSubmit || !selectedAddress}
-      className={` font-home mt-8 w-full bg-[#9caf88e0] text-white py-2 rounded-lg font-semibold text-lg shadow-md transition duration-300 ease-in-out ${loadingSubmit || !selectedAddress ? "opacity-50 cursor-not-allowed" : "hover:bg-[#9CAF88]"
-        }`}
+      className={` font-home mt-8 w-full bg-[#9caf88e0] text-white py-2 rounded-lg font-semibold text-lg shadow-md transition duration-300 ease-in-out ${
+        loadingSubmit || !selectedAddress
+          ? "opacity-50 cursor-not-allowed"
+          : "hover:bg-[#9CAF88]"
+      }`}
     >
       {loadingSubmit ? "Placing Order..." : "Place Order"}
     </button>
@@ -290,7 +310,7 @@ const CheckoutDetails = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/signup?redirect=/checkout");
+      navigate("/create-account?redirect=/checkout");
     } else {
       setCheckingAuth(false);
     }
@@ -331,7 +351,9 @@ const CheckoutDetails = () => {
     if (paymentMethod === "bank") {
       const isScriptLoaded = await loadRazorpayScript();
       if (!isScriptLoaded) {
-        toast.error("Failed to load Razorpay SDK. Please check your connection.");
+        toast.error(
+          "Failed to load Razorpay SDK. Please check your connection."
+        );
         return;
       }
 
@@ -478,10 +500,13 @@ const CheckoutDetails = () => {
         toast.success("Coupon applied");
       } else {
         setCouponMessage(response.data.message);
+        
       }
     } catch (err) {
-      const msg = err.response?.data?.message || "Invalid coupon or server error.";
+      const msg =
+        err.response?.data?.message || "Invalid coupon or server error.";
       setCouponMessage(msg);
+      toast.error(msg)
     }
   };
 
@@ -537,20 +562,18 @@ const CheckoutDetails = () => {
             )}
           </div> */}
 
-
           <div className="py-6">
             <h2 className="text-xl font-semibold font-heading mb-2 text-green-600">
               Apply Coupon
             </h2>
             <div className="flex items-center space-x-2">
-
               <input
                 type="text"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
                 placeholder="Enter coupon code"
                 className="border border-gray-300 rounded px-4 py-2 w-full"
-                disabled={!!couponData}  // disables input after coupon applied
+                disabled={!!couponData} // disables input after coupon applied
               />
               {!couponData && (
                 <button
