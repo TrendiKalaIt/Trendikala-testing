@@ -151,7 +151,7 @@ const Products = () => {
                   <img
                     src={cat.icon}
                     alt={cat.name}
-                    className={`w-full h-full object-cover rounded-lg transform hover:-translate-y-1 ${isComingSoon ? 'opacity-50' : ''}`}
+                    className={`w-full h-full object-cover rounded-lg transform hover:-translate-y-1 ${isComingSoon ? 'opacity-100 bg-black1/2' : ''}`}
                     onError={(e) => (e.target.style.display = "none")}
                   />
                 ) : (
