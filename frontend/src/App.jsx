@@ -17,7 +17,6 @@ import Wishlist from './pages/Wishlist';
 import CheckoutDetails from './pages/Checkout';
 import Thankyou from './pages/ThankyouPage';
 import Manufacturing from './pages/Manufacturing';
-import ErrorPage from './pages/ErrorPage';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import ForgotPassword from './pages/ForgotPassword';
@@ -34,10 +33,11 @@ import TermsConditions from './pages/TermsConditions';
 import ShippingDelivery from './pages/ShippingDeliveryPolicy ';
 
 
-import ComingSoon from './components/ComingSoon';
+
 import UserProfilePage from "./pages/UserProfilePage";
 import CategoryProducts from './pages/CategoryProducts';
 import CategoriesComingSoon from './components/CategoriesComingSoon'
+import ErrorPage from './pages/Error';
 
 
 // Redux
@@ -64,8 +64,8 @@ function App() {
               <Route path="/faqs" element={<FAQPage />} />
               <Route path="/contact-us" element={<ContactUs />} />
               <Route path="/cancellation-return-policy" element={<CancellationReturn />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
-              <Route path="/terms-conditions" element={<TermsConditions/>} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms-and-conditions" element={<TermsConditions />} />
               <Route path="/shipping-delivery-policy" element={<ShippingDelivery />} />
 
               <Route path="/enquiry-us" element={<Enquiry />} />
@@ -95,8 +95,9 @@ function App() {
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />
             </Route>
+            <Route path="*" element={<ErrorPage />} />
 
-            <Route path="/error" element={<ErrorPage />} />
+
           </Routes>
         </Router>
       </Provider>

@@ -139,11 +139,7 @@ const Products = () => {
               onClick={() => {
                 setSelectedCategory(cat._id);
                 setSelectedSubcategory("");
-                // if (cat.products && cat.products.length > 0) {
-                //   setCategoryHasProducts(true);
-                // } else {
-                //   setCategoryHasProducts(false);
-                // }
+                
               }}
             >
               <div className="w-full aspect-square overflow-hidden py-1 relative">

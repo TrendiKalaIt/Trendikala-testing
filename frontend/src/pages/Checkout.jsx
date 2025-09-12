@@ -524,44 +524,7 @@ const CheckoutDetails = () => {
         </div>
 
         <div className="flex-1 lg:pl-12 ">
-          {/* <div className="mb-8">
-            <h2 className="text-xl font-semibold font-heading mb-2 text-green-600">
-              Apply Coupon
-            </h2>
-            <div className="flex items-center space-x-2">
-              <input
-                type="text"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                placeholder="Enter coupon code"
-                className="border border-gray-300 rounded px-4 py-2 w-full"
-                disabled={!!couponData}
-              />
-              <button
-                onClick={handleApplyCoupon}
-                className="bg-green-600 text-white px-4 py-2 rounded font-home hover:bg-green-700"
-                disabled={!!couponData}
-              >
-                Apply
-              </button>
-              {couponData && (
-                <button
-                  onClick={() => {
-                    setCouponData(null);
-                    setCouponCode("");
-                    setCouponMessage("");
-                  }}
-                  className="bg-red-600 text-white px-4 py-2 rounded font-home hover:bg-red-700"
-                >
-                  Remove 
-                </button>
-              )}
-            </div>
-            {couponMessage && (
-              <p className="mt-2 text-sm text-green-600 font-body">{couponMessage}</p>
-            )}
-          </div> */}
-
+         
           <div className="py-6">
             <h2 className="text-xl font-semibold font-heading mb-2 text-green-600">
               Apply Coupon
