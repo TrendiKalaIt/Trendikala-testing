@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
 
-import { clearOrder, selectPlacedOrder } from '../utility/orderSlice'; // Adjust path if needed
+import { clearOrder, selectPlacedOrder } from '../utility/orderSlice'; 
 
 const Thankyou = () => {
   const dispatch = useDispatch();
