@@ -13,10 +13,17 @@ const EnquiryForm = () => {
     preferredTime: '',
   });
 
+  const [image, setImage] = useState(null); // image state
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -24,9 +31,23 @@ const EnquiryForm = () => {
     setIsSubmitting(true);
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/enquiries/send-enquiry`, formData);
+      const data = new FormData();
+      // append all text fields with fallback ''
+      for (const key in formData) {
+        data.append(key, formData[key] || '');
+      }
+      if (image) {
+        data.append('image', image);
+      }
+
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/enquiries/send-enquiry`,
+        data,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
 
       toast.success('Enquiry sent successfully!');
+      // reset form
       setFormData({
         fullName: '',
         email: '',
@@ -36,6 +57,7 @@ const EnquiryForm = () => {
         preferredContactMethod: 'Email',
         preferredTime: '',
       });
+      setImage(null);
     } catch (error) {
       console.error('Enquiry submission failed:', error);
       toast.error('Failed to send enquiry. Please try again.');
@@ -80,7 +102,7 @@ const EnquiryForm = () => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className="fonr-body w-full p-2 border border-gray-300 rounded"
+            className="font-body w-full p-2 border border-gray-300 rounded"
           />
         </div>
 
@@ -93,12 +115,12 @@ const EnquiryForm = () => {
             required
             className="font-body w-full p-2 border border-gray-300 rounded"
           >
-             <option value="" disabled  hidden>Select Type</option>
+            <option value="" disabled hidden>Select Type</option>
             <option value="Product">Product Related</option>
             <option value="Bulk">Bulk Order</option>
             <option value="Custom">Custom Design Request</option>
             <option value="General">General Query</option>
-            <option value="General">Order Cancellation Query</option>
+            <option value="Cancellation">Order Cancellation Query</option>
           </select>
         </div>
       </div>
@@ -111,9 +133,23 @@ const EnquiryForm = () => {
           onChange={handleChange}
           required
           rows="5"
-          className="font-body w-full h-11 p-2 border border-gray-300 rounded"
+          className="font-body w-full p-2 border border-gray-300 rounded"
           placeholder="Type your message here..."
         />
+      </div>
+
+      {/* Image Upload Section */}
+      <div className="mt-4">
+        <label className="font-home text-sm text-gray-700 font-medium">Upload Image</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          className="mt-1"
+        />
+        {image && (
+          <p className="text-sm mt-1">Selected: {image.name}</p>
+        )}
       </div>
 
       <div className="mt-4">
