@@ -12,8 +12,10 @@ import ProductReviews from "./ProductReviews";
 import ProductReviewForm from "./ProductReviewForm";
 import SizeChartModel from "./SizeChartModel.jsx";
 import { useNavigate } from "react-router-dom";
-import { setOrderDetails } from "../../utility/checkoutSlice";
 import { useSelector } from "react-redux";
+import { setOrderDetails } from "../../utility/checkoutSlice";
+import { setReviews } from "../../utility/reviewSlice";
+
 
 
 
@@ -25,7 +27,7 @@ const ProductDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-const user = useSelector((state) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
 
   const [thumbnail, setThumbnail] = useState(null);
   const [selectedColor, setSelectedColor] = useState("");
@@ -41,6 +43,7 @@ const user = useSelector((state) => state.auth.user);
   const [animateThumbnail, setAnimateThumbnail] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
+  const reviews = useSelector((state) => state.review.reviews);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -199,6 +202,18 @@ const user = useSelector((state) => state.auth.user);
     ).toFixed(1);
   };
 
+
+
+  useEffect(() => {
+    if (product?.reviews) {
+      dispatch(setReviews(product.reviews));
+    }
+  }, [product, dispatch]);
+
+
+
+
+
   if (loading)
     return <div className="text-center mt-10">Loading product...</div>;
   if (error)
@@ -214,10 +229,10 @@ const user = useSelector((state) => state.auth.user);
 
   const discountPercent = currentSizeObj.discountPrice
     ? Math.round(
-        ((currentSizeObj.price - currentSizeObj.discountPrice) /
-          currentSizeObj.price) *
-          100
-      )
+      ((currentSizeObj.price - currentSizeObj.discountPrice) /
+        currentSizeObj.price) *
+      100
+    )
     : 0;
 
   return (
@@ -234,11 +249,10 @@ const user = useSelector((state) => state.auth.user);
                     setThumbnail(media);
                     setCurrentIndex(i); // update currentIndex for modal
                   }}
-                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden cursor-pointer border-2 transition ${
-                    thumbnail?.url === media.url
-                      ? "border-green-700"
-                      : "border-gray-300"
-                  }`}
+                  className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden cursor-pointer border-2 transition ${thumbnail?.url === media.url
+                    ? "border-green-700"
+                    : "border-gray-300"
+                    }`}
                 >
                   {media.type === "image" ? (
                     <img
@@ -339,11 +353,10 @@ const user = useSelector((state) => state.auth.user);
                   <button
                     onClick={() => setSelectedColor(color.name)}
                     className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition 
-            ${
-              selectedColor === color.name
-                ? "border-green-700 scale-110"
-                : "border-gray-300"
-            }`}
+            ${selectedColor === color.name
+                        ? "border-green-700 scale-110"
+                        : "border-gray-300"
+                      }`}
                     style={{ backgroundColor: color.hex }}
                   >
                     {selectedColor === color.name && (
@@ -389,11 +402,10 @@ const user = useSelector((state) => state.auth.user);
                       onClick={() => handleSizeSelect(sizeObj)}
                       disabled={sizeObj.stock <= 0}
                       className={` font-heading relative px-3 rounded-3xl lg:px-4 lg:py-2 lg:rounded-none border text-[12px] font-medium transition
-    ${
-      selectedSize === sizeObj.size
-        ? "bg-[#93A87E] text-white border-[#93A87E]"
-        : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
-    }
+    ${selectedSize === sizeObj.size
+                          ? "bg-[#93A87E] text-white border-[#93A87E]"
+                          : "bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200"
+                        }
     ${sizeObj.stock <= 0 ? "text-gray-400 cursor-not-allowed" : ""}`}
                     >
                       {sizeObj.size}
@@ -420,57 +432,55 @@ const user = useSelector((state) => state.auth.user);
 
           {/* Quantity & Add to Cart */}
           {/* Quantity, Add to Cart & Buy Now */}
-<div className="flex flex-col gap-3 pt-1 w-full">
-  {/* Quantity Selector */}
-  <div className="flex items-center p-0 border border-gray-300 rounded-full lg:w-32 justify-between self-start">
-    <button
-      className="px-4 text-xl text-gray-600 hover:bg-gray-100 rounded-l-full py-1"
-      onClick={() => handleQuantity("decrease")}
-    >
-      -
-    </button>
-    <span className="text-lg font-medium">{quantity}</span>
-    <button
-      className="px-4 text-xl text-gray-600 hover:bg-gray-100 rounded-r-full py-1"
-      onClick={() => handleQuantity("increase")}
-    >
-      +
-    </button>
-  </div>
+          <div className="flex flex-col gap-3 pt-1 w-full">
+            {/* Quantity Selector */}
+            <div className="flex items-center p-0 border border-gray-300 rounded-full lg:w-32 justify-between self-start">
+              <button
+                className="px-4 text-xl text-gray-600 hover:bg-gray-100 rounded-l-full py-1"
+                onClick={() => handleQuantity("decrease")}
+              >
+                -
+              </button>
+              <span className="text-lg font-medium">{quantity}</span>
+              <button
+                className="px-4 text-xl text-gray-600 hover:bg-gray-100 rounded-r-full py-1"
+                onClick={() => handleQuantity("increase")}
+              >
+                +
+              </button>
+            </div>
 
-  {/* Buttons Row */}
-  <div className="flex flex-col sm:flex-row gap-4 w-full">
-    {/* Add to Cart */}
-    <button
-      onClick={handleAddToCart}
-      disabled={selectedStock <= 0}
-       className={`flex-1 py-2 text-xl rounded-full shadow-lg 
+            {/* Buttons Row */}
+            <div className="flex flex-col sm:flex-row gap-4 w-full">
+              {/* Add to Cart */}
+              <button
+                onClick={handleAddToCart}
+                disabled={selectedStock <= 0}
+                className={`flex-1 py-2 text-xl rounded-full shadow-lg 
     transition-transform duration-300 ease-in-out
-    ${
-      selectedStock <= 0
-        ? "bg-gray-400 cursor-not-allowed text-white"
-        : "bg-[#a4aeb2] text-white font-semibold shadow-md hover:scale-105 hover:brightness-90"
-    }`}
-    >
-      {selectedStock <= 0 ? "Out of Stock" : "Add to Cart"}
-    </button>
+    ${selectedStock <= 0
+                    ? "bg-gray-400 cursor-not-allowed text-white"
+                    : "bg-[#a4aeb2] text-white font-semibold shadow-md hover:scale-105 hover:brightness-90"
+                  }`}
+              >
+                {selectedStock <= 0 ? "Out of Stock" : "Add to Cart"}
+              </button>
 
-    {/* Buy Now */}
-    <button
-      onClick={handleBuyNow}
-      disabled={selectedStock <= 0}
-      className={`flex-1 py-2 text-xl rounded-full shadow-lg 
+              {/* Buy Now */}
+              <button
+                onClick={handleBuyNow}
+                disabled={selectedStock <= 0}
+                className={`flex-1 py-2 text-xl rounded-full shadow-lg 
     transition-transform duration-300 ease-in-out
-    ${
-      selectedStock <= 0
-        ? "bg-gray-400 cursor-not-allowed text-white"
-        : "bg-gradient-to-r from-[#35894E] to-[#80996D] text-white font-semibold shadow-md hover:scale-105 hover:brightness-90"
-    }`}
-    >
-      {selectedStock <= 0 ? "Out of Stock" : "Buy Now"}
-    </button>
-  </div>
-</div>
+    ${selectedStock <= 0
+                    ? "bg-gray-400 cursor-not-allowed text-white"
+                    : "bg-gradient-to-r from-[#35894E] to-[#80996D] text-white font-semibold shadow-md hover:scale-105 hover:brightness-90"
+                  }`}
+              >
+                {selectedStock <= 0 ? "Out of Stock" : "Buy Now"}
+              </button>
+            </div>
+          </div>
 
         </div>
       </div>
@@ -490,8 +500,11 @@ const user = useSelector((state) => state.auth.user);
             <ProductDetails productData={product} />
           ) : (
             <>
-              <ProductReviews reviews={product.reviews} />
+
               <ProductReviewForm productId={product._id} />
+              <ProductReviews reviews={reviews} />
+
+
             </>
           )}
         </div>

@@ -2,6 +2,7 @@ const express = require('express');
 const upload = require('../middleware/multer');
 const productController = require('../controllers/productController');
 const protect = require('../middleware/authMiddleware');
+const multer = require('multer');
 
 const router = express.Router();
 
@@ -29,7 +30,11 @@ router.get('/:id', async (req, res) => {
 });
 
 // ========================== Add Product Review ==========================
-router.post('/:id/reviews', protect, productController.addProductReview);
-
+router.post(
+  '/:id/reviews',
+  protect,
+  upload.array('media', 5), // max 5 files per review
+  productController.addProductReview
+);
 
 module.exports = router;

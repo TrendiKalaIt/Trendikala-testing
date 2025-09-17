@@ -2,6 +2,7 @@
 const Product = require('../models/Product'); // Adjust path as needed
 const mongoose = require('mongoose');
 const category = require('../models/Category')
+const cloudinary = require('cloudinary').v2;
 
 // Get all products with optional filtering
 exports.getAllProducts = async (req, res) => {
@@ -70,32 +71,56 @@ exports.getProductBySlug = async (req, res) => {
 };
 
 
-
 exports.addProductReview = async (req, res) => {
     try {
+        console.log('req.body:', req.body);      // <-- Check here
+        console.log('req.files:', req.files);
+
         const productId = req.params.id;
-        const { rating, comment } = req.body;
 
         const product = await Product.findById(productId);
         if (!product) return res.status(404).json({ message: 'Product not found' });
+
+        // Multer + FormData ke case me rating string me aa raha hoga
+        const ratingNum = Number(req.body.rating);
+        if (isNaN(ratingNum) || ratingNum < 1 || ratingNum > 5) {
+            return res.status(400).json({ message: 'Invalid rating value' });
+        }
+
+        if (!req.body.comment || req.body.comment.trim() === '') {
+            return res.status(400).json({ message: 'Comment is required' });
+        }
+
+        const media = req.files?.map(file => ({
+            type: file.mimetype.startsWith('video') ? 'video' : 'image',
+            url: file.secure_url || file.path // Cloudinary pe secure_url, local pe path
+        })) || [];
+
+
         const review = {
-            user: req.user._id,       // Pass user ObjectId from protect middleware
-            name: req.user.name,      // User's name
-            rating,
-            comment,
+            user: req.user._id,
+            name: req.user.name,
+            rating: ratingNum,
+            comment: req.body.comment,
             verified: true,
-            date: new Date().toISOString().split('T')[0], // e.g. "2025-07-03"
+            date: new Date().toISOString().split('T')[0],
+            media,
         };
 
         product.reviews.push(review);
+        product.numReviews = product.reviews.length;
+        product.rating =
+            product.reviews.reduce((acc, r) => acc + r.rating, 0) / product.reviews.length;
+
         await product.save();
 
-        res.status(201).json({ message: 'Review added successfully', review });
+        res.status(201).json(review);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Failed to add review', error: err.message });
     }
 };
+
 
 
 // Search products by name, category, description, brand, and tags (partial, case-insensitive match)
@@ -113,20 +138,20 @@ exports.searchProducts = async (req, res) => {
         const products = await Product.aggregate([
             {
                 $lookup: {
-                    from: 'categories',            
+                    from: 'categories',
                     localField: 'category',
                     foreignField: '_id',
                     as: 'category'
                 }
             },
-            { $unwind: '$category' },     
+            { $unwind: '$category' },
             {
                 $match: {
                     $or: [
                         { productName: { $regex: query, $options: 'i' } },
                         // { brand: { $regex: query, $options: 'i' } },
                         // { description: { $regex: query, $options: 'i' } },
-                       { 'category.name': { $regex: query, $options: 'i' } }
+                        { 'category.name': { $regex: query, $options: 'i' } }
                     ]
                 }
             }
